@@ -25,9 +25,11 @@ const Sidebar = () => {
                                 <img src={assets.images.slIcon} alt="icon" className="w-[24px]" />
                             </Button>
                         </NavLink>
+                        <NavLink to="/gallery">
                         <Button className="bg-transparent my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips hover:bg-primary">
                             <img src={assets.images.photoIcon} alt="icon" className="w-[24px]" />
                         </Button>
+                        </NavLink>
                         <Button className="bg-transparent my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips hover:bg-primary">
                             <img src={assets.images.clipboardIcon} alt="icon" className="w-[24px]" />
                         </Button>

@@ -11,6 +11,7 @@ import hmodel7 from '../assets/images/banner/models/house(7).png';
 import hmodel8 from '../assets/images/banner/models/house(8).png';
 import hmodel9 from '../assets/images/banner/models/house(9).png';
 import pdf1 from '../assets/images/banner/pdf/pdf-1.png';
+import doc from '../assets/images/banner/doc.jpg';
 import sketch1 from '../assets/images/banner/pdf/sketch(2).png';
 import sketch2 from '../assets/images/banner/pdf/sketch(3).png';
 import sketch3 from '../assets/images/banner/pdf/sketch(4).png';
@@ -56,6 +57,7 @@ const assets = {
     hmodel8,
     hmodel9,
     pdf1,
+    doc,
     sketch1,
     sketch2,
     sketch3,

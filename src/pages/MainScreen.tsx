@@ -6,9 +6,67 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { fetchProjectAttachments } from "@/redux/features/projectAttachmentsSlice"
+import { fetchProjectPlans } from "@/redux/features/projectPlanSlice"
+import { fetchProjects, setSelectedProject } from "@/redux/features/projectSlice"
+import { useAppDispatch, useAppSelector } from "@/redux/redux-hooks"
+import { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
 
 const MainScreen = () => {
+
+    const dispatch = useAppDispatch();
+    const [video, setVideo] = useState<string | null>(null);
+    const [image, setImage] = useState<string | null>(null);
+    const [doc, setDoc] = useState<string | null>(null);
+    const { projects, selectedProjects } =  useAppSelector(s=>s.projectState);
+    const { attachments } =  useAppSelector(s=>s.projectAttachmentsState);
+
+    const fetchProjectsData  = () => {
+        dispatch(fetchProjects({}));
+    }
+
+    useEffect(() => {
+        fetchProjectsData();
+    }, [dispatch])
+
+    useEffect(() => {
+        if(projects.length > 0 && !selectedProjects) {
+            dispatch(setSelectedProject(projects[0]))
+        }
+        if(selectedProjects) {
+
+            dispatch(fetchProjectPlans({project_id: selectedProjects.id}))
+            dispatch(fetchProjectAttachments({project_id: selectedProjects.id}))
+        }
+    }, [projects, selectedProjects, dispatch])
+
+
+    const setLastVideo = () => {
+        const lastVideo = attachments.find((attachment) => attachment.attachmentType === 'video');
+        if(lastVideo) {
+            setVideo(lastVideo.filePath)
+        }
+    }
+    const setLastImage = () => {
+        const lastVideo = attachments.find((attachment) => attachment.attachmentType === 'image');
+        if(lastVideo) {
+            setImage(lastVideo.filePath)
+        }
+    }
+    const setLastDoc = () => {
+        const lastVideo = attachments.find((attachment) => attachment.attachmentType === 'document');
+        if(lastVideo) {
+            setDoc(lastVideo.filePath)
+        }
+    }
+
+    useEffect(() => {
+        setLastVideo();
+        setLastImage();
+        setLastDoc();
+    }, [attachments]);
+
     return (
         <>
             <div className="flex gap-3  rounded-[40px]">
@@ -19,7 +77,13 @@ const MainScreen = () => {
                             <span className="block text-[16px] font-medium leading-normal text-secondary capitalize">Most recent video</span>
                             <a href="#" className="block text-[14px] font-medium leading-normal text-secondary underline capitalize">see all</a>
                         </div>
-                        <img src={assets.images.videoThumb} alt="video" className="w-full h-full" />
+                        {video &&
+                            <video  className="w-full h-full" controls >
+                                <source src={video} type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                        }
+                        {/* <img src={assets.images.videoThumb} alt="video" className="w-full h-full" /> */}
                     </div>
 
                 </div>
@@ -27,32 +91,26 @@ const MainScreen = () => {
                     <div className="mb-2 px-4">
 
                         <span className="block text-[16px] font-medium leading-normal text-secondary capitalize mb-3">select project</span>
-                        {/* <DropdownMenu>
-                            <DropdownMenuTrigger className="w-full max-w-[268px] h-[60px] rounded-[36px] bg-white ring-0 border-none shadow-none">Open</DropdownMenuTrigger>
-                            <DropdownMenuContent className="max-w-[268px]">
-                                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>Profile</DropdownMenuItem>
-                                <DropdownMenuItem>Billing</DropdownMenuItem>
-                                <DropdownMenuItem>Team</DropdownMenuItem>
-                                <DropdownMenuItem>Subscription</DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu> */}
-                        <Select>
-                            <SelectTrigger className="ne-tabs w-full  h-[60px] rounded-[36px] bg-white border-transparent focus:border-transparent focus:ring-0 border-0 border-none shadow-none ">
-                                <SelectValue className="px-3" placeholder="Defence Appartments" />
+                        <Select value={selectedProjects?.id} onValueChange={(value) => dispatch(setSelectedProject(projects.find(x=> x.id === value))) }>
+                            <SelectTrigger className="ne-tabs w-full h-[60px] rounded-[36px] bg-white border-transparent focus:border-transparent focus:ring-0 border-0 border-none shadow-none">
+                                <SelectValue className="px-3" placeholder="Select Projects">
+                                    {projects.find((project) => project.id === selectedProjects?.id)?.name || "Select Projects"}
+                                </SelectValue>
                             </SelectTrigger>
-                            <SelectContent >
-                                <SelectItem value="light">Defence Appartment 1</SelectItem>
-                                <SelectItem value="dark">Defence Appartment 2</SelectItem>
-                                <SelectItem value="system">Defence Appartment 3</SelectItem>
+                            <SelectContent>
+                                {projects &&
+                                    projects.map((item, i) => (
+                                        <SelectItem key={i} value={item.id}>
+                                            {item.name}
+                                        </SelectItem>
+                                    ))}
                             </SelectContent>
                         </Select>
 
                     </div>
                     <div className="flex justify-around items-center px-[5px]">
                         <div className="my-[10px]">
-                            <NavLink to="/sec">
+                            <NavLink to="/gallery">
                                 <div className="flex gap-2 justify-center items-center ">
                                     <img src={assets.images.playIcon} alt="icons" className="w-[25px] h-[25px]" />
 
@@ -65,11 +123,14 @@ const MainScreen = () => {
                                 </div>
                             </NavLink>
                             <div className=" text-center mx-auto h-[250px]">
-                                <img src={assets.images.banner1} alt="3D-image" className="w-full h-full object-contain" />
+                                { 
+                                    image &&
+                                    <img src={image} alt="3D-image" className="w-full h-full object-contain" />
+                                }
                             </div>
                         </div>
                         <div className="my-[10px]">
-                            <NavLink to="/sec">
+                            <NavLink to="/gallery">
                                 <div className="flex gap-2 justify-center items-center ">
                                     <img src={assets.images.playIcon} alt="icons" className="w-[25px] h-[25px]" />
                                     <span className="text-[14px] font-bold text-secondary leading-normal capitalize">project documentation</span>
@@ -81,7 +142,12 @@ const MainScreen = () => {
                                 </div>
                             </NavLink>
                             <div className="h-[250px] text-center mx-auto">
-                                <img src={assets.images.banner2} alt="3D-image" className="w-full h-full object-contain" />
+                                {
+                                    doc && 
+                                    <a href={doc} target="_blank">
+                                        <img src={assets.images.doc} alt="3D-image" className="w-full h-full object-contain" />
+                                    </a>
+                                }
                             </div>
                         </div>
                     </div>
@@ -95,7 +161,7 @@ const MainScreen = () => {
                             Total investment plan
                         </div>
                         <div className="max-w-[200px] mb-2 text-[#EB5A00] text-[40px] leading-normal font-bold">
-                            $53,154.
+                            {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.budget}.
                             <span className="text-secondary opacity-[0.5]">00</span>
                         </div>
                         <div className="flex gap-1 items-center">
@@ -121,7 +187,7 @@ const MainScreen = () => {
 
                         </div>
                         <div className="max-w-[200px] mb-2 text-[#EB5A00] text-[24px] leading-normal font-bold">
-                            $33,154.
+                        {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.totalPaid}.
                             <span className="text-secondary opacity-[0.5]">00</span>
                         </div>
                         <div className="flex gap-2 items-center mt-4">
@@ -135,7 +201,7 @@ const MainScreen = () => {
 
                         </div>
                         <div className="max-w-[200px] mb-4 text-[#EB5A00] text-[24px] leading-normal font-bold">
-                            $20,000.
+                        {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.pendingAmount}.
                             <span className="text-secondary opacity-[0.5]">00</span>
                         </div>
                     </div>
@@ -190,4 +256,4 @@ const MainScreen = () => {
     )
 }
 
-export default MainScreen
+export default MainScreen 

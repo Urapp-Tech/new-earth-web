@@ -4,6 +4,9 @@ import authStateReducer from './features/authStateSlice';
 import deviceStateReducer from './features/deviceState';
 import forgotPasswordSliceReducer from './features/forgotPasswordSlice';
 import authModalSliceReducer from './features/authModalSlice';
+import projectSliceReducer from './features/projectSlice';
+import projectPlanSlice from './features/projectPlanSlice';
+import projectAttachmentsSlice from './features/projectAttachmentsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +15,9 @@ export const store = configureStore({
     deviceStates: deviceStateReducer,
     forgotPasswordState: forgotPasswordSliceReducer,
     authModalState: authModalSliceReducer,
+    projectState: projectSliceReducer,
+    projectPlanState: projectPlanSlice,
+    projectAttachmentsState: projectAttachmentsSlice,
   },
 });
 
