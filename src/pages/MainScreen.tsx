@@ -215,7 +215,7 @@ const MainScreen = () => {
 
                         </div>
                         <div className="max-w-[200px] mb-4 text-[#EB5A00] text-[24px] leading-normal font-bold">
-                        {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.pendingAmount}.
+                        {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.dueAmount}.
                             <span className="text-secondary opacity-[0.5]">00</span>
                         </div>
                     </div>
