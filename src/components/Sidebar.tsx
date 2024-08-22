@@ -1,8 +1,19 @@
 import { Button } from "@/components/ui/button"
 import { NavLink } from "react-router-dom"
 import assets from "../assets"
+import { useAppDispatch } from "@/redux/redux-hooks";
+import { logout } from "@/redux/features/authStateSlice";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate('/auth/login');
+    };
+
     return (
         <>
             <div className=' w-[10%] max-w-[100px] flex flex-col gap-[70px] bg-lightgrey px-[20px]'>
@@ -32,7 +43,7 @@ const Sidebar = () => {
                     <Button className="bg-transparent my-[10px] rounded-[28px] w-[56px] h-[56px] p-0">
                         <img src={assets.images.avatar1} alt="icon" className="max-w-full w-full h-full object-contain" />
                     </Button>
-                    <Button className="bg-grey my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips">
+                    <Button onClick={handleLogout} className="bg-grey my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips">
                         <img src={assets.images.logoutIcon} alt="icon" className="w-[24px]" />
                     </Button>
                 </div>
