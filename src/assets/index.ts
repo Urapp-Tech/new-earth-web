@@ -28,6 +28,8 @@ import slIcon from '../assets/images/icons/ic-slack.png';
 import startegyIcon from '../assets/images/icons/ic-strategy.png';
 import logo from '../assets/images/icons/main-logo.png';
 import speechBubble from './images/speech-bubble.png';
+import noFile from './images/banner/no-file.png';
+import noVideo from './images/banner/no-video.png';
 
 
 
@@ -63,7 +65,8 @@ const assets = {
     sketch3,
     speechBubble,
     hmodel10,
-
+    noFile,
+    noVideo,
   },
 } as const;
 
