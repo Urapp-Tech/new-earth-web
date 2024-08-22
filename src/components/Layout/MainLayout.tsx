@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom"
 import Sidebar from "../Sidebar"
 import TopBar from "../TopBar"
-import { useAppDispatch, useAppSelector } from "@/redux/redux-hooks"
+import { useAppSelector } from "@/redux/redux-hooks"
 import { useEffect } from "react"
 
 const MainLayout = () => {
