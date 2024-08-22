@@ -15,4 +15,5 @@ export interface ProjectAttachment {
   deletedAt: string | null;
   projectName: string;
   projectStartDate: string;
+  category: string;
 }

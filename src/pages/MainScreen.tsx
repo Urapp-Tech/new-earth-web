@@ -47,17 +47,26 @@ const MainScreen = () => {
         if (lastVideo) {
             setVideo(lastVideo.filePath)
         }
+        else {
+            setVideo(null)
+        }
     }
     const setLastImage = () => {
-        const lastVideo = attachments.find((attachment) => attachment.attachmentType === 'image');
+        const lastVideo = attachments.find((attachment) => attachment.attachmentType === 'image' && attachment.category === '3d');
         if (lastVideo) {
             setImage(lastVideo.filePath)
+        }
+        else {
+            setImage(null)
         }
     }
     const setLastDoc = () => {
         const lastVideo = attachments.find((attachment) => attachment.attachmentType === 'document');
         if (lastVideo) {
             setDoc(lastVideo.filePath)
+        }
+        else {
+            setDoc(null)
         }
     }
 
@@ -75,15 +84,16 @@ const MainScreen = () => {
                     <div className="max-w-[656px]">
                         <div className="flex justify-between items-center mb-2 px-4">
                             <span className="block text-[16px] font-medium leading-normal text-secondary capitalize">Most recent video</span>
-                            <a href="#" className="block text-[14px] font-medium leading-normal text-secondary underline capitalize">see all</a>
+                            <NavLink to="videos" className="block text-[14px] font-medium leading-normal text-secondary underline capitalize">see all</NavLink>
                         </div>
-                        {video &&
+                        {video ?
                             <video className="w-full h-full rounded-[20px]" controls >
                                 <source src={video} type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
+                            :
+                            <img src={assets.images.noVideo} alt="video" className="w-full h-[400px] object-cover" />
                         }
-                        {/* <img src={assets.images.videoThumb} alt="video" className="w-full h-full" /> */}
                     </div>
 
                 </div>
@@ -124,8 +134,10 @@ const MainScreen = () => {
                             </NavLink>
                             <div className=" text-center mx-auto h-[250px]">
                                 {
-                                    image &&
-                                    <img src={image} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
+                                    image ?
+                                        <img src={image} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
+                                        :
+                                        <img src={assets.images.noFile} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
                                 }
                             </div>
                         </div>
@@ -143,10 +155,12 @@ const MainScreen = () => {
                             </NavLink>
                             <div className="h-[250px] text-center mx-auto">
                                 {
-                                    doc &&
-                                    <a href={doc} target="_blank">
-                                        <img src={assets.images.doc} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
-                                    </a>
+                                    doc ?
+                                        <a href={doc} target="_blank">
+                                            <img src={assets.images.doc} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
+                                        </a>
+                                        :
+                                        <img src={assets.images.noFile} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
                                 }
                             </div>
                         </div>
@@ -166,7 +180,7 @@ const MainScreen = () => {
                         </div>
                         <div className="flex gap-1 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <g opacity="0.5" clip-path="url(#clip0_44_143)">
+                                <g opacity="0.5" clipPath="url(#clip0_44_143)">
                                     <path d="M10 7.33331V3.33331L8 1.33331L6 3.33331V4.66665H2V14H14V7.33331H10ZM4.66667 12.6666H3.33333V11.3333H4.66667V12.6666ZM4.66667 9.99998H3.33333V8.66665H4.66667V9.99998ZM4.66667 7.33331H3.33333V5.99998H4.66667V7.33331ZM8.66667 12.6666H7.33333V11.3333H8.66667V12.6666ZM8.66667 9.99998H7.33333V8.66665H8.66667V9.99998ZM8.66667 7.33331H7.33333V5.99998H8.66667V7.33331ZM8.66667 4.66665H7.33333V3.33331H8.66667V4.66665ZM12.6667 12.6666H11.3333V11.3333H12.6667V12.6666ZM12.6667 9.99998H11.3333V8.66665H12.6667V9.99998Z" fill="#14242E" />
                                 </g>
                                 <defs>
@@ -201,7 +215,7 @@ const MainScreen = () => {
 
                         </div>
                         <div className="max-w-[200px] mb-4 text-[#EB5A00] text-[24px] leading-normal font-bold">
-                            {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.pendingAmount}.
+                            {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.dueAmount}.
                             <span className="text-secondary opacity-[0.5]">00</span>
                         </div>
                     </div>
@@ -213,7 +227,7 @@ const MainScreen = () => {
                                 <div className=" text-[24px] font-medium leading-normal text-white">
                                     Project Plan
                                 </div>
-                                <a href="#" className="block text-[16px] font-medium leading-normal text-secondary underline capitalize">view details</a>
+                                <NavLink to="/plans" className="block text-[16px] font-medium leading-normal text-secondary underline capitalize">view details</NavLink>
                             </div>
 
                         </div>

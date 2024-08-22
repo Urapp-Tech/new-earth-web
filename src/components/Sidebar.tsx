@@ -26,13 +26,15 @@ const Sidebar = () => {
                             </Button>
                         </NavLink>
                         <NavLink to="/gallery">
-                        <Button className="bg-transparent my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips hover:bg-primary">
-                            <img src={assets.images.photoIcon} alt="icon" className="w-[24px]" />
-                        </Button>
+                            <Button className="bg-transparent my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips hover:bg-primary">
+                                <img src={assets.images.photoIcon} alt="icon" className="w-[24px]" />
+                            </Button>
                         </NavLink>
-                        <Button className="bg-transparent my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips hover:bg-primary">
-                            <img src={assets.images.clipboardIcon} alt="icon" className="w-[24px]" />
-                        </Button>
+                        <NavLink to="/plans">
+                            <Button className="bg-transparent my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips hover:bg-primary">
+                                <img src={assets.images.clipboardIcon} alt="icon" className="w-[24px]" />
+                            </Button>
+                        </NavLink>
                         <Button className="bg-transparent my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips hover:bg-primary">
                             <img src={assets.images.startegyIcon} alt="icon" className="w-[24px]" />
                         </Button>

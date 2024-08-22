@@ -15,6 +15,6 @@ export interface Project {
     supervisorName: string;
     constructionType: string;
     totalPaid: number;
-    pendingAmount: number;
+    dueAmount: number;
   }
   

@@ -51,7 +51,7 @@ const GalleryScreen = () => {
 
                             <div className="flex justify-start flex-wrap gap-[15px] p-5 ">
 
-                                {attachments.filter(a => a.attachmentType === "image").map((image, i) => {
+                                {attachments.filter(a => a.attachmentType === "image" && a.category === "3d").map((image, i) => {
                                     return (
                                         <div key={i} className="basis-[20%] my-4">
                                             <div className="w-[210px] h-[210px] mb-3 rounded-[20px] border-[#e3e3e3] border-[1px] mx-auto">
@@ -76,7 +76,7 @@ const GalleryScreen = () => {
 
                             <div className="flex justify-start flex-wrap gap-[15px] p-5 ">
 
-                                {attachments.filter(a => a.attachmentType === "image").map((image, i) => {
+                                {attachments.filter(a => a.attachmentType === "image" && a.category !== "3d").map((image, i) => {
                                     return (
                                         <div key={i} className="basis-[20%] my-4">
                                             <div className="w-[210px] h-[210px] mb-3 rounded-[20px] border-[#e3e3e3] border-[1px] mx-auto">
