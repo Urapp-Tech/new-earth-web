@@ -19,10 +19,10 @@ const MainScreen = () => {
     const [video, setVideo] = useState<string | null>(null);
     const [image, setImage] = useState<string | null>(null);
     const [doc, setDoc] = useState<string | null>(null);
-    const { projects, selectedProjects } =  useAppSelector(s=>s.projectState);
-    const { attachments } =  useAppSelector(s=>s.projectAttachmentsState);
+    const { projects, selectedProjects } = useAppSelector(s => s.projectState);
+    const { attachments } = useAppSelector(s => s.projectAttachmentsState);
 
-    const fetchProjectsData  = () => {
+    const fetchProjectsData = () => {
         dispatch(fetchProjects({}));
     }
 
@@ -31,32 +31,32 @@ const MainScreen = () => {
     }, [dispatch])
 
     useEffect(() => {
-        if(projects.length > 0 && !selectedProjects) {
+        if (projects.length > 0 && !selectedProjects) {
             dispatch(setSelectedProject(projects[0]))
         }
-        if(selectedProjects) {
+        if (selectedProjects) {
 
-            dispatch(fetchProjectPlans({project_id: selectedProjects.id}))
-            dispatch(fetchProjectAttachments({project_id: selectedProjects.id}))
+            dispatch(fetchProjectPlans({ project_id: selectedProjects.id }))
+            dispatch(fetchProjectAttachments({ project_id: selectedProjects.id }))
         }
     }, [projects, selectedProjects, dispatch])
 
 
     const setLastVideo = () => {
         const lastVideo = attachments.find((attachment) => attachment.attachmentType === 'video');
-        if(lastVideo) {
+        if (lastVideo) {
             setVideo(lastVideo.filePath)
         }
     }
     const setLastImage = () => {
         const lastVideo = attachments.find((attachment) => attachment.attachmentType === 'image');
-        if(lastVideo) {
+        if (lastVideo) {
             setImage(lastVideo.filePath)
         }
     }
     const setLastDoc = () => {
         const lastVideo = attachments.find((attachment) => attachment.attachmentType === 'document');
-        if(lastVideo) {
+        if (lastVideo) {
             setDoc(lastVideo.filePath)
         }
     }
@@ -78,7 +78,7 @@ const MainScreen = () => {
                             <a href="#" className="block text-[14px] font-medium leading-normal text-secondary underline capitalize">see all</a>
                         </div>
                         {video &&
-                            <video  className="w-full h-full" controls >
+                            <video className="w-full h-full rounded-[20px]" controls >
                                 <source src={video} type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
@@ -91,7 +91,7 @@ const MainScreen = () => {
                     <div className="mb-2 px-4">
 
                         <span className="block text-[16px] font-medium leading-normal text-secondary capitalize mb-3">select project</span>
-                        <Select value={selectedProjects?.id} onValueChange={(value) => dispatch(setSelectedProject(projects.find(x=> x.id === value))) }>
+                        <Select value={selectedProjects?.id} onValueChange={(value) => dispatch(setSelectedProject(projects.find(x => x.id === value)))}>
                             <SelectTrigger className="ne-tabs w-full h-[60px] rounded-[36px] bg-white border-transparent focus:border-transparent focus:ring-0 border-0 border-none shadow-none">
                                 <SelectValue className="px-3" placeholder="Select Projects">
                                     {projects.find((project) => project.id === selectedProjects?.id)?.name || "Select Projects"}
@@ -111,7 +111,7 @@ const MainScreen = () => {
                     <div className="flex justify-around items-center px-[5px]">
                         <div className="my-[10px]">
                             <NavLink to="/gallery">
-                                <div className="flex gap-2 justify-center items-center ">
+                                <div className="flex gap-2 justify-center items-center mb-[15px]">
                                     <img src={assets.images.playIcon} alt="icons" className="w-[25px] h-[25px]" />
 
                                     <span className="text-[14px] font-bold text-secondary leading-normal">3D renders</span>
@@ -123,15 +123,15 @@ const MainScreen = () => {
                                 </div>
                             </NavLink>
                             <div className=" text-center mx-auto h-[250px]">
-                                { 
+                                {
                                     image &&
-                                    <img src={image} alt="3D-image" className="w-full h-full object-contain" />
+                                    <img src={image} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
                                 }
                             </div>
                         </div>
                         <div className="my-[10px]">
                             <NavLink to="/gallery">
-                                <div className="flex gap-2 justify-center items-center ">
+                                <div className="flex gap-2 justify-center items-center mb-[15px]">
                                     <img src={assets.images.playIcon} alt="icons" className="w-[25px] h-[25px]" />
                                     <span className="text-[14px] font-bold text-secondary leading-normal capitalize">project documentation</span>
                                     <a href="#">
@@ -143,9 +143,9 @@ const MainScreen = () => {
                             </NavLink>
                             <div className="h-[250px] text-center mx-auto">
                                 {
-                                    doc && 
+                                    doc &&
                                     <a href={doc} target="_blank">
-                                        <img src={assets.images.doc} alt="3D-image" className="w-full h-full object-contain" />
+                                        <img src={assets.images.doc} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
                                     </a>
                                 }
                             </div>
@@ -160,7 +160,7 @@ const MainScreen = () => {
                         <div className="max-w-[200px] py-2 text-secondary text-[24px] leading-normal font-medium">
                             Total investment plan
                         </div>
-                        <div className="max-w-[200px] mb-2 text-[#EB5A00] text-[40px] leading-normal font-bold">
+                        <div className="max-w-[250px] mb-2 text-[#EB5A00] text-[40px] leading-normal font-bold">
                             {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.budget}.
                             <span className="text-secondary opacity-[0.5]">00</span>
                         </div>
@@ -187,7 +187,7 @@ const MainScreen = () => {
 
                         </div>
                         <div className="max-w-[200px] mb-2 text-[#EB5A00] text-[24px] leading-normal font-bold">
-                        {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.totalPaid}.
+                            {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.totalPaid}.
                             <span className="text-secondary opacity-[0.5]">00</span>
                         </div>
                         <div className="flex gap-2 items-center mt-4">
@@ -201,7 +201,7 @@ const MainScreen = () => {
 
                         </div>
                         <div className="max-w-[200px] mb-4 text-[#EB5A00] text-[24px] leading-normal font-bold">
-                        {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.pendingAmount}.
+                            {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.pendingAmount}.
                             <span className="text-secondary opacity-[0.5]">00</span>
                         </div>
                     </div>

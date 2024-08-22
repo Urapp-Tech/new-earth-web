@@ -1,5 +1,5 @@
-import assets from "@/assets"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import assets from "@/assets";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchProjectAttachments } from "@/redux/features/projectAttachmentsSlice";
 import { fetchProjectPlans } from "@/redux/features/projectPlanSlice";
 import { fetchProjects, setSelectedProject } from "@/redux/features/projectSlice";
@@ -12,9 +12,9 @@ const GalleryScreen = () => {
 
     const dispatch = useAppDispatch();
 
-    const { projects, selectedProjects } =  useAppSelector(s=>s.projectState);
-    const { attachments } =  useAppSelector(s=>s.projectAttachmentsState);
-    const fetchProjectsData  = () => {
+    const { projects, selectedProjects } = useAppSelector(s => s.projectState);
+    const { attachments } = useAppSelector(s => s.projectAttachmentsState);
+    const fetchProjectsData = () => {
         dispatch(fetchProjects({}));
     }
 
@@ -24,13 +24,13 @@ const GalleryScreen = () => {
     }, [dispatch])
 
     useEffect(() => {
-        if(projects.length > 0 && !selectedProjects) {
+        if (projects.length > 0 && !selectedProjects) {
             dispatch(setSelectedProject(projects[0]))
         }
-        if(selectedProjects) {
+        if (selectedProjects) {
 
-            dispatch(fetchProjectPlans({project_id: selectedProjects.id}))
-            dispatch(fetchProjectAttachments({project_id: selectedProjects.id}))
+            dispatch(fetchProjectPlans({ project_id: selectedProjects.id }))
+            dispatch(fetchProjectAttachments({ project_id: selectedProjects.id }))
         }
     }, [projects, selectedProjects, dispatch])
 
@@ -49,55 +49,65 @@ const GalleryScreen = () => {
                         </TabsList>
                         <TabsContent value="account" className="m-0">
 
-                            <div className="flex justify-start flex-wrap gap-0 p-5 ">
+                            <div className="flex justify-start flex-wrap gap-[15px] p-5 ">
 
-                            {attachments.filter(a => a.attachmentType === "image" ).map((image, i) => {
+                                {attachments.filter(a => a.attachmentType === "image").map((image, i) => {
                                     return (
                                         <div key={i} className="basis-[20%] my-4">
-                                            <img src={image.filePath} alt="model" />
-                                            <h5 className="text-center">
-                                                     {image.title}
+                                            <div className="w-[210px] h-[210px] mb-3 rounded-[20px] border-[#e3e3e3] border-[1px] mx-auto">
+                                                <img src={image.filePath} alt="model" className="rounded-[20px]  object-contain w-full h-full" />
+                                            </div>
 
-                                                </h5>
-                                                <h6 className="text-center">
-                                                    {image.day}
-                                                </h6>
+                                            <h5 className="text-center my-2 opacity-[0.5] text-[16px]">
+                                                {image.title}
+
+                                            </h5>
+                                            <h6 className="text-center">
+                                                {image.day}
+                                            </h6>
                                         </div>
                                     )
                                 })}
-                                
+
                             </div>
 
                         </TabsContent>
                         <TabsContent value="password" className="m-0">
 
-                            <div className="flex justify-start flex-wrap gap-0 p-5 max-w-[800px]  min-h-[400px] mb-3">
-                                {attachments.filter(a => a.attachmentType === "image" ).map((image, i) => {
-                                    return (
-                                        <div key={i} className="basis-[25%] my-4">
-                                            <img src={image.filePath} alt="model" />
-                                            <h5 className="text-center">
-                                                     {image.title}
+                            <div className="flex justify-start flex-wrap gap-[15px] p-5 ">
 
-                                                </h5>
-                                                <h6 className="text-center">
-                                                    {image.day}
-                                                </h6>
+                                {attachments.filter(a => a.attachmentType === "image").map((image, i) => {
+                                    return (
+                                        <div key={i} className="basis-[20%] my-4">
+                                            <div className="w-[210px] h-[210px] mb-3 rounded-[20px] border-[#e3e3e3] border-[1px] mx-auto">
+                                                <img src={image.filePath} alt="model" className="rounded-[20px]  object-contain w-full h-full" />
+                                            </div>
+
+                                            <h5 className="text-center my-2 opacity-[0.5] text-[16px]">
+                                                {image.title}
+
+                                            </h5>
+                                            <h6 className="text-center">
+                                                {image.day}
+                                            </h6>
                                         </div>
                                     )
                                 })}
+
                             </div>
                         </TabsContent>
                         <TabsContent value="report" className="m-0">
 
-                            <div className="flex justify-start flex-wrap gap-0 p-5 max-w-[1024px] min-h-[400px] mb-3">
-                                {attachments.filter(a => a.attachmentType === "document" ).map((doc, i) => {
+                            <div className="flex justify-start flex-wrap gap-[15px] p-5  min-h-[400px] mb-3">
+                                {attachments.filter(a => a.attachmentType === "document").map((doc, i) => {
                                     return (
                                         <div key={i} className="basis-[20%] my-4">
                                             <a href={doc.filePath} target="_blank">
-                                                <img src={assets.images.doc} alt="model" />
-                                                <h5 className="text-center">
-                                                     {doc.title}
+                                                <div className="w-[210px] h-[210px] mb-3 rounded-[20px] border-[#e3e3e3] border-[1px] mx-auto">
+                                                    <img src={assets.images.doc} alt="model" className="rounded-[20px]  object-contain w-full h-full" />
+                                                </div>
+                                                <h5 className="text-center my-2 opacity-[0.5] text-[16px]">
+                                                    {doc.title}
 
                                                 </h5>
                                                 <h6 className="text-center">
