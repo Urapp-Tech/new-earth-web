@@ -21,7 +21,11 @@ import photoIcon from '../assets/images/icons/ic-photo.png';
 import playIcon from '../assets/images/icons/ic-play.png';
 import slIcon from '../assets/images/icons/ic-slack.png';
 import startegyIcon from '../assets/images/icons/ic-strategy.png';
+import speechBubble from './images/speech-bubble.png';
 import logo from '../assets/images/icons/main-logo.png';
+
+
+
 const assets = {
   images: {
     logo,
@@ -47,7 +51,9 @@ const assets = {
     hmodel7,
     hmodel8,
     hmodel9,
-    hmodel10
+    speechBubble,
+    hmodel10,
+
   },
 } as const;
 

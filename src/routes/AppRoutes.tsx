@@ -1,13 +1,16 @@
 
 // import MainScreen from "@/pages/MainScreen";
+import AuthLayout from "@/components/Layout/AuthLayout";
 import MainScreen from "@/pages/MainScreen";
 import SecScreen from "@/pages/SecScreen";
 import { Loader } from "lucide-react";
 import { lazy, Suspense } from "react";
-import { RouteObject } from "react-router-dom";
+import { Navigate, RouteObject } from "react-router-dom";
 // import MainLayout from "../components/Layout/MainLayout";
 
 const MainLayout = lazy(() => import('@/components/Layout/MainLayout'))
+
+const LoginPage = lazy(() => import('../pages/auth/login/LoginPage'));
 
 export const routeObjects: RouteObject[] = [
     {
@@ -24,4 +27,19 @@ export const routeObjects: RouteObject[] = [
             },
         ],
     },
+    {
+        path: 'auth',
+        element: <AuthLayout />,
+        children: [
+          { index: true, element: <Navigate to="login" replace /> },
+          {
+            path: 'login',
+            element: (
+              <Suspense fallback={<Loader />}>
+                <LoginPage />
+              </Suspense>
+            ),
+          },
+        ],
+      },
 ];

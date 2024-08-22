@@ -1,8 +1,18 @@
-import { Outlet } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import Sidebar from "../Sidebar"
 import TopBar from "../TopBar"
+import { useAppDispatch, useAppSelector } from "@/redux/redux-hooks"
+import { useEffect } from "react"
 
 const MainLayout = () => {
+
+    const { user } = useAppSelector(s=> s.authState);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if( !user ) {
+            navigate('/auth/login');
+        }
+    }, [])
     return (
         <div className="bg-lightgrey">
             <TopBar />
