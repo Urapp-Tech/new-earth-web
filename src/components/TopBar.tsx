@@ -20,7 +20,7 @@ const TopBar = () => {
                     <div className="  flex justify-between items-center gap-4">
 
                         <div className="w-full">
-                            <Input type="search" placeholder="Search" className="w-full outline-none border-none focus-visible:ring-0 rounded-[20px]" />
+                            <Input type="search" placeholder="Search" className="ne-tabs w-full outline-none border-none focus-visible:ring-0 rounded-[20px]" />
                         </div>
                         <div className="px-2">
                             <Button className="w-[40px] h-[40px] rounded-[20px] bg-white p-2 hover:bg-[#ccc]">

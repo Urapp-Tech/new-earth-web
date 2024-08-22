@@ -10,6 +10,10 @@ import hmodel6 from '../assets/images/banner/models/house(6).png';
 import hmodel7 from '../assets/images/banner/models/house(7).png';
 import hmodel8 from '../assets/images/banner/models/house(8).png';
 import hmodel9 from '../assets/images/banner/models/house(9).png';
+import pdf1 from '../assets/images/banner/pdf/pdf-1.png';
+import sketch1 from '../assets/images/banner/pdf/sketch(2).png';
+import sketch2 from '../assets/images/banner/pdf/sketch(3).png';
+import sketch3 from '../assets/images/banner/pdf/sketch(4).png';
 import videoThumb from "../assets/images/banner/video-banner.png";
 import avatar1 from '../assets/images/icons/ic-avatar.png';
 import bellIcon from '../assets/images/icons/ic-bell.png';
@@ -47,7 +51,12 @@ const assets = {
     hmodel7,
     hmodel8,
     hmodel9,
-    hmodel10
+    hmodel10,
+    pdf1,
+    sketch1,
+    sketch2,
+    sketch3,
+
   },
 } as const;
 

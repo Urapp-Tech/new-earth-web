@@ -1,5 +1,12 @@
 import assets from "@/assets"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import { NavLink } from "react-router-dom"
 
 const MainScreen = () => {
     return (
@@ -20,9 +27,9 @@ const MainScreen = () => {
                     <div className="mb-2 px-4">
 
                         <span className="block text-[16px] font-medium leading-normal text-secondary capitalize mb-3">select project</span>
-                        <DropdownMenu>
+                        {/* <DropdownMenu>
                             <DropdownMenuTrigger className="w-full max-w-[268px] h-[60px] rounded-[36px] bg-white ring-0 border-none shadow-none">Open</DropdownMenuTrigger>
-                            <DropdownMenuContent>
+                            <DropdownMenuContent className="max-w-[268px]">
                                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem>Profile</DropdownMenuItem>
@@ -30,34 +37,49 @@ const MainScreen = () => {
                                 <DropdownMenuItem>Team</DropdownMenuItem>
                                 <DropdownMenuItem>Subscription</DropdownMenuItem>
                             </DropdownMenuContent>
-                        </DropdownMenu>
+                        </DropdownMenu> */}
+                        <Select>
+                            <SelectTrigger className="ne-tabs w-full  h-[60px] rounded-[36px] bg-white border-transparent focus:border-transparent focus:ring-0 border-0 border-none shadow-none ">
+                                <SelectValue className="px-3" placeholder="Defence Appartments" />
+                            </SelectTrigger>
+                            <SelectContent >
+                                <SelectItem value="light">Defence Appartment 1</SelectItem>
+                                <SelectItem value="dark">Defence Appartment 2</SelectItem>
+                                <SelectItem value="system">Defence Appartment 3</SelectItem>
+                            </SelectContent>
+                        </Select>
 
                     </div>
                     <div className="flex justify-around items-center px-[5px]">
                         <div className="my-[10px]">
-                            <div className="flex gap-2 justify-center items-center ">
-                                <img src={assets.images.playIcon} alt="icons" className="w-[25px] h-[25px]" />
-                                <span className="text-[14px] font-bold text-secondary leading-normal">3D renders</span>
-                                <a href="#">
+                            <NavLink to="/sec">
+                                <div className="flex gap-2 justify-center items-center ">
+                                    <img src={assets.images.playIcon} alt="icons" className="w-[25px] h-[25px]" />
+
+                                    <span className="text-[14px] font-bold text-secondary leading-normal">3D renders</span>
+
                                     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="9" viewBox="0 0 10 9" fill="none">
                                         <path d="M1 8.5L9 0.5M9 0.5H1M9 0.5V8.5" stroke="#14242E" />
                                     </svg>
-                                </a>
-                            </div>
+
+                                </div>
+                            </NavLink>
                             <div className=" text-center mx-auto h-[250px]">
                                 <img src={assets.images.banner1} alt="3D-image" className="w-full h-full object-contain" />
                             </div>
                         </div>
                         <div className="my-[10px]">
-                            <div className="flex gap-2 justify-center items-center ">
-                                <img src={assets.images.playIcon} alt="icons" className="w-[25px] h-[25px]" />
-                                <span className="text-[14px] font-bold text-secondary leading-normal capitalize">project documentation</span>
-                                <a href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="9" viewBox="0 0 10 9" fill="none">
-                                        <path d="M1 8.5L9 0.5M9 0.5H1M9 0.5V8.5" stroke="#14242E" />
-                                    </svg>
-                                </a>
-                            </div>
+                            <NavLink to="/sec">
+                                <div className="flex gap-2 justify-center items-center ">
+                                    <img src={assets.images.playIcon} alt="icons" className="w-[25px] h-[25px]" />
+                                    <span className="text-[14px] font-bold text-secondary leading-normal capitalize">project documentation</span>
+                                    <a href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="9" viewBox="0 0 10 9" fill="none">
+                                            <path d="M1 8.5L9 0.5M9 0.5H1M9 0.5V8.5" stroke="#14242E" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </NavLink>
                             <div className="h-[250px] text-center mx-auto">
                                 <img src={assets.images.banner2} alt="3D-image" className="w-full h-full object-contain" />
                             </div>

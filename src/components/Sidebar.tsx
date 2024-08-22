@@ -1,17 +1,19 @@
 import { Button } from "@/components/ui/button"
-
+import { NavLink } from "react-router-dom"
 import assets from "../assets"
 
 const Sidebar = () => {
     return (
         <>
-            <div className=' w-[10%] max-w-[100px] flex flex-col gap-[70px] bg-lightgrey'>
+            <div className=' w-[10%] max-w-[100px] flex flex-col gap-[70px] bg-lightgrey px-[20px]'>
 
                 <div className="basis-[60%] mx-auto">
                     <div className="max-h-[380px] w-[80px] bg-grey rounded-[45px] text-center">
-                        <Button className="bg-transparent my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips hover:bg-primary">
-                            <img src={assets.images.slIcon} alt="icon" className="w-[24px]" />
-                        </Button>
+                        <NavLink to="/">
+                            <Button className="bg-transparent my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips hover:bg-primary">
+                                <img src={assets.images.slIcon} alt="icon" className="w-[24px]" />
+                            </Button>
+                        </NavLink>
                         <Button className="bg-transparent my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips hover:bg-primary">
                             <img src={assets.images.photoIcon} alt="icon" className="w-[24px]" />
                         </Button>

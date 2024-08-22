@@ -13,9 +13,9 @@ const SecScreen = () => {
                 <div className="bg-white  rounded-[20px]">
                     <Tabs defaultValue="account" className="w-full">
                         <TabsList className="w-full justify-start p-0">
-                            <TabsTrigger value="account" className="min-w-[184px] rounded-t-[20px] h-auto">3d renderers</TabsTrigger>
-                            <TabsTrigger value="password" className="min-w-[184px] shadow-none">blueprints</TabsTrigger>
-                            <TabsTrigger value="report" className="min-w-[184px] shadow-none">Approvals & Reports</TabsTrigger>
+                            <TabsTrigger value="account" className="ne-tab min-w-[184px] rounded-t-[20px] h-auto">3d renderers</TabsTrigger>
+                            <TabsTrigger value="password" className="ne-tab min-w-[184px] shadow-none">blueprints</TabsTrigger>
+                            <TabsTrigger value="report" className="ne-tab min-w-[184px] shadow-none">Approvals & Reports</TabsTrigger>
                         </TabsList>
                         <TabsContent value="account" className="m-0">
 
