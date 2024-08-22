@@ -1,22 +1,22 @@
+import { useAppSelector } from "@/redux/redux-hooks"
+import { useEffect } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
 import Sidebar from "../Sidebar"
 import TopBar from "../TopBar"
-import { useAppSelector } from "@/redux/redux-hooks"
-import { useEffect } from "react"
 
 const MainLayout = () => {
 
-    const { user } = useAppSelector(s=> s.authState);
+    const { user } = useAppSelector(s => s.authState);
     const navigate = useNavigate();
     useEffect(() => {
-        if( !user ) {
+        if (!user) {
             navigate('/auth/login');
         }
     }, [])
     return (
         <div className="bg-lightgrey">
             <TopBar />
-            <div className="flex justify-between items-start">
+            <div className="flex justify-between items-start h-full">
                 <Sidebar />
                 <div className="w-[90%] px-2 py-2">
                     <Outlet />

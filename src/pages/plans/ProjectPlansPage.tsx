@@ -13,12 +13,12 @@ import PlanDetailsDialog from "./PlanDetailsDialog";
 const ProjectPlansPage = () => {
 
     const dispatch = useAppDispatch();
-    const [projectPlan, setProjectPlan ] = useState<ProjectPlan>();
-    const [showPlanDetails, setShowPlanDetails ] = useState<boolean>(false);
-    const { projects, selectedProjects } =  useAppSelector(s=>s.projectState);
-    const { plans } =  useAppSelector(s=>s.projectPlanState);
-    
-    const fetchProjectsData  = () => {
+    const [projectPlan, setProjectPlan] = useState<ProjectPlan>();
+    const [showPlanDetails, setShowPlanDetails] = useState<boolean>(false);
+    const { projects, selectedProjects } = useAppSelector(s => s.projectState);
+    const { plans } = useAppSelector(s => s.projectPlanState);
+
+    const fetchProjectsData = () => {
         dispatch(fetchProjects({}));
     }
 
@@ -28,12 +28,12 @@ const ProjectPlansPage = () => {
     }, [dispatch])
 
     useEffect(() => {
-        if(projects.length > 0 && !selectedProjects) {
+        if (projects.length > 0 && !selectedProjects) {
             dispatch(setSelectedProject(projects[0]))
         }
-        if(selectedProjects) {
+        if (selectedProjects) {
 
-            dispatch(fetchProjectPlans({project_id: selectedProjects.id}))
+            dispatch(fetchProjectPlans({ project_id: selectedProjects.id }))
         }
     }, [projects, selectedProjects, dispatch])
 
@@ -58,31 +58,32 @@ const ProjectPlansPage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {sortArrayByKey(plans, 'day','asc').map((plan, index) => {
+                            {sortArrayByKey(plans, 'day', 'asc').map((plan, index) => {
                                 let count = 0;
                                 if (plan.data && plan.data.length > 0) {
-                                  count = plan.data.reduce(
-                                    // eslint-disable-next-line @typescript-eslint/no-shadow
-                                    (total: number, item: any) =>
-                                      total + (item?.count ?? 0),
-                                    0
-                                  );
+                                    count = plan.data.reduce(
+                                        // eslint-disable-next-line @typescript-eslint/no-shadow
+                                        (total: number, item: any) =>
+                                            total + (item?.count ?? 0),
+                                        0
+                                    );
                                 }
-                                return(
-                                <tr key={index} className="text-left">
-                                    <td className=" px-5 py-1">{plan.day}</td>
-                                    <td className=" px-5 py-1">{count}</td>
-                                    <td className=" px-5 py-1">
-                                        <Button onClick={() => handleProjectPlanSelection(plan)} className="bg-transparent  my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips bg-[#F5F5F5] text-primary hover:bg-primary hover:text-white" >
-                                            <EyeIcon />
-                                        </Button>
-                                    </td>
-                                </tr>
-                            )})}
+                                return (
+                                    <tr key={index} className="text-left border-grey-100 border-[1px]">
+                                        <td className=" px-5 py-1">{plan.day}</td>
+                                        <td className=" px-5 py-1">{count}</td>
+                                        <td className=" px-5 py-1">
+                                            <Button onClick={() => handleProjectPlanSelection(plan)} className="bg-transparent  my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips bg-[#F5F5F5] text-primary hover:bg-primary hover:text-white" >
+                                                <EyeIcon />
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
 
                         </tbody>
                     </table>
-                            <PlanDetailsDialog open={showPlanDetails} setOpen={(val) => setShowPlanDetails(val)} plan={projectPlan} />
+                    <PlanDetailsDialog open={showPlanDetails} setOpen={(val) => setShowPlanDetails(val)} plan={projectPlan} />
                 </div>
             </div>
         </>

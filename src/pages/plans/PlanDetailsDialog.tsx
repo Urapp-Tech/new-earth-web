@@ -1,4 +1,3 @@
-import { Activity, ProjectPlan } from '@/interfaces/project-plans';
 import {
   Dialog,
   DialogContent,
@@ -6,6 +5,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
+import { Activity, ProjectPlan } from '@/interfaces/project-plans';
 
 type DialogProps = {
   open: boolean;
@@ -46,21 +46,21 @@ const PlanDetailsDialog: React.FC<DialogProps> = ({ open, setOpen, plan }) => {
                       <td className=" px-5 py-1">
                         {item.activity
                           ? item.activity
-                              .split(',')
-                              .map((activity, activityIndex) => {
-                                return (
-                                  <span
-                                    key={activityIndex}
-                                    className="me-2 rounded border border-blue-300 bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-gray-700 dark:text-blue-300"
-                                  >
-                                    {activity}
-                                  </span>
-                                );
-                              })
+                            .split(',')
+                            .map((activity, activityIndex) => {
+                              return (
+                                <span
+                                  key={activityIndex}
+                                  className="me-2 rounded-[15px] border border-grey bg-lightgrey px-2.5 py-0.5 text-xs font-medium text-secondary dark:bg-gray-700 dark:text-blue-300"
+                                >
+                                  {activity}
+                                </span>
+                              );
+                            })
                           : '--'}
                       </td>
                       <td className=" px-5 py-1">
-                        <Progress value={Number(item.progress)} />
+                        <Progress value={Number(item.progress)} className='dark:bg-primary' />
                       </td>
                       <td className=" px-5 py-1">{item.remarks ? item.remarks : '--'}</td>
                     </tr>
