@@ -24,6 +24,15 @@ const PlanDetailsDialog: React.FC<DialogProps> = ({ open, setOpen, plan }) => {
           <DialogTitle>Day Activities</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
+
+        <div className="mt-2">
+          <h3>
+            <b>Project Name: </b> {plan?.projectName ?? ''}
+          </h3>
+          <h3>
+            <b>Working Day: </b> {plan?.day ?? ''}
+          </h3>
+        </div>
           <table>
             <thead>
               <tr className="text-left">
