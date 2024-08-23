@@ -43,14 +43,22 @@ const MainScreen = () => {
 
 
     const setLastVideo = () => {
-        const lastVideo = attachments.find((attachment) => attachment.attachmentType === 'video');
+        const lastVideo = attachments
+            .filter((attachment) => attachment.attachmentType === 'video')
+            .sort((a, b) => {
+                const dateA = new Date(a.uploadedAt).getTime();
+                const dateB = new Date(b.uploadedAt).getTime();
+    
+                return dateB - dateA; // Sort in descending order (latest first)
+            })
+            .shift(); // Get the first (latest) video
+    
         if (lastVideo) {
-            setVideo(lastVideo.filePath)
+            setVideo(lastVideo.filePath);
+        } else {
+            setVideo(null);
         }
-        else {
-            setVideo(null)
-        }
-    }
+    };
     const setLastImage = () => {
         const lastVideo = attachments.find((attachment) => attachment.attachmentType === 'image' && attachment.category === '3d');
         if (lastVideo) {
@@ -83,7 +91,7 @@ const MainScreen = () => {
 
                     <div className="max-w-[656px]">
                         <div className="flex justify-between items-center mb-2 px-4">
-                            <span className="block text-[16px] font-medium leading-normal text-secondary capitalize">Most recent video</span>
+                            <span className="block text-[16px] font-medium leading-normal text-secondary mb-2 capitalize">Most recent video</span>
                             <NavLink to="videos" className="block text-[14px] font-medium leading-normal text-secondary underline capitalize">see all</NavLink>
                         </div>
                         {video ?
