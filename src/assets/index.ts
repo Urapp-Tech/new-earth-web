@@ -37,6 +37,7 @@ import splash7 from './images/banner/ne-splash(7).png';
 import splash8 from './images/banner/ne-splash(8).png';
 import noFile from './images/banner/no-file.png';
 import noVideo from './images/banner/no-video.png';
+import blueprintNoFile from './images/banner/blueprint-noFile.png';
 import speechBubble from './images/speech-bubble.png';
 
 
@@ -82,6 +83,7 @@ const assets = {
     splash8,
     noFile,
     noVideo,
+    blueprintNoFile,
   },
 } as const;
 

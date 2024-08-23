@@ -5,7 +5,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
-import { Activity, ProjectPlan } from '@/interfaces/project-plans';
+import { ProjectPlan } from '@/interfaces/project-plans';
 
 type DialogProps = {
   open: boolean;
@@ -13,13 +13,20 @@ type DialogProps = {
   plan?: ProjectPlan;
 };
 
+const formatHeader = (key: string) => {
+  return key.replace(/([a-z])([A-Z])/g, '$1 $2');
+};
+
+const fixedColumns = ['stage', 'room', 'activity', 'progress', 'remarks'];
+
+
 const PlanDetailsDialog: React.FC<DialogProps> = ({ open, setOpen, plan }) => {
   const toggleModal = (val: boolean) => {
     setOpen(val);
   };
   return (
     <Dialog open={open} onOpenChange={toggleModal}>
-      <DialogContent className="sm:max-w-[425px] md:max-w-[825px] lg:max-w-[1125px]">
+      <DialogContent className="sm:max-w-[425px] md:max-w-[825px] lg:max-w-[1325px]">
         <DialogHeader>
           <DialogTitle>Day Activities</DialogTitle>
         </DialogHeader>
@@ -36,18 +43,37 @@ const PlanDetailsDialog: React.FC<DialogProps> = ({ open, setOpen, plan }) => {
           <table>
             <thead>
               <tr className="text-left">
-                <th className='p-5'>Stage</th>
-                <th className='p-5'>Room</th>
-                <th className='p-5'>Activity</th>
-                <th className='p-5'>Completed</th>
-                <th className='p-5'>Remarks</th>
-                <th>&nbsp;</th>
+                {/* Render fixed columns */}
+                {fixedColumns.map((col) => (
+                  <th className='p-5' key={col}>
+                    {formatHeader(col.charAt(0).toUpperCase() + col.slice(1))}
+                  </th>
+                ))}
+                {/* Render additional columns dynamically */}
+                {plan &&
+                  plan.data &&
+                  Object.keys(plan.data[0]).map((key) => {
+                    if (!fixedColumns.includes(key)) {
+                      return (
+                        <th className='p-5' key={key}>
+                          {formatHeader(
+                            key.charAt(0).toUpperCase() + key.slice(1)
+                          )}
+                        </th>
+                      );
+                    }
+                    return null;
+                  })}
               </tr>
             </thead>
             <tbody>
-              {plan &&
+            {plan &&
                 plan.data &&
-                plan.data.map((item: Activity, index: number) => {
+                plan.data.map((item: any, index: number) => {
+                  const additionalColumns = Object.keys(item).filter(
+                    (key) => !fixedColumns.includes(key)
+                  );
+
                   return (
                     <tr key={index}>
                       <td className=" px-5 py-1">{item.stage ? item.stage : '--'}</td>
@@ -55,23 +81,25 @@ const PlanDetailsDialog: React.FC<DialogProps> = ({ open, setOpen, plan }) => {
                       <td className=" px-5 py-1">
                         {item.activity
                           ? item.activity
-                            .split(',')
-                            .map((activity, activityIndex) => {
-                              return (
+                              .split(',')
+                              .map((activity: any, activityIndex: number) => (
                                 <span
                                   key={activityIndex}
                                   className="me-2 rounded-[15px] border border-grey bg-lightgrey px-2.5 py-0.5 text-xs font-medium text-secondary dark:bg-gray-700 dark:text-blue-300"
                                 >
                                   {activity}
                                 </span>
-                              );
-                            })
+                              ))
                           : '--'}
                       </td>
                       <td className=" px-5 py-1">
                         <Progress value={Number(item.progress)} className='dark:bg-primary' />
                       </td>
-                      <td className=" px-5 py-1">{item.remarks ? item.remarks : '--'}</td>
+                      <td>{item.remarks ? item.remarks : '--'}</td>
+                      {/* Render additional columns dynamically */}
+                      {additionalColumns.map((key: any) => (
+                        <td className=" px-5 py-1" key={key}>{item[key] ? item[key] : '--'}</td>
+                      ))}
                     </tr>
                   );
                 })}

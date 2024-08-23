@@ -69,7 +69,7 @@ const MainScreen = () => {
         }
     }
     const setLastDoc = () => {
-        const lastVideo = attachments.find((attachment) => attachment.attachmentType === 'document');
+        const lastVideo = attachments.find((attachment) => attachment.attachmentType === 'image' && attachment.category !== '3d');
         if (lastVideo) {
             setDoc(lastVideo.filePath)
         }
@@ -150,10 +150,10 @@ const MainScreen = () => {
                             </div>
                         </div>
                         <div className="my-[10px]">
-                            <NavLink to="/gallery">
+                            <NavLink to="/gallery/blueprints">
                                 <div className="flex gap-2 justify-center items-center mb-[15px]">
                                     <img src={assets.images.playIcon} alt="icons" className="w-[25px] h-[25px]" />
-                                    <span className="text-[14px] font-bold text-secondary leading-normal capitalize">project documentation</span>
+                                    <span className="text-[14px] font-bold text-secondary leading-normal capitalize">project blueprints</span>
                                     <a href="#">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="9" viewBox="0 0 10 9" fill="none">
                                             <path d="M1 8.5L9 0.5M9 0.5H1M9 0.5V8.5" stroke="#14242E" />
@@ -164,11 +164,9 @@ const MainScreen = () => {
                             <div className="h-[250px] text-center mx-auto">
                                 {
                                     doc ?
-                                        <a href={doc} target="_blank">
-                                            <img src={assets.images.doc} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
-                                        </a>
+                                        <img src={doc} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
                                         :
-                                        <img src={assets.images.noFile} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
+                                        <img src={assets.images.blueprintNoFile} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
                                 }
                             </div>
                         </div>

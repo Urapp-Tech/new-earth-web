@@ -2,7 +2,6 @@ import axiosInstance from "@/api/axiosInstance";
 import assets from "@/assets";
 import { toast } from "@/components/ui/use-toast";
 import { login } from "@/redux/features/authStateSlice";
-import { handleShowForgotModal } from "@/redux/features/forgotPasswordSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/redux-hooks";
 import promiseHandler from "@/utils/promise-handler";
 import { useState } from "react";
@@ -27,9 +26,6 @@ const LoginPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleShowPasswordModalState = (val: boolean) => {
-    dispatch(handleShowForgotModal(val));
-  };
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     if (!systemConfig?.tenant) {

@@ -5,6 +5,7 @@ import { fetchProjectPlans } from "@/redux/features/projectPlanSlice";
 import { fetchProjects, setSelectedProject } from "@/redux/features/projectSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/redux-hooks";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 
 
@@ -17,6 +18,8 @@ const GalleryScreen = () => {
     const fetchProjectsData = () => {
         dispatch(fetchProjects({}));
     }
+
+    const { tab='3d' } = useParams();
 
 
     useEffect(() => {
@@ -41,13 +44,13 @@ const GalleryScreen = () => {
                     Gallery
                 </div>
                 <div className="bg-white  rounded-[20px]">
-                    <Tabs defaultValue="account" className="w-full">
+                    <Tabs defaultValue={tab} className="w-full">
                         <TabsList className="w-full justify-start p-0">
-                            <TabsTrigger value="account" className="ne-tabs min-w-[184px] rounded-t-[20px] h-auto p-[12px]">3d renderers</TabsTrigger>
-                            <TabsTrigger value="password" className="ne-tabs min-w-[184px] rounded-t-[20px] h-auto  shadow-none p-[12px]">blueprints</TabsTrigger>
+                            <TabsTrigger value="3d" className="ne-tabs min-w-[184px] rounded-t-[20px] h-auto p-[12px]">3d renderers</TabsTrigger>
+                            <TabsTrigger value="blueprints" className="ne-tabs min-w-[184px] rounded-t-[20px] h-auto  shadow-none p-[12px]">blueprints</TabsTrigger>
                             <TabsTrigger value="report" className="ne-tabs min-w-[184px] rounded-t-[20px] h-auto  shadow-none p-[12px]">Approvals & Reports</TabsTrigger>
                         </TabsList>
-                        <TabsContent value="account" className="m-0">
+                        <TabsContent value="3d" className="m-0">
 
                             <div className="flex justify-start flex-wrap gap-[15px] p-5 ">
 
@@ -72,7 +75,7 @@ const GalleryScreen = () => {
                             </div>
 
                         </TabsContent>
-                        <TabsContent value="password" className="m-0">
+                        <TabsContent value="blueprints" className="m-0">
 
                             <div className="flex justify-start flex-wrap gap-[15px] p-5 ">
 

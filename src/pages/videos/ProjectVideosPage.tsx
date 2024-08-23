@@ -44,6 +44,7 @@ const ProjectVideosPage = () => {
                     <table>
                         <thead>
                             <tr className="text-left">
+                                <th className="w-[20%] p-5">&nbsp;</th>
                                 <th className="w-[30%] p-5">Project Day</th>
                                 <th className="w-[10%]  p-5">Title</th>
                                 <th className="w-[10%]  p-5">Description</th>
@@ -54,7 +55,13 @@ const ProjectVideosPage = () => {
                             {sortArrayByKey(attachments.filter(x=>x.attachmentType==="video"), 'day','asc').map((plan, index) => {
                                 
                                 return(
-                                <tr key={index} className="text-left">
+                                <tr key={index} className="text-left border-grey-100  border-[1px]">
+                                    <td className=" px-5 py-1">
+                                        <video className="h-[150px] w-[300px] rounded-[20px]" controls>
+                                             <source src={plan.filePath} type="video/mp4" />
+                                             Your browser does not support the video tag.
+                                        </video>
+                                    </td>
                                     <td className=" px-5 py-1">{plan.day}</td>
                                     <td className=" px-5 py-1">{plan.title}</td>
                                     <td className=" px-5 py-1">{plan.description}</td>

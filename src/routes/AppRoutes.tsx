@@ -24,7 +24,7 @@ export const routeObjects: RouteObject[] = [
                 element: <Suspense fallback={<Loader />}><MainScreen /></Suspense>,
             },
             {
-                path: 'gallery',
+                path: 'gallery/:tab?',
                 element: <Suspense fallback={<Loader />}><GalleryScreen /></Suspense>,
             },
             {
