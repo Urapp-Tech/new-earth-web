@@ -40,6 +40,7 @@ const PlanDetailsDialog: React.FC<DialogProps> = ({ open, setOpen, plan }) => {
             <b>Working Day: </b> {plan?.day ?? ''}
           </h3>
         </div>
+        <div className="relative overflow-x-auto">
           <table>
             <thead>
               <tr className="text-left">
@@ -78,7 +79,7 @@ const PlanDetailsDialog: React.FC<DialogProps> = ({ open, setOpen, plan }) => {
                     <tr key={index}>
                       <td className=" px-5 py-1">{item.stage ? item.stage : '--'}</td>
                       <td className=" px-5 py-1">{item.room ? item.room : '--'}</td>
-                      <td className=" px-5 py-1">
+                      <td className=" px-5 py-1  whitespace-nowrap ">
                         {item.activity
                           ? item.activity
                               .split(',')
@@ -105,6 +106,7 @@ const PlanDetailsDialog: React.FC<DialogProps> = ({ open, setOpen, plan }) => {
                 })}
             </tbody>
           </table>
+        </div>
         </div>
       </DialogContent>
     </Dialog>
