@@ -129,3 +129,4 @@ export const GENDER = [
 ];
 
 export const CURRENCY_SYMBOL = import.meta.env.VITE_CURRENCY_SYMBOL;
+export const CURRENCY = import.meta.env.VITE_CURRENCY;

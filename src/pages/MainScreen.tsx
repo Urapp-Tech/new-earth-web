@@ -10,6 +10,8 @@ import { fetchProjectAttachments } from "@/redux/features/projectAttachmentsSlic
 import { fetchProjectPlans } from "@/redux/features/projectPlanSlice"
 import { fetchProjects, setSelectedProject } from "@/redux/features/projectSlice"
 import { useAppDispatch, useAppSelector } from "@/redux/redux-hooks"
+import { CURRENCY } from "@/utils/constant"
+import { formatCurrency } from "@/utils/helpers"
 import { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
 
@@ -181,8 +183,8 @@ const MainScreen = () => {
                             Total investment plan
                         </div>
                         <div className="max-w-[250px] mb-2 text-[#EB5A00] text-[40px] leading-normal font-bold">
-                            {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.budget}.
-                            <span className="text-secondary opacity-[0.5]">00</span>
+                            { formatCurrency(selectedProjects?.budget ?? 0, CURRENCY ).split('.')[0] }.
+                            <span className="text-secondary opacity-[0.5]">{ formatCurrency(selectedProjects?.budget ?? 0, CURRENCY).split('.')[1] }</span>
                         </div>
                         <div className="flex gap-1 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -207,8 +209,8 @@ const MainScreen = () => {
 
                         </div>
                         <div className="max-w-[200px] mb-2 text-[#EB5A00] text-[24px] leading-normal font-bold">
-                            {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.totalPaid}.
-                            <span className="text-secondary opacity-[0.5]">00</span>
+                            { formatCurrency(selectedProjects?.totalPaid ?? 0, CURRENCY ).split('.')[0] }.
+                            <span className="text-secondary opacity-[0.5]">{ formatCurrency(selectedProjects?.totalPaid ?? 0, CURRENCY ).split('.')[1] }</span>
                         </div>
                         <div className="flex gap-2 items-center mt-4">
 
@@ -221,8 +223,8 @@ const MainScreen = () => {
 
                         </div>
                         <div className="max-w-[200px] mb-4 text-[#EB5A00] text-[24px] leading-normal font-bold">
-                            {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.dueAmount}.
-                            <span className="text-secondary opacity-[0.5]">00</span>
+                            { formatCurrency(selectedProjects?.dueAmount ?? 0, CURRENCY ).split('.')[0] }.
+                            <span className="text-secondary opacity-[0.5]">{ formatCurrency(selectedProjects?.dueAmount ?? 0, CURRENCY ).split('.')[1] }</span>
                         </div>
                     </div>
                 </div>
