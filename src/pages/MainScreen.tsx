@@ -48,11 +48,11 @@ const MainScreen = () => {
             .sort((a, b) => {
                 const dateA = new Date(a.uploadedAt).getTime();
                 const dateB = new Date(b.uploadedAt).getTime();
-    
+
                 return dateB - dateA; // Sort in descending order (latest first)
             })
             .shift(); // Get the first (latest) video
-    
+
         if (lastVideo) {
             setVideo(lastVideo.filePath);
         } else {
@@ -86,16 +86,16 @@ const MainScreen = () => {
 
     return (
         <>
-            <div className="flex gap-3  rounded-[40px]">
-                <div className="basis-[50%]">
+            <div className="flex gap-3  rounded-[40px] max-[1024px]:flex-col">
+                <div className="basis-[50%] max-[1024px]:basis-[100%]">
 
-                    <div className="max-w-[656px]">
+                    <div className="max-w-[656px] max-[1024px]:max-w-[90%] max-[1024px]:mx-auto max-[768px]:max-w-full">
                         <div className="flex justify-between items-center mb-2 px-4">
                             <span className="block text-[16px] font-medium leading-normal text-secondary mb-2 capitalize">Most recent video</span>
                             <NavLink to="videos" className="block text-[14px] font-medium leading-normal text-secondary underline capitalize">see all</NavLink>
                         </div>
                         {video ?
-                            <video className="w-full h-full rounded-[20px]" controls >
+                            <video className="w-full h-full rounded-[20px] max-h-[250px]" controls >
                                 <source src={video} type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
@@ -105,10 +105,10 @@ const MainScreen = () => {
                     </div>
 
                 </div>
-                <div className="basis-[50%]">
-                    <div className="mb-2 px-4">
+                <div className="basis-[50%] max-[1024px]:basis-[100%] max-[1024px]:px-5 max-[768px]:px-1">
+                    <div className="mb-2 px-4 max-[1024px]:max-w-[80%] max-[768px]:max-w-full">
 
-                        <span className="block text-[16px] font-medium leading-normal text-secondary capitalize mb-3">select project</span>
+                        <span className="block text-[16px] font-medium leading-normal text-secondary capitalize mb-3 max-[1024px]:mt-7">select project</span>
                         <Select value={selectedProjects?.id} onValueChange={(value) => dispatch(setSelectedProject(projects.find(x => x.id === value)))}>
                             <SelectTrigger className="ne-tabs w-full h-[60px] rounded-[36px] bg-white border-transparent focus:border-transparent focus:ring-0 border-0 border-none shadow-none">
                                 <SelectValue className="px-3" placeholder="Select Projects">
@@ -126,8 +126,8 @@ const MainScreen = () => {
                         </Select>
 
                     </div>
-                    <div className="flex justify-around items-center px-[5px]">
-                        <div className="my-[10px]">
+                    <div className="flex justify-around items-center px-[5px] gap-[15px] max-[1024px]:justify-start max-[1024px]:gap-[30px] max-[576px]:flex-col">
+                        <div className="my-[10px] max-[576px]:w-full">
                             <NavLink to="/gallery">
                                 <div className="flex gap-2 justify-center items-center mb-[15px]">
                                     <img src={assets.images.playIcon} alt="icons" className="w-[25px] h-[25px]" />
@@ -140,16 +140,16 @@ const MainScreen = () => {
 
                                 </div>
                             </NavLink>
-                            <div className=" text-center mx-auto h-[250px]">
+                            <div className=" text-center mx-auto h-[250px] max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
                                 {
                                     image ?
-                                        <img src={image} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
+                                        <img src={image} alt="3D-image" className="w-full h-full object-contain ne-box-shade max-[1260px]:object-cover" />
                                         :
-                                        <img src={assets.images.noFile} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
+                                        <img src={assets.images.noFile} alt="3D-image" className="w-full h-full object-contain ne-box-shade max-[1260px]:object-cover" />
                                 }
                             </div>
                         </div>
-                        <div className="my-[10px]">
+                        <div className="my-[10px] max-[576px]:w-full">
                             <NavLink to="/gallery/blueprints">
                                 <div className="flex gap-2 justify-center items-center mb-[15px]">
                                     <img src={assets.images.playIcon} alt="icons" className="w-[25px] h-[25px]" />
@@ -161,12 +161,12 @@ const MainScreen = () => {
                                     </a>
                                 </div>
                             </NavLink>
-                            <div className="h-[250px] text-center mx-auto">
+                            <div className="h-[250px] text-center mx-auto max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
                                 {
                                     doc ?
-                                        <img src={doc} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
+                                        <img src={doc} alt="3D-image" className="w-full h-full object-contain ne-box-shade max-[1260px]:object-cover" />
                                         :
-                                        <img src={assets.images.blueprintNoFile} alt="3D-image" className="w-full h-full object-contain ne-box-shade" />
+                                        <img src={assets.images.blueprintNoFile} alt="3D-image" className="w-full h-full object-contain ne-box-shade max-[1260px]:object-cover" />
                                 }
                             </div>
                         </div>
@@ -174,15 +174,15 @@ const MainScreen = () => {
                 </div>
             </div>
 
-            <div className="flex mt-4 min-h-[410px] ">
-                <div className="basis-[40%]">
+            <div className="flex mt-4 min-h-[420px] max-[1260px]:flex-col ">
+                <div className="basis-[40%] max-[1260px]:max-w-[600px] max-[1260px]:my-3">
                     <div className="bg-ban-two p-5">
                         <div className="max-w-[200px] py-2 text-secondary text-[24px] leading-normal font-medium">
                             Total investment plan
                         </div>
-                        <div className="max-w-[250px] mb-2 text-[#EB5A00] text-[40px] leading-normal font-bold">
+                        <div className="max-w-[250px] mb-2 text-[#EB5A00] text-[40px] leading-normal font-bold max-[480px]:text-[24px]">
                             {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.budget}.
-                            <span className="text-secondary opacity-[0.5]">00</span>
+                            <span className="text-secondary opacity-[0.5] break-all leading-4">00</span>
                         </div>
                         <div className="flex gap-1 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -201,7 +201,7 @@ const MainScreen = () => {
                         </div>
                         <div className="flex gap-1 items-center mt-4">
 
-                            <span className="text-[14px] font-medium leading-normal text-secondary capitalize ">
+                            <span className="text-[14px] font-medium leading-normal text-secondary capitalize break-all">
                                 Total paid
                             </span>
 
@@ -210,7 +210,7 @@ const MainScreen = () => {
                             {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.totalPaid}.
                             <span className="text-secondary opacity-[0.5]">00</span>
                         </div>
-                        <div className="flex gap-2 items-center mt-4">
+                        <div className="flex gap-2 items-center mt-4 max-[576px]:flex-col max-[576px]:items-start">
 
                             <span className="text-[14px] font-medium leading-normal text-secondary capitalize ">
                                 Due amount
@@ -222,14 +222,14 @@ const MainScreen = () => {
                         </div>
                         <div className="max-w-[200px] mb-4 text-[#EB5A00] text-[24px] leading-normal font-bold">
                             {import.meta.env.VITE_CURRENCY_SYMBOL} {selectedProjects?.dueAmount}.
-                            <span className="text-secondary opacity-[0.5]">00</span>
+                            <span className="text-secondary opacity-[0.5] break-all">00</span>
                         </div>
                     </div>
                 </div>
-                <div className="basis-[60%] px-4 py-2">
-                    <div className="flex justify-between items-center gap-4">
-                        <div className="flex-1 bg-ban-three min-h-[400px] p-6 ">
-                            <div className="flex justify-between items-center">
+                <div className="basis-[60%] px-4 py-2 max-[1260px]:my-2">
+                    <div className="flex justify-between items-center gap-4 max-[768px]:flex-col max-[767px]:items-start">
+                        <div className="flex-1 bg-ban-three min-h-[400px] p-6 max-[768px]:min-h-[350px] max-[768px]:w-[80%] max-[576px]:w-full">
+                            <div className="flex justify-between items-center max-[768px]:flex-col max-[768px]:items-start">
                                 <div className=" text-[24px] font-medium leading-normal text-white">
                                     Project Plan
                                 </div>
@@ -237,14 +237,14 @@ const MainScreen = () => {
                             </div>
 
                         </div>
-                        <div className="flex-1 bg-white min-h-[400px] p-6 rounded-[50px]">
-                            <div className="flex justify-between items-center">
+                        <div className="flex-1 bg-white min-h-[400px] p-6 rounded-[50px] max-[768px]:min-h-[350px] max-[768px]:w-[80%] max-[576px]:w-full max-[576px]:p-3">
+                            <div className="flex justify-between items-center max-[768px]:flex-col max-[768px]:items-start">
                                 <div className=" text-[24px] font-medium leading-normal text-secondary mb-2">
                                     Milestones
                                 </div>
                                 <a href="#" className="block text-[16px] font-medium leading-normal text-secondary underline capitalize">view details</a>
                             </div>
-                            <div className="w-[269px] h-[59px] border-2 border-primary rounded-[50px] my-3">
+                            <div className="w-[269px] h-[59px] border-2 border-primary rounded-[50px] my-3 max-[480px]:w-full">
                                 <div className="block w-[70%] h-full bg-primary rounded-[50px]">
                                     <span className="block text-white   w-[120px]  text-[16px] font-bold px-5 leading-normal py-2">
                                         Demolition
@@ -252,7 +252,7 @@ const MainScreen = () => {
 
                                 </div>
                             </div>
-                            <div className="w-[269px] h-[59px] border-2 border-primary rounded-[50px] my-3">
+                            <div className="w-[269px] h-[59px] border-2 border-primary rounded-[50px] my-3 max-[480px]:w-full">
                                 <div className="block w-[90%] h-full bg-primary rounded-[50px]">
                                     <span className="block text-white   w-[120px]  text-[16px] font-bold px-5 leading-normal py-2">
                                         Construction
@@ -260,7 +260,7 @@ const MainScreen = () => {
 
                                 </div>
                             </div>
-                            <div className="w-[269px] h-[59px] border-2 border-primary rounded-[50px] my-3">
+                            <div className="w-[269px] h-[59px] border-2 border-primary rounded-[50px] my-3 max-[480px]:w-full">
                                 <div className="block w-[50%] h-full bg-primary rounded-[50px]">
                                     <span className="block text-white   w-[120px]  text-[16px] font-bold px-5 leading-normal py-2">
                                         Finishing
