@@ -31,11 +31,14 @@ const ProjectPlansPage = () => {
         if (projects.length > 0 && !selectedProjects) {
             dispatch(setSelectedProject(projects[0]))
         }
+    }, [projects,])
+
+    useEffect(() => {
         if (selectedProjects) {
 
             dispatch(fetchProjectPlans({ project_id: selectedProjects.id }))
         }
-    }, [projects, selectedProjects, dispatch])
+    }, [ selectedProjects, dispatch])
 
     const handleProjectPlanSelection = (plan: ProjectPlan) => {
         setProjectPlan(plan);
