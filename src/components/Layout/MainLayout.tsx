@@ -18,7 +18,7 @@ const MainLayout = () => {
             <TopBar />
             <div className="flex justify-between items-start h-full">
                 <Sidebar />
-                <div className="w-[90%] px-2 py-2">
+                <div className="w-[90%] px-2 py-2 max-[768px]:w-[85%] max-[576px]:w-full max-[576px]:px-2">
                     <Outlet />
 
                 </div >
