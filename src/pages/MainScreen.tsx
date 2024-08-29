@@ -182,9 +182,9 @@ const MainScreen = () => {
                         <div className="max-w-[200px] py-2 text-secondary text-[24px] leading-normal font-medium">
                             Total investment plan
                         </div>
-                        <div className="max-w-[250px] mb-2 text-[#EB5A00] text-[40px] leading-normal font-bold max-[480px]:text-[24px]">
-                            { formatCurrency(selectedProjects?.budget ?? 0, CURRENCY ).split('.')[0] }.
-                            <span className="text-secondary opacity-[0.5] break-all leading-4">{ formatCurrency(selectedProjects?.budget ?? 0, CURRENCY).split('.')[1] }</span>
+                        <div className="mb-2 text-[#EB5A00] text-[40px] leading-normal font-bold max-[480px]:text-[24px]">
+                            {formatCurrency(selectedProjects?.budget ?? 0, CURRENCY).split('.')[0]}.
+                            <span className="text-secondary opacity-[0.5] break-all leading-4">{formatCurrency(selectedProjects?.budget ?? 0, CURRENCY).split('.')[1]}</span>
                         </div>
                         <div className="flex gap-1 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -209,8 +209,8 @@ const MainScreen = () => {
 
                         </div>
                         <div className="max-w-[200px] mb-2 text-[#EB5A00] text-[24px] leading-normal font-bold">
-                            { formatCurrency(selectedProjects?.totalPaid ?? 0, CURRENCY ).split('.')[0] }.
-                            <span className="text-secondary opacity-[0.5]">{ formatCurrency(selectedProjects?.totalPaid ?? 0, CURRENCY ).split('.')[1] }</span>
+                            {formatCurrency(selectedProjects?.totalPaid ?? 0, CURRENCY).split('.')[0]}.
+                            <span className="text-secondary opacity-[0.5]">{formatCurrency(selectedProjects?.totalPaid ?? 0, CURRENCY).split('.')[1]}</span>
                         </div>
                         <div className="flex gap-2 items-center mt-4 max-[576px]:flex-col max-[576px]:items-start">
 
@@ -227,7 +227,7 @@ const MainScreen = () => {
                             <span className="text-secondary opacity-[0.5] break-all">{ formatCurrency(selectedProjects?.dueAmount ?? 0, CURRENCY ).split('.')[1] }</span>
                         </div>
                     </div>
-                </div>
+                </div >
                 <div className="basis-[60%] px-4 py-2 max-[1260px]:my-2">
                     <div className="flex justify-between items-center gap-4 max-[768px]:flex-col max-[767px]:items-start">
                         <div className="flex-1 bg-ban-three min-h-[400px] p-6 max-[768px]:min-h-[350px] max-[768px]:w-[80%] max-[576px]:w-full">
@@ -274,7 +274,7 @@ const MainScreen = () => {
                     </div>
 
                 </div>
-            </div></>
+            </div ></>
     )
 }
 
