@@ -2,6 +2,10 @@ import { ThemeColor } from '../types/app.types';
 
 export function getDomainName() {
   const domain = window.location.hostname;
+  const domainArr = domain.split('.');
+  if (domainArr.length > 1) {
+    return domain.split('.')[1];
+  }
   return domain.split('.')[0];
 }
 
