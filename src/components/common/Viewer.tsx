@@ -1,14 +1,11 @@
-import { useState } from 'react';
 import ImageViewer from 'react-simple-image-viewer';
 function ViewApp({ isViewerOpen, images, currentImage, setCurrentImage, setIsViewerOpen }: any) {
-    console.log("🚀 ~ ViewApp ~ images:", images)
 
     const closeImageViewer: any = () => {
         setCurrentImage(0);
         setIsViewerOpen(false);
     };
 
-    const [img, setImgs] = useState<any>([]);
 
     return (
         <div>
