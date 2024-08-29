@@ -1,10 +1,9 @@
 import assets from "@/assets";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchProjectAttachments } from "@/redux/features/projectAttachmentsSlice";
-import { fetchProjectPlans } from "@/redux/features/projectPlanSlice";
 import { fetchProjects, setSelectedProject } from "@/redux/features/projectSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/redux-hooks";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 
@@ -24,18 +23,19 @@ const GalleryScreen = () => {
 
     useEffect(() => {
         fetchProjectsData();
-    }, [dispatch])
+    }, [])
 
     useEffect(() => {
         if (projects.length > 0 && !selectedProjects) {
             dispatch(setSelectedProject(projects[0]))
         }
-        if (selectedProjects) {
+    }, [projects])
 
-            dispatch(fetchProjectPlans({ project_id: selectedProjects.id }))
+    useEffect(() => {
+        if (selectedProjects) {
             dispatch(fetchProjectAttachments({ project_id: selectedProjects.id }))
         }
-    }, [projects, selectedProjects, dispatch])
+    }, [selectedProjects])
 
     return (
         <>
@@ -130,4 +130,4 @@ const GalleryScreen = () => {
     )
 }
 
-export default GalleryScreen
+export default memo(GalleryScreen);

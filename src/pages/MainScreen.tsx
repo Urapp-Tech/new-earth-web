@@ -7,7 +7,6 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { fetchProjectAttachments } from "@/redux/features/projectAttachmentsSlice"
-import { fetchProjectPlans } from "@/redux/features/projectPlanSlice"
 import { fetchProjects, setSelectedProject } from "@/redux/features/projectSlice"
 import { useAppDispatch, useAppSelector } from "@/redux/redux-hooks"
 import { CURRENCY } from "@/utils/constant"
@@ -36,12 +35,13 @@ const MainScreen = () => {
         if (projects.length > 0 && !selectedProjects) {
             dispatch(setSelectedProject(projects[0]))
         }
-        if (selectedProjects) {
+    }, [projects])
 
-            dispatch(fetchProjectPlans({ project_id: selectedProjects.id }))
+    useEffect(() => {
+        if (selectedProjects) {
             dispatch(fetchProjectAttachments({ project_id: selectedProjects.id }))
         }
-    }, [projects, selectedProjects, dispatch])
+    }, [selectedProjects])
 
 
     const setLastVideo = () => {

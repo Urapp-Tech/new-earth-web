@@ -11,13 +11,13 @@ import { setTenant, setTenantConfig } from "./redux/features/deviceState";
 import appService from "./services/app.service";
 import { setSystemConfig } from "./redux/features/appStateSlice";
 
+function RouterOutlet() {
+  const routing = useRoutes(routeObjects);
+
+  return routing;
+}
 
 function App() {
-  function RouterOutlet() {
-    const routing = useRoutes(routeObjects);
-
-    return routing;
-  }
 
   const persistedDeviceData = useAppSelector(
     (state) => state.deviceStates.deviceData
