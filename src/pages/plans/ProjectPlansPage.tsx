@@ -44,8 +44,8 @@ const ProjectPlansPage = () => {
 
     return (
         <>
-            <div className=" p-2">
-                <div className="text-[28px] text-secondary mb-5">
+            <div className=" p-2 max-[1024px]:px-[40px] max-[768px]:p-0">
+                <div className="text-[28px] text-secondary mb-5 max-[576px]:text-center">
                     Plans
                 </div>
                 <div className="bg-white  rounded-[20px]">
@@ -71,8 +71,8 @@ const ProjectPlansPage = () => {
                                 return (
                                     <tr key={index} className="text-left border-grey-100 border-[1px]">
                                         <td className=" px-5 py-1">{plan.day}</td>
-                                        <td className=" px-5 py-1">{count}</td>
-                                        <td className=" px-5 py-1">
+                                        <td className=" px-5 py-1 ">{count}</td>
+                                        <td className=" px-2 py-1">
                                             <Button onClick={() => handleProjectPlanSelection(plan)} className="bg-transparent  my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips bg-[#F5F5F5] text-primary hover:bg-primary hover:text-white" >
                                                 <EyeIcon />
                                             </Button>

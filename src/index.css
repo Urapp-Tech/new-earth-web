@@ -89,3 +89,33 @@ body {
   border-radius: 30px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
+
+.EZDrawer .EZDrawer__container {
+  width: 120px !important;
+  @apply bg-lightgrey !important;
+}
+
+.tabs--head::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+.tabs--head::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+.tabs--head::-webkit-scrollbar-thumb {
+  background: #F47F4A;
+  border-radius: 7px;
+}
+
+/* Handle on hover */
+
+
+@media screen and (min-width: 768px) {
+  .side-draw {
+    display: none !important;
+  }
+}
