@@ -8,6 +8,7 @@
     "dev:development": "vite --mode development --port 3020 --host",
     "dev:development-local": "vite --mode development-local --port 3020 --host",
     "dev:production": "vite --mode production --port 3020 --host",
+    "dev:staging": "vite --mode staging --port 3020 --host",
     "build": "tsc && vite build",
     "build:production": "tsc && vite build --mode production",
     "build:staging": "tsc && vite build --mode staging",
