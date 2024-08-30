@@ -70,7 +70,7 @@ const Sidebar = () => {
                     direction='left'
                     className='bg-lightgrey '
                 >
-                    <div className='py-[20px] flex flex-col gap-[40px] bg-[#6d6d6d] px-[20px] '>
+                    <div className='py-[20px] flex flex-col gap-[40px] bg-[#6d6d6d] px-[20px] h-full'>
 
                         <div className="basis-[60%] mx-auto">
                             <div className="max-h-[380px] w-[80px] bg-grey rounded-[45px] text-center">

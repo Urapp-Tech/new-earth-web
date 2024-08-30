@@ -97,12 +97,12 @@ const MainScreen = () => {
                             <NavLink to="videos" className="block text-[14px] font-medium leading-normal text-secondary underline capitalize">see all</NavLink>
                         </div>
                         {video ?
-                            <video className="w-full h-full rounded-[20px] max-h-[250px]" controls >
+                            <video className="w-full h-full rounded-[20px] max-h-[350px]" controls >
                                 <source src={video} type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
                             :
-                            <img src={assets.images.noVideo} alt="video" className="w-full h-[400px] object-cover" />
+                            <img src={assets.images.noVideo} alt="video" className="w-full h-[350px] object-cover" />
                         }
                     </div>
 
