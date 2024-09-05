@@ -12,6 +12,8 @@ const MainScreen = lazy(() => import('@/pages/MainScreen'));
 const GalleryScreen = lazy(() => import('@/pages/GalleryScreen'));
 const ProjectPlansPage = lazy(() => import('@/pages/plans/ProjectPlansPage'));
 const ProjectVideosPage = lazy(() => import('@/pages/videos/ProjectVideosPage'));
+const QuotationsPage = lazy(() => import('@/pages/quotation/QuotationsPage'));
+const QuotationsDetailsPage = lazy(() => import('@/pages/quotation/QuotationsDetailsPage'));
 
 
 export const routeObjects: RouteObject[] = [
@@ -34,6 +36,28 @@ export const routeObjects: RouteObject[] = [
             {
                 path: 'videos',
                 element: <Suspense fallback={<Loader />}><ProjectVideosPage /></Suspense>,
+            },
+            {
+                path: 'quotations',
+                children: [
+                  {
+                    path: '',
+                    element: (
+                      <Suspense fallback={<Loader />}>
+                        <QuotationsPage />
+                      </Suspense>
+                    ),
+                    index: true,
+                  },
+                  {
+                    path: ':id',
+                    element: (
+                      <Suspense fallback={<Loader />}>
+                        <QuotationsDetailsPage />
+                      </Suspense>
+                    ),
+                  },
+                ]
             },
         ],
     },

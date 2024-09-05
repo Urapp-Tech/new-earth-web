@@ -7,6 +7,7 @@ import authModalSliceReducer from './features/authModalSlice';
 import projectSliceReducer from './features/projectSlice';
 import projectPlanSlice from './features/projectPlanSlice';
 import projectAttachmentsSlice from './features/projectAttachmentsSlice';
+import quotationSlice from './features/quotationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     projectState: projectSliceReducer,
     projectPlanState: projectPlanSlice,
     projectAttachmentsState: projectAttachmentsSlice,
+    quotationState: quotationSlice,
   },
 });
 

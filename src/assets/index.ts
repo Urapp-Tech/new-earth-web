@@ -39,6 +39,7 @@ import noFile from './images/banner/no-file.png';
 import noVideo from './images/banner/no-video.png';
 import blueprintNoFile from './images/banner/blueprint-noFile.png';
 import speechBubble from './images/speech-bubble.png';
+import supplier from './images/icons/supply.png';
 
 
 const assets = {
@@ -84,6 +85,7 @@ const assets = {
     noFile,
     noVideo,
     blueprintNoFile,
+    supplier,
   },
 } as const;
 

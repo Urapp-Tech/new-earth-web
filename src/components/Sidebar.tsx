@@ -40,9 +40,11 @@ const Sidebar = () => {
                                 <img src={assets.images.clipboardIcon} alt="icon" className="w-[24px]" />
                             </Button>
                         </NavLink>
-                        <Button className="bg-transparent my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips hover:bg-primary">
-                            <img src={assets.images.startegyIcon} alt="icon" className="w-[24px]" />
-                        </Button>
+                        <NavLink to="/quotations">
+                            <Button className="bg-transparent my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips hover:bg-primary">
+                                <img src={assets.images.supplier} alt="icon" className="w-[24px]" />
+                            </Button>
+                        </NavLink>
                         <Button className="bg-transparent my-[10px] rounded-[28px] w-[56px] h-[56px] btn-flips hover:bg-primary">
                             <img src={assets.images.busnessIcon} alt="icon" className="w-[24px]" />
                         </Button>
