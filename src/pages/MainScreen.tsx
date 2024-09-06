@@ -97,7 +97,7 @@ const MainScreen = () => {
                             <NavLink to="videos" className="block text-[14px] font-medium leading-normal text-secondary underline capitalize">see all</NavLink>
                         </div>
                         {video ?
-                            <video className="w-full h-full rounded-[20px] max-h-[350px]" controls >
+                            <video className="w-full h-full rounded-[20px] max-h-[350px] object-cover" controls >
                                 <source src={video} type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
@@ -142,12 +142,12 @@ const MainScreen = () => {
 
                                 </div>
                             </NavLink>
-                            <div className=" text-center mx-auto h-[250px] max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
+                            <div className=" text-center mx-auto max-w-[300px] h-[250px] max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
                                 {
                                     image ?
-                                        <img src={image} alt="3D-image" className="w-full h-full object-contain ne-box-shade max-[1260px]:object-cover" />
+                                        <img src={image} alt="3D-image" className="w-full h-full object-contain ne-box-shade p-2" />
                                         :
-                                        <img src={assets.images.noFile} alt="3D-image" className="w-full h-full object-contain ne-box-shade max-[1260px]:object-cover" />
+                                        <img src={assets.images.noFile} alt="3D-image" className="w-full h-full object-contain ne-box-shade " />
                                 }
                             </div>
                         </div>
@@ -163,12 +163,12 @@ const MainScreen = () => {
                                     </a>
                                 </div>
                             </NavLink>
-                            <div className="h-[250px] text-center mx-auto max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
+                            <div className="h-[250px] text-center mx-auto max-w-[300px] max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
                                 {
                                     doc ?
-                                        <img src={doc} alt="3D-image" className="w-full h-full object-contain ne-box-shade max-[1260px]:object-cover" />
+                                        <img src={doc} alt="3D-image" className="w-full h-full object-contain ne-box-shade p-2" />
                                         :
-                                        <img src={assets.images.blueprintNoFile} alt="3D-image" className="w-full h-full object-contain ne-box-shade max-[1260px]:object-cover" />
+                                        <img src={assets.images.blueprintNoFile} alt="3D-image" className="w-full h-full object-contain ne-box-shade " />
                                 }
                             </div>
                         </div>
@@ -223,8 +223,8 @@ const MainScreen = () => {
 
                         </div>
                         <div className="max-w-[200px] mb-4 text-[#EB5A00] text-[24px] leading-normal font-bold">
-                            { formatCurrency(selectedProjects?.dueAmount ?? 0, CURRENCY ).split('.')[0] }.
-                            <span className="text-secondary opacity-[0.5] break-all">{ formatCurrency(selectedProjects?.dueAmount ?? 0, CURRENCY ).split('.')[1] }</span>
+                            {formatCurrency(selectedProjects?.dueAmount ?? 0, CURRENCY).split('.')[0]}.
+                            <span className="text-secondary opacity-[0.5] break-all">{formatCurrency(selectedProjects?.dueAmount ?? 0, CURRENCY).split('.')[1]}</span>
                         </div>
                     </div>
                 </div >
