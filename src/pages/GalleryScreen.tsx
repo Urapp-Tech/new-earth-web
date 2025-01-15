@@ -1,165 +1,215 @@
-import assets from "@/assets";
-import ViewApp from "@/components/common/Viewer";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ProjectAttachment } from "@/interfaces/project-attachments";
-import { fetchProjectAttachments } from "@/redux/features/projectAttachmentsSlice";
-import { fetchProjects, setSelectedProject } from "@/redux/features/projectSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/redux-hooks";
-import { useCallback, memo, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
-
+import assets from '@/assets';
+import ViewApp from '@/components/common/Viewer';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ProjectAttachment } from '@/interfaces/project-attachments';
+import { fetchProjectAttachments } from '@/redux/features/projectAttachmentsSlice';
+import { FileText } from 'lucide-react';
+import {
+  fetchProjects,
+  setSelectedProject,
+} from '@/redux/features/projectSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
+import { useCallback, memo, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 const GalleryScreen = () => {
+  const dispatch = useAppDispatch();
+  const [currentImage, setCurrentImage] = useState(0);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [allImages, setAllImages] = useState<ProjectAttachment[]>([]);
 
-    const dispatch = useAppDispatch();
-    const [currentImage, setCurrentImage] = useState(0);
-    const [isViewerOpen, setIsViewerOpen] = useState(false);
-    const [allImages, setAllImages] = useState<ProjectAttachment[]>([]);
+  const { projects, selectedProjects } = useAppSelector((s) => s.projectState);
+  const { attachments } = useAppSelector((s) => s.projectAttachmentsState);
+  const fetchProjectsData = () => {
+    dispatch(fetchProjects({}));
+  };
 
-    const { projects, selectedProjects } = useAppSelector(s => s.projectState);
-    const { attachments } = useAppSelector(s => s.projectAttachmentsState);
-    const fetchProjectsData = () => {
-        dispatch(fetchProjects({}));
+  const { tab = 'ImagesandVideos' } = useParams();
+
+  useEffect(() => {
+    fetchProjectsData();
+  }, []);
+
+  useEffect(() => {
+    if (projects.length > 0 && !selectedProjects) {
+      dispatch(setSelectedProject(projects[0]));
     }
+  }, [projects]);
 
-    const { tab = '3d' } = useParams();
+  useEffect(() => {
+    if (selectedProjects) {
+      dispatch(fetchProjectAttachments({ project_id: selectedProjects.id }));
+    }
+  }, [selectedProjects]);
 
+  //   const openImageViewer = useCallback((index: number, type = '3d') => {
+  //     if (type === '3d') {
+  //       setAllImages(
+  //         attachments.filter(
+  //           (a) => a.attachmentType === 'image' && a.category === '3d'
+  //         )
+  //       );
+  //     } else if ('blue') {
+  //       setAllImages(
+  //         attachments.filter(
+  //           (a) => a.attachmentType === 'image' && a.category !== '3d'
+  //         )
+  //       );
+  //     }
+  //     setCurrentImage(index);
 
-    useEffect(() => {
-        fetchProjectsData();
-    }, [])
+  //     setIsViewerOpen(true);
+  //   }, []);
 
-    useEffect(() => {
-        if (projects.length > 0 && !selectedProjects) {
-            dispatch(setSelectedProject(projects[0]))
-        }
-    }, [projects])
+  return (
+    <>
+      <div className=" p-2 max-[1024px]:px-[40px] max-[768px]:p-0">
+        {isViewerOpen && (
+          <ViewApp
+            isViewerOpen={isViewerOpen}
+            setIsViewerOpen={setIsViewerOpen}
+            setCurrentImage={setCurrentImage}
+            currentImage={currentImage}
+            images={allImages}
+          />
+        )}
+        <div className="mb-5 text-[28px] text-secondary max-[576px]:text-center">
+          Media Gallery
+        </div>
+        <div className="rounded-[20px]  bg-white">
+          <Tabs defaultValue={tab} className="w-full ">
+            <div className="tabs--head max-[576px]:overflow-y-hidden max-[490px]:overflow-x-scroll">
+              <TabsList className="w-full justify-start p-0 max-[490px]:w-[580px]">
+                <TabsTrigger
+                  value="ImagesandVideos"
+                  className="ne-tabs h-auto min-w-[184px] rounded-t-[20px] p-[12px] max-[768px]:min-w-[148px] max-[576px]:text-[16px]"
+                >
+                  Images and Videos
+                </TabsTrigger>
+                <TabsTrigger
+                  value="3drendersandblueprints"
+                  className="ne-tabs h-auto min-w-[184px] rounded-t-[20px]  p-[12px] shadow-none max-[768px]:min-w-[148px] max-[576px]:text-[16px]"
+                >
+                  3d-renders and blueprints
+                </TabsTrigger>
+                {/* <TabsTrigger
+                  value="OtherDocs"
+                  className="ne-tabs h-auto min-w-[184px] rounded-t-[20px]  p-[12px] shadow-none max-[768px]:min-w-[148px] max-[576px]:text-[16px]"
+                >
+                  Other Docs
+                </TabsTrigger> */}
+              </TabsList>
+            </div>
 
-    useEffect(() => {
-        if (selectedProjects) {
-            dispatch(fetchProjectAttachments({ project_id: selectedProjects.id }))
-        }
-    }, [selectedProjects])
-
-    const openImageViewer = useCallback((index: number, type = "3d") => {
-        if (type === "3d") {
-            setAllImages(attachments.filter(a => a.attachmentType === "image" && a.category === "3d"));
-        }
-        else if ('blue') {
-            setAllImages(attachments.filter(a => a.attachmentType === "image" && a.category !== "3d"));
-
-        }
-        setCurrentImage(index);
-
-        setIsViewerOpen(true);
-    }, []);
-
-
-
-    return (
-        <>
-            <div className=" p-2 max-[1024px]:px-[40px] max-[768px]:p-0">
-                {isViewerOpen &&
-                    <ViewApp
-                        isViewerOpen={isViewerOpen}
-                        setIsViewerOpen={setIsViewerOpen}
-                        setCurrentImage={setCurrentImage}
-                        currentImage={currentImage}
-                        images={allImages}
-                    />
-                }
-                <div className="text-[28px] text-secondary mb-5 max-[576px]:text-center">
-                    Gallery
-                </div>
-                <div className="bg-white  rounded-[20px]">
-                    <Tabs defaultValue={tab} className="w-full ">
-                        <div className="max-[576px]:overflow-y-hidden max-[490px]:overflow-x-scroll tabs--head">
-                            <TabsList className="w-full justify-start p-0 max-[490px]:w-[580px]">
-                                <TabsTrigger value="3d" className="ne-tabs min-w-[184px] rounded-t-[20px] h-auto p-[12px] max-[768px]:min-w-[148px] max-[576px]:text-[16px]">3d renderers</TabsTrigger>
-                                <TabsTrigger value="blueprints" className="ne-tabs min-w-[184px] rounded-t-[20px] h-auto  shadow-none p-[12px] max-[768px]:min-w-[148px] max-[576px]:text-[16px]">blueprints</TabsTrigger>
-                                <TabsTrigger value="report" className="ne-tabs min-w-[184px] rounded-t-[20px] h-auto  shadow-none p-[12px] max-[768px]:min-w-[148px] max-[576px]:text-[16px]">Approvals & Reports</TabsTrigger>
-                            </TabsList>
+            <TabsContent value="ImagesandVideos" className="m-0">
+              <div className="flex flex-wrap justify-start gap-[15px] p-5 ">
+                {attachments
+                  .filter(
+                    (a) =>
+                      a.attachmentType === 'image' ||
+                      a.attachmentType === 'video'
+                  )
+                  .map((image, i) => {
+                    return (
+                      <div key={i} className="my-4 basis-[20%]">
+                        <div className="mx-auto mb-3 h-[210px] w-[210px] cursor-pointer rounded-[20px] border-[1px] border-[#e3e3e3]">
+                          {image.attachmentType === 'video' && (
+                            <a href={image.filePath} rel="noopener noreferrer">
+                              <video
+                                className="h-full max-h-[250px] w-full max-w-[250px] rounded-[20px] object-cover"
+                                controls
+                              >
+                                <source src={image.filePath} type="video/mp4" />
+                                Your browser does not support the video tag.
+                              </video>
+                            </a>
+                          )}
+                          {image.attachmentType === 'image' && (
+                            <a href={image.filePath} rel="noopener noreferrer">
+                              <img
+                                src={image.filePath}
+                                alt="model"
+                                className="h-full  w-full rounded-[20px] object-contain"
+                              />
+                            </a>
+                          )}
                         </div>
 
-                        <TabsContent value="3d" className="m-0">
+                        <h5 className="my-2 text-center text-[16px] opacity-[0.5]">
+                          {image.title}
+                        </h5>
+                        <h6 className="text-center">{image.day}</h6>
+                      </div>
+                    );
+                  })}
+              </div>
+            </TabsContent>
+            <TabsContent value="3drendersandblueprints" className="m-0">
+              <div className="flex flex-wrap justify-start gap-[15px] p-5 ">
+                {attachments
+                  .filter(
+                    (a) =>
+                      a.attachmentType === 'document' &&
+                      (a.category === '3d' || a.category === 'Blueprint')
+                  )
+                  .map((image, i) => {
+                    return (
+                      <div key={i} className="my-4 basis-[20%]">
+                        <div className="mx-auto mb-3 h-[210px] w-[210px] cursor-pointer rounded-[20px] border-[1px] border-[#e3e3e3]">
+                          <div className="flex h-full items-center justify-center">
+                            <a href={image.filePath} rel="noopener noreferrer">
+                              <FileText size={150} />
+                            </a>
+                          </div>
+                          {/* <img
+                            src={image.filePath}
+                            alt="model"
+                            className="h-full  w-full rounded-[20px] object-contain"
+                          /> */}
+                        </div>
 
-                            <div className="flex justify-start flex-wrap gap-[15px] p-5 ">
-
-                                {attachments.filter(a => a.attachmentType === "image" && a.category === "3d").map((image, i) => {
-                                    return (
-                                        <div onClick={() => openImageViewer(i, "3d")} key={i} className="basis-[20%] my-4 ">
-                                            <div className="w-[210px] h-[210px] mb-3 rounded-[20px] border-[#e3e3e3] border-[1px] mx-auto cursor-pointer">
-                                                <img src={image.filePath} alt="model" className="rounded-[20px]  object-contain w-full h-full" />
-                                            </div>
-
-                                            <h5 className="text-center my-2 opacity-[0.5] text-[16px]">
-                                                {image.title}
-
-                                            </h5>
-                                            <h6 className="text-center">
-                                                {image.day}
-                                            </h6>
-                                        </div>
-                                    )
-                                })}
-
-                            </div>
-
-                        </TabsContent>
-                        <TabsContent value="blueprints" className="m-0">
-
-                            <div className="flex justify-start flex-wrap gap-[15px] p-5 ">
-
-                                {attachments.filter(a => a.attachmentType === "image" && a.category !== "3d").map((image, i) => {
-                                    return (
-                                        <div key={i} onClick={() => openImageViewer(i, "blue")} className="basis-[20%] my-4">
-                                            <div className="w-[210px] h-[210px] mb-3 rounded-[20px] border-[#e3e3e3] border-[1px] mx-auto cursor-pointer">
-                                                <img src={image.filePath} alt="model" className="rounded-[20px]  object-contain w-full h-full" />
-                                            </div>
-
-                                            <h5 className="text-center my-2 opacity-[0.5] text-[16px]">
-                                                {image.title}
-
-                                            </h5>
-                                            <h6 className="text-center">
-                                                {image.day}
-                                            </h6>
-                                        </div>
-                                    )
-                                })}
-
-                            </div>
-                        </TabsContent>
-                        <TabsContent value="report" className="m-0">
-
-                            <div className="flex justify-start flex-wrap gap-[15px] p-5  min-h-[400px] mb-3">
-                                {attachments.filter(a => a.attachmentType === "document").map((doc, i) => {
-                                    return (
-                                        <div key={i} className="basis-[20%] my-4">
-                                            <a href={doc.filePath} target="_blank">
-                                                <div className="w-[210px] h-[210px] mb-3 rounded-[20px] border-[#e3e3e3] border-[1px] mx-auto cursor-pointer">
-                                                    <img src={assets.images.doc} alt="model" className="rounded-[20px]  object-contain w-full h-full" />
-                                                </div>
-                                                <h5 className="text-center my-2 opacity-[0.5] text-[16px]">
-                                                    {doc.title}
-
-                                                </h5>
-                                                <h6 className="text-center">
-                                                    {doc.day}
-                                                </h6>
-                                            </a>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        </TabsContent>
-                    </Tabs>
-
-                </div>
-            </div>
-        </>
-    )
-}
+                        <h5 className="text-center text-[16px] opacity-[0.5]">
+                          {image.title}
+                        </h5>
+                        <h6 className="text-center text-sm">
+                          {dayjs(image.uploadedAt).format('YYYY-MM-DD')}
+                        </h6>
+                      </div>
+                    );
+                  })}
+              </div>
+            </TabsContent>
+            {/* <TabsContent value="OtherDocs" className="m-0">
+              <div className="mb-3 flex min-h-[400px] flex-wrap justify-start  gap-[15px] p-5">
+                {attachments
+                  .filter((a) => a.attachmentType === 'document')
+                  .map((doc, i) => {
+                    return (
+                      <div key={i} className="my-4 basis-[20%]">
+                        <a href={doc.filePath} target="_blank">
+                          <div className="mx-auto mb-3 h-[210px] w-[210px] cursor-pointer rounded-[20px] border-[1px] border-[#e3e3e3]">
+                            <img
+                              src={assets.images.doc}
+                              alt="model"
+                              className="h-full  w-full rounded-[20px] object-contain"
+                            />
+                          </div>
+                          <h5 className="my-2 text-center text-[16px] opacity-[0.5]">
+                            {doc.title}
+                          </h5>
+                          <h6 className="text-center">{doc.day}</h6>
+                        </a>
+                      </div>
+                    );
+                  })}
+              </div>
+            </TabsContent> */}
+          </Tabs>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default memo(GalleryScreen);

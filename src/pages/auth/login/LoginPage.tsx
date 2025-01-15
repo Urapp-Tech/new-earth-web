@@ -1,19 +1,17 @@
-import axiosInstance from "@/api/axiosInstance";
-import assets from "@/assets";
-import { toast } from "@/components/ui/use-toast";
-import { login } from "@/redux/features/authStateSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/redux-hooks";
-import promiseHandler from "@/utils/promise-handler";
-import { useState } from "react";
+import axiosInstance from '@/api/axiosInstance';
+import assets from '@/assets';
+import { toast } from '@/components/ui/use-toast';
+import { login } from '@/redux/features/authStateSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
+import promiseHandler from '@/utils/promise-handler';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate } from 'react-router-dom';
 
 interface LoginFormValues {
   username: string;
   password: string;
 }
-
 
 const LoginPage = () => {
   const {
@@ -25,7 +23,6 @@ const LoginPage = () => {
   const { systemConfig } = useAppSelector((x) => x.appState);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     if (!systemConfig?.tenant) {
@@ -47,7 +44,16 @@ const LoginPage = () => {
       toast({
         title: 'Error while signing in',
         variant: 'destructive',
-        description: loginError.message,
+        className: '--radix-toast-swipe-move-y',
+        style: {
+          position: 'fixed',
+          left: '20px',
+          top: '20px', // Adjust to your desired top position
+          transform: 'translateX(0%)',
+          width: '30%',
+          backgroundColor: '#f27426',
+          color: '#fff',
+        },
       });
       return;
     }
@@ -56,6 +62,15 @@ const LoginPage = () => {
         title: 'Error while signing in',
         variant: 'destructive',
         description: loginResponse.data.message,
+        style: {
+          position: 'fixed',
+          left: '20px',
+          top: '20px', // Adjust to your desired top position
+          transform: 'translateX(0%)',
+          width: '30%',
+          backgroundColor: '#f27426',
+          color: '#fff',
+        },
       });
       return;
     }
@@ -66,10 +81,12 @@ const LoginPage = () => {
   return (
     <div className="w-full">
       <div className="mx-auto  flex w-full  items-center justify-around max-[1560px]:items-center">
-        <div className="w-[50%] px-[30px] bg-white h-screen self-center my-[10px] py-[10%]">
-          <div className=" max-w-[460px] mx-auto">
+        <div className="my-[10px] h-screen w-[50%] self-center bg-white px-[30px] py-[10%]">
+          <div className=" mx-auto max-w-[460px]">
             <div className="py-[20px] ">
-              <h1 className="text-center text-[64px] leading-normal text-secondary font-semibold">Welcome</h1>
+              <h1 className="text-center text-[64px] font-semibold leading-normal text-secondary">
+                Welcome
+              </h1>
             </div>
             <form
               className="mb-4 h-full bg-white px-1 pb-8 pt-6 max-[480px]:py-1"
@@ -77,7 +94,7 @@ const LoginPage = () => {
             >
               <div className="mb-4">
                 <label
-                  className="mb-2 block text-[12px] font-semibold text-txt-color"
+                  className="text-txt-color mb-2 block text-[12px] font-semibold"
                   htmlFor="username"
                 >
                   Username or email
@@ -90,7 +107,7 @@ const LoginPage = () => {
                       message: 'Invalid email address',
                     },
                   })}
-                  className="w-full appearance-none rounded-[36px] border border-grey px-3 text-[16px] py-4 leading-tight text-txt-color focus:outline-none"
+                  className="text-txt-color w-full appearance-none rounded-[36px] border border-grey px-3 py-4 text-[16px] leading-tight focus:outline-none"
                   id="username"
                   type="text"
                   placeholder="Username"
@@ -103,7 +120,7 @@ const LoginPage = () => {
               </div>
               <div className="mb-1">
                 <label
-                  className="mb-2 block text-[12px] font-semibold text-txt-color"
+                  className="text-txt-color mb-2 block text-[12px] font-semibold"
                   htmlFor="password"
                 >
                   Password
@@ -112,7 +129,7 @@ const LoginPage = () => {
                   {...register('password', {
                     required: 'Password is required',
                   })}
-                  className="mb-3 w-full appearance-none rounded-[36px] border border-grey  text-[16px] px-3 py-4 leading-tight text-txt-color focus:outline-none "
+                  className="text-txt-color mb-3 w-full appearance-none rounded-[36px] border  border-grey px-3 py-4 text-[16px] leading-tight focus:outline-none "
                   id="password"
                   type="password"
                   placeholder="******************"
@@ -163,7 +180,6 @@ const LoginPage = () => {
               </div>
             </form>
           </div>
-
         </div>
         <div className="w-[50%] px-3 py-2">
           <div className="mx-auto  flex max-h-[834px] items-center justify-center overflow-hidden rounded-lg max-[1560px]:max-h-[96vh]">
@@ -235,7 +251,7 @@ const LoginPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default LoginPage;

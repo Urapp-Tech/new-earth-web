@@ -1,9 +1,8 @@
 import axiosInstance from '@/api/axiosInstance';
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ProjectAttachment } from '@/interfaces/project-attachments';
 
 type InitialState = {
-  attachments: ProjectAttachment[];
+  projectQuotations: any;
   loading: boolean;
   notify: boolean;
   total_count: number;
@@ -11,24 +10,19 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
-  attachments: [],
+  projectQuotations: [],
   total_count: 0,
   loading: false,
   notify: false,
   notifyMessage: {},
 };
 
-export const fetchProjectAttachments = createAsyncThunk(
-  'projects/fetchProjectAttachments',
-  async (
-    data: {
-      project_id: string;
-    },
-    { rejectWithValue }
-  ) => {
+export const fetchProjectQuotations = createAsyncThunk(
+  'project-quotations/fetchProjectQuotations',
+  async (data: {}, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(
-        `/app/new-earth/attachments/list/${data.project_id}`,
+        `/app/new-earth/project-quotations/list`,
         { params: data }
       );
       return response.data;
@@ -38,15 +32,12 @@ export const fetchProjectAttachments = createAsyncThunk(
   }
 );
 
-export const projectAttachmentsSlice = createSlice({
-  name: 'projectAttachmentsSlice',
+export const projectQuotationSlice = createSlice({
+  name: 'projectQuotationSlice',
   initialState,
   reducers: {
-    setProjectsAttachments: (
-      state,
-      action: PayloadAction<ProjectAttachment[]>
-    ) => {
-      state.attachments = action.payload;
+    setProjectQuotation: (state, action: PayloadAction<any[]>) => {
+      state.projectQuotations = action.payload;
     },
     setNotifyState: (state, action: PayloadAction<boolean>) => {
       state.notify = action.payload;
@@ -58,18 +49,18 @@ export const projectAttachmentsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProjectAttachments.pending, (state) => {
+      .addCase(fetchProjectQuotations.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchProjectAttachments.fulfilled, (state, action) => {
+      .addCase(fetchProjectQuotations.fulfilled, (state, action) => {
         state.loading = false;
-        state.attachments = action.payload?.data.list || [];
+        state.projectQuotations = action.payload?.data.list || [];
         state.total_count =
-          action.payload?.data?.totalCount ||
+          action.payload?.data?.total ||
           action.payload?.data.projects?.length ||
           0;
       })
-      .addCase(fetchProjectAttachments.rejected, (state, action: any) => {
+      .addCase(fetchProjectQuotations.rejected, (state, action: any) => {
         state.loading = false;
         if (action.error) {
           state.notifyMessage = {
@@ -82,7 +73,7 @@ export const projectAttachmentsSlice = createSlice({
   },
 });
 
-export const { setProjectsAttachments, setNotifyState, showNotifyMessage } =
-  projectAttachmentsSlice.actions;
+export const { setProjectQuotation, setNotifyState, showNotifyMessage } =
+  projectQuotationSlice.actions;
 
-export default projectAttachmentsSlice.reducer;
+export default projectQuotationSlice.reducer;
