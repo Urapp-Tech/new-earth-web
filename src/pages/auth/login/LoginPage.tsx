@@ -89,7 +89,7 @@ const LoginPage = () => {
               </h1>
             </div>
             <form
-              className="mb-4 h-full bg-white px-1 pb-8 pt-6 max-[480px]:py-1"
+              className="mb-4 h-full bg-white px-1 pb-8 pt-6 max-[768px]:bg-transparent max-[480px]:py-1"
               onSubmit={handleSubmit(onSubmit)}
             >
               <div className="mb-4">
@@ -142,32 +142,32 @@ const LoginPage = () => {
               </div>
               <div className="mb-2 flex items-center justify-end">
                 {/* <button
-                type="button"
-                className="inline-block bg-transparent align-baseline text-[12px] font-bold text-primary"
-                onClick={() => handleShowPasswordModalState(true)}
-              >
-                Forgot Password?
-              </button> */}
+              type="button"
+              className="inline-block bg-transparent align-baseline text-[12px] font-bold text-primary"
+              onClick={() => handleShowPasswordModalState(true)}
+            >
+              Forgot Password?
+            </button> */}
               </div>
               <div className="flex items-center justify-center">
                 <button
-                  className="leading-noramal focus:shadow-outline w-full rounded-[36px] bg-primary px-4 py-4 text-[18px] font-bold text-white focus:outline-none"
+                  className="leading-noramal focus:shadow-outline w-full rounded-[36px] bg-primary px-4 py-4 text-[18px] font-bold text-white focus:outline-none  max-[768px]:py-2 max-[768px]:text-[14px]"
                   type="submit"
                 >
                   Sign In
                 </button>
               </div>
               {/* <div className="brk-points relative my-[20px] flex items-center justify-between opacity-[0.5]">
-              <span className="block h-[1px] w-[45%] bg-primary" />
-              <span className="block w-[10%] text-center text-txt-color">
-                or
-              </span>
-              <span className="block h-[1px] w-[45%] bg-primary" />
-            </div> */}
+            <span className="block h-[1px] w-[45%] bg-primary" />
+            <span className="block w-[10%] text-center text-txt-color">
+              or
+            </span>
+            <span className="block h-[1px] w-[45%] bg-primary" />
+          </div> */}
               <div className="my-[15px] flex justify-center text-center">
                 {/* <span className="mr-1 block text-[12px] font-bold leading-normal text-heading-color">
-                Are you new?{' '}
-              </span> */}
+              Are you new?{' '}
+            </span> */}
                 <div
                   className="cursor-pointer text-[12px] font-semibold text-primary"
                   onClick={() => {
@@ -181,72 +181,52 @@ const LoginPage = () => {
             </form>
           </div>
         </div>
-        <div className="w-[50%] px-3 py-2">
-          <div className="mx-auto  flex max-h-[834px] items-center justify-center overflow-hidden rounded-lg max-[1560px]:max-h-[96vh]">
-            {/* <img
-              src={assets.images.bgLogin}
-              alt="urlaundry"
-              className="h-full w-full object-contain"
-            /> */}
+        <div className="w-[50%] px-3 py-2 max-[768px]:w-full max-[768px]:flex-1 max-[768px]:py-0">
+          <div className="mx-auto  flex max-h-[834px] items-center justify-center overflow-hidden rounded-lg max-[1560px]:max-h-[96vh] max-[768px]:max-h-screen">
             <div className="flex">
               <div className="relative min-h-[984px] w-[735px] flex-1 overflow-hidden">
-                {/* <div className="absolute bottom-[15px] right-[15px] z-10 h-[30px]">
-                  <img
-                    src={assets.images.nelogo}
-                    alt="new-earth"
-                    className="h-full w-full object-contain"
-                  />
-                </div> */}
-
                 <img
                   src={assets.images.splash1}
                   alt="Image 1"
-                  className="ne-fade-image absolute left-0 top-0 h-full w-full object-contain opacity-0"
+                  className="ne-fade-image z-1 absolute left-0 top-0 h-full w-full object-contain opacity-0"
                 />
                 <img
                   src={assets.images.splash2}
                   alt="Image 2"
-                  className="ne-fade-image absolute left-0 top-0 h-full w-full object-contain opacity-0"
+                  className="ne-fade-image z-1 absolute left-0 top-0 h-full w-full object-contain opacity-0"
                 />
                 <img
                   src={assets.images.splash3}
                   alt="Image 3"
-                  className="ne-fade-image absolute left-0 top-0 h-full w-full object-contain opacity-0"
+                  className="ne-fade-image z-1 absolute left-0 top-0 h-full w-full object-contain opacity-0"
                 />
                 <img
                   src={assets.images.splash4}
                   alt="Image 4"
-                  className="ne-fade-image absolute left-0 top-0 h-full w-full object-contain opacity-0"
+                  className="ne-fade-image z-1 absolute left-0 top-0 h-full w-full object-contain opacity-0"
                 />
                 <img
                   src={assets.images.splash5}
                   alt="Image 5"
-                  className="ne-fade-image absolute left-0 top-0 h-full w-full object-contain opacity-0"
+                  className="ne-fade-image z-1 absolute left-0 top-0 h-full w-full object-contain opacity-0"
                 />
                 <img
                   src={assets.images.splash6}
                   alt="Image 6"
-                  className="ne-fade-image absolute left-0 top-0 h-full w-full object-contain opacity-0"
+                  className="ne-fade-image z-1 absolute left-0 top-0 h-full w-full object-contain opacity-0"
                 />
                 <img
                   src={assets.images.splash7}
                   alt="Image 7"
-                  className="ne-fade-image absolute left-0 top-0 h-full w-full object-contain opacity-0"
+                  className="ne-fade-image z-1 absolute left-0 top-0 h-full w-full object-contain opacity-0"
                 />
                 <img
                   src={assets.images.splash8}
                   alt="Image 8"
-                  className="ne-fade-image absolute left-0 top-0 h-full w-full object-contain opacity-0"
+                  className="ne-fade-image z-1 absolute left-0 top-0 h-full w-full object-contain opacity-0"
                 />
               </div>
             </div>
-            {/* <div className="flex flex-col items-center justify-center">
-              <p className="text-xl font-semibold">Image is not uploaded yet</p>
-              <span className="text-sm font-medium">
-                Hint: You can upload under setting module from setting config
-                tab
-              </span>
-            </div> */}
           </div>
         </div>
       </div>
