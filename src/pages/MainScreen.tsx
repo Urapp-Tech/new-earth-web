@@ -25,7 +25,8 @@ const MainScreen = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((s) => s.authState);
-  const [video, setVideo] = useState<string | null>(null);
+  const [video, setVideo] = useState<any>(null);
+  const [dImage, setdImage] = useState<any>(null);
   const [image, setImage] = useState<any>(null);
   const [_doc, setDoc] = useState<string | null>(null);
   const { projects, selectedProjects } = useAppSelector((s) => s.projectState);
@@ -41,7 +42,7 @@ const MainScreen = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (projects.length > 0) {
+    if (projects.length > 0 && selectedProjects?.id === null) {
       dispatch(setSelectedProject(projects[0]));
     }
   }, [projects]);
@@ -62,8 +63,13 @@ const MainScreen = () => {
   //   };
 
   const setLastVideo = () => {
-    const lastVideo = attachments
-      .filter((attachment) => attachment.attachmentType === 'video')
+    const lastVideo: any = attachments
+      .filter(
+        (attachment: any) =>
+          attachment.attachmentType === 'video' &&
+          attachment.category !== '3d' &&
+          attachment.category !== 'Blueprint'
+      )
       .sort((a, b) => {
         const dateA = new Date(a.uploadedAt).getTime();
         const dateB = new Date(b.uploadedAt).getTime();
@@ -73,22 +79,54 @@ const MainScreen = () => {
       .shift(); // Get the first (latest) video
 
     if (lastVideo) {
-      setVideo(lastVideo.filePath);
+      setVideo(lastVideo);
     } else {
       setVideo(null);
     }
   };
   const setLastImage = () => {
-    const lastVideo = attachments.find(
-      (attachment) =>
-        attachment.attachmentType === 'document' && attachment.category === '3d'
-    );
+    const lastVideo: any = attachments
+      .filter(
+        (attachment: any) =>
+          attachment.attachmentType === 'image' &&
+          attachment.category !== '3d' &&
+          attachment.category !== 'Blueprint'
+      )
+      .sort((a, b) => {
+        const dateA = new Date(a.uploadedAt).getTime();
+        const dateB = new Date(b.uploadedAt).getTime();
+
+        return dateB - dateA; // Sort in descending order (latest first)
+      })
+      .shift();
+    // const lastVideo: any = attachments.find(
+    //   (attachment: any) =>
+    //     attachment.attachmentType === 'image' &&
+    //     (attachment.category !== '3d' || attachment.category !== 'Blueprint')
+    // );
+    console.log('lastVideo', lastVideo);
+
     if (lastVideo) {
       setImage(lastVideo);
     } else {
       setImage(null);
     }
   };
+  const set3dLastImage = () => {
+    const lastVideo = attachments.find(
+      (attachment) =>
+        (attachment.attachmentType === 'document' ||
+          attachment.attachmentType === 'image') &&
+        attachment.category === '3d'
+    );
+
+    if (lastVideo) {
+      setdImage(lastVideo);
+    } else {
+      setdImage(null);
+    }
+  };
+
   const setLastDoc = () => {
     const lastVideo = attachments.find(
       (attachment) =>
@@ -136,37 +174,42 @@ const MainScreen = () => {
 
   useEffect(() => {
     setLastVideo();
+    set3dLastImage();
     setLastImage();
     setLastDoc();
   }, [attachments]);
 
+  console.log('daysPassed', image, video);
+
   return (
     <>
-      <div className="mb-5">
-        <div className="relative h-[40px] w-[99%] rounded-xl bg-gray-200">
-          <div
-            className="absolute left-0 top-0 h-full rounded-xl bg-green-500"
-            style={{
-              width: `${calculateProgressWidth(dashboard?.startDate, dashboard?.endDate, dashboard?.currentDate)}%`,
-            }}
-          />
+      {daysPassed >= 1 && (
+        <div className="mb-5">
+          <div className="relative h-[40px] w-[99%] rounded-xl bg-gray-200">
+            <div
+              className="absolute left-0 top-0 h-full rounded-xl bg-green-500"
+              style={{
+                width: `${calculateProgressWidth(dashboard?.startDate, dashboard?.endDate, dashboard?.currentDate)}%`,
+              }}
+            />
 
-          <span
-            className="absolute top-2 translate-y-full text-sm font-medium text-black"
-            style={{
-              left: `${calculateProgressWidth(dashboard?.startDate, dashboard?.endDate, dashboard?.currentDate)}%`,
-              transform: 'translateX(-15%)',
-            }}
-          >
-            Day {daysPassed}
-          </span>
-        </div>
+            <span
+              className="absolute top-2 translate-y-full text-sm font-medium text-black"
+              style={{
+                left: `${calculateProgressWidth(dashboard?.startDate, dashboard?.endDate, dashboard?.currentDate)}%`,
+                transform: 'translateX(-15%)',
+              }}
+            >
+              Day {daysPassed}
+            </span>
+          </div>
 
-        <div className="mt-1 flex justify-between text-sm text-gray-500">
-          <span>{startDate.format('YYYY-MM-DD')} ( Day 01 )</span>
-          <span>{totalDays} Days </span>
+          <div className="mt-1 flex justify-between text-sm text-gray-500">
+            <span>{startDate.format('YYYY-MM-DD')} ( Day 01 )</span>
+            <span>{totalDays} Days </span>
+          </div>
         </div>
-      </div>
+      )}
       <div className="mb-2 px-4 xl:w-[50%]">
         <span className="mb-3 block text-[16px] font-medium capitalize leading-normal text-secondary max-[1024px]:mt-7">
           select project
@@ -195,11 +238,11 @@ const MainScreen = () => {
         </Select>
       </div>
       <div className="flex gap-3 rounded-[40px] max-[1024px]:flex-col">
-        <div className="flex basis-[50%] items-center max-[1024px]:basis-[100%]">
+        {/* <div className="flex basis-[50%] items-center max-[1024px]:basis-[100%]">
           <div className="max-w-[656px] max-[1024px]:mx-auto max-[1024px]:max-w-[90%] max-[768px]:max-w-full">
             <div className="mb-2 flex items-center justify-between px-4">
               <span className="mb-2 block text-[16px] font-medium capitalize leading-normal text-secondary">
-                Most recent video
+                Most recent progress videos and images
               </span>
               <NavLink
                 to="gallery"
@@ -208,21 +251,103 @@ const MainScreen = () => {
                 see all
               </NavLink>
             </div>
-            {video ? (
+            {image?.uploadedAt > video?.uploadedAt && image?.filePath ? (
+              <img
+                src={image?.filePath}
+                alt="3D-3dImage"
+                className="h-[200px] object-cover"
+              />
+            ) : (
+              image?.uploadedAt > video?.uploadedAt && (
+                <img
+                  src={assets.images.noFile}
+                  alt="img"
+                  className="h-[350px] w-[700px] rounded-3xl object-cover"
+                />
+              )
+            )}
+
+            {video?.uploadedAt > image?.uploadedAt && video?.filePath ? (
               <video
                 className="h-full max-h-[350px] w-full rounded-[20px]"
                 controls
               >
-                <source src={video} type="video/mp4" />
+                <source src={video?.filePath} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             ) : (
-              <img
-                src={assets.images.noVideo}
-                alt="video"
-                className="h-[350px] w-[700px] rounded-3xl object-cover"
-              />
+              video?.uploadedAt > image?.uploadedAt && (
+                <img
+                  src={assets.images.noVideo}
+                  alt="video"
+                  className="h-[350px] w-[700px] rounded-3xl object-cover"
+                />
+              )
             )}
+          </div>
+        </div> */}
+        <div className="basis-[50%] px-4 max-[1260px]:my-2">
+          <div className="h-[400px] rounded-[40px] border-2 p-5">
+            <NavLink to="/gallery">
+              <div className="mb-[15px] flex items-center justify-start gap-2">
+                <img
+                  src={assets.images.playIcon}
+                  alt="icons"
+                  className="h-[25px] w-[25px]"
+                />
+
+                <span className="text-[14px] font-bold leading-normal text-secondary">
+                  Most recent progress videos and images
+                </span>
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  height="9"
+                  viewBox="0 0 10 9"
+                  fill="none"
+                >
+                  <path d="M1 8.5L9 0.5M9 0.5H1M9 0.5V8.5" stroke="#14242E" />
+                </svg>
+              </div>
+            </NavLink>
+            <div className="mx-auto h-[250px] max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
+              {image?.uploadedAt > video?.uploadedAt && image?.filePath ? (
+                <div className="flex h-full items-center justify-center">
+                  <img
+                    src={image?.filePath}
+                    alt="3D-3dImage"
+                    className="h-[150px] object-contain"
+                  />
+                </div>
+              ) : (
+                image?.uploadedAt > video?.uploadedAt && (
+                  <img
+                    src={assets.images.noFile}
+                    alt="img"
+                    className="h-[350px] w-[700px] rounded-3xl object-cover"
+                  />
+                )
+              )}
+
+              {video?.uploadedAt > image?.uploadedAt && video?.filePath ? (
+                <video
+                  className="h-full max-h-[350px] w-full rounded-[20px]"
+                  controls
+                >
+                  <source src={video?.filePath} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                video?.uploadedAt > image?.uploadedAt && (
+                  <img
+                    src={assets.images.noVideo}
+                    alt="video"
+                    className="h-[350px] w-[700px] rounded-3xl object-cover"
+                  />
+                )
+              )}
+            </div>
           </div>
         </div>
         <div className="basis-1/2 px-1 max-[1024px]:basis-full max-[1024px]:px-3 max-[768px]:px-0">
@@ -386,22 +511,22 @@ const MainScreen = () => {
               </div>
             </NavLink>
             <div className="mx-auto h-[250px] max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
-              {image?.filePath ? (
+              {dImage?.filePath ? (
                 <>
                   <div className="flex justify-center p-1">
-                    <a href={image.filePath} rel="noopener noreferrer">
+                    <a href={dImage.filePath} rel="noopener noreferrer">
                       <FileText size={250} className="opacity-[.7]" />
                     </a>
                   </div>
                   <div className="text-center font-semibold capitalize">
-                    <h5 className="text-[16px]">{image.title}</h5>
+                    <h5 className="text-[16px]">{dImage.title}</h5>
                   </div>
                 </>
               ) : (
                 <>
                   <img
                     src={assets.images.noFile}
-                    alt="3D-image"
+                    alt="3D-3dImage"
                     className="h-full w-full object-contain p-5 max-[1260px]:object-cover"
                   />
                   <div className="text-center">

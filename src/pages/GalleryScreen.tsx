@@ -107,8 +107,10 @@ const GalleryScreen = () => {
                 {attachments
                   .filter(
                     (a) =>
-                      a.attachmentType === 'image' ||
-                      a.attachmentType === 'video'
+                      (a.attachmentType === 'image' ||
+                        a.attachmentType === 'video') &&
+                      a.category !== 'Blueprint' &&
+                      a.category !== '3d'
                   )
                   .map((image, i) => {
                     return (
@@ -150,7 +152,8 @@ const GalleryScreen = () => {
                 {attachments
                   .filter(
                     (a) =>
-                      a.attachmentType === 'document' &&
+                      (a.attachmentType === 'document' ||
+                        a.attachmentType === 'image') &&
                       (a.category === '3d' || a.category === 'Blueprint')
                   )
                   .map((image, i) => {

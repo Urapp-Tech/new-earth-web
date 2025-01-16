@@ -88,7 +88,7 @@ export default function ProjectQuotation() {
                   value="Labor"
                   className="ne-tabs h-auto min-w-[184px] rounded-t-[20px]  p-[12px] shadow-none max-[768px]:min-w-[148px] max-[576px]:text-[16px]"
                 >
-                  Labor & Materail Cost Slips
+                  Labor & Material Cost Slips
                 </TabsTrigger>
               </TabsList>
             </div>
