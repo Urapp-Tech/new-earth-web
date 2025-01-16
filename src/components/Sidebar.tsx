@@ -95,18 +95,18 @@ const Sidebar = () => {
                   </TooltipContent>
                 </Tooltip>
               </NavLink>
-              <Button className="btn-flips my-[10px] h-[56px] w-[56px] rounded-[28px] bg-transparent hover:bg-primary">
+              {/* <Button className="btn-flips my-[10px] h-[56px] w-[56px] rounded-[28px] bg-transparent hover:bg-primary">
                 <img
                   src={assets.images.busnessIcon}
                   alt="icon"
                   className="w-[24px]"
                 />
-              </Button>
+              </Button> */}
             </TooltipProvider>
           </div>
         </div>
-        <div className="basis-[20%] text-center">
-          <Button className="my-[10px] h-[56px] w-[56px] rounded-[28px] bg-transparent p-0">
+        <div className="mx-3 basis-[20%] text-center">
+          <Button className="h-[56px] w-[56px] rounded-[28px] bg-transparent p-0">
             <img
               src={assets.images.avatar1}
               alt="icon"
