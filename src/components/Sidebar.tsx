@@ -195,7 +195,16 @@ const Sidebar = () => {
                     />
                   </Button>
                 </NavLink>
-                <Button className="btn-flips my-[10px] h-[56px] w-[56px] rounded-[28px] bg-transparent hover:bg-primary">
+                <NavLink to="/project-quotations">
+                  <Button className="btn-flips my-[10px] h-[56px] w-[56px] rounded-[28px] bg-transparent hover:bg-primary">
+                    <img
+                      src={assets.images.supplier}
+                      alt="icon"
+                      className="w-[24px]"
+                    />
+                  </Button>
+                </NavLink>
+                {/* <Button className="btn-flips my-[10px] h-[56px] w-[56px] rounded-[28px] bg-transparent hover:bg-primary">
                   <img
                     src={assets.images.startegyIcon}
                     alt="icon"
@@ -208,7 +217,7 @@ const Sidebar = () => {
                     alt="icon"
                     className="w-[24px]"
                   />
-                </Button>
+                </Button> */}
               </div>
             </div>
             <div className="basis-[20%] text-center">

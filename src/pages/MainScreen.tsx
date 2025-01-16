@@ -227,7 +227,7 @@ const MainScreen = () => {
               <img
                 src={assets.images.noVideo}
                 alt="video"
-                className="h-[350px] w-full object-cover"
+                className="h-[350px] w-[700px] rounded-3xl object-cover"
               />
             )}
           </div>
@@ -259,7 +259,7 @@ const MainScreen = () => {
         <div className="basis-[50%] max-[1260px]:my-3 max-[1260px]:max-w-[600px]">
           <div className="bg-ban-two p-5">
             <div className="flex max-w-full items-center justify-between py-2 text-[24px] font-medium leading-normal text-secondary">
-              <span>Total investment plan</span>
+              <span>Project Quotations and Payments</span>
               <span
                 onClick={() => navigate('./project-quotations')}
                 className="cursor-pointer text-sm underline underline-offset-2"

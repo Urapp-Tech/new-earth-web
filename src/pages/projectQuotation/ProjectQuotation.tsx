@@ -64,7 +64,7 @@ export default function ProjectQuotation() {
   //   }, [selectedProjects]);
   return (
     <div>
-      <div className=" p-2 max-[1024px]:px-[40px] max-[768px]:p-0">
+      <div className="p-2 max-[1024px]:px-[40px] max-[768px]:p-0">
         <div className="mb-5 text-[28px] text-secondary max-[576px]:text-center">
           Project Quotations and Payments
         </div>
