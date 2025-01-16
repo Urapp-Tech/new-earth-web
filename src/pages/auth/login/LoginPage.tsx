@@ -31,7 +31,7 @@ const LoginPage = () => {
     // Handle form submission
     setIsLoader(true);
 
-    const [loginResponse, loginError] = await promiseHandler(
+    const [loginResponse] = await promiseHandler(
       axiosInstance.post('/app/app-user/sign-in/app', {
         email: data.username,
         password: data.password,

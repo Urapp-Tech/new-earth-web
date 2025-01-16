@@ -1,4 +1,4 @@
-import assets from '@/assets';
+// import assets from '@/assets';
 import ViewApp from '@/components/common/Viewer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ProjectAttachment } from '@/interfaces/project-attachments';
@@ -9,7 +9,7 @@ import {
   setSelectedProject,
 } from '@/redux/features/projectSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
-import { useCallback, memo, useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 
@@ -17,7 +17,7 @@ const GalleryScreen = () => {
   const dispatch = useAppDispatch();
   const [currentImage, setCurrentImage] = useState(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
-  const [allImages, setAllImages] = useState<ProjectAttachment[]>([]);
+  const [allImages] = useState<ProjectAttachment[]>([]);
 
   const { projects, selectedProjects } = useAppSelector((s) => s.projectState);
   const { attachments } = useAppSelector((s) => s.projectAttachmentsState);

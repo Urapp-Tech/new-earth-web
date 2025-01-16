@@ -13,10 +13,10 @@ const ProjectPlansPage = lazy(() => import('@/pages/plans/ProjectPlansPage'));
 const ProjectVideosPage = lazy(
   () => import('@/pages/videos/ProjectVideosPage')
 );
-const QuotationsPage = lazy(() => import('@/pages/quotation/QuotationsPage'));
-const QuotationsDetailsPage = lazy(
-  () => import('@/pages/quotation/QuotationsDetailsPage')
-);
+// const QuotationsPage = lazy(() => import('@/pages/quotation/QuotationsPage'));
+// const QuotationsDetailsPage = lazy(
+//   () => import('@/pages/quotation/QuotationsDetailsPage')
+// );
 
 const ProjectQuotation = lazy(
   () => import('@/pages/projectQuotation/ProjectQuotation')

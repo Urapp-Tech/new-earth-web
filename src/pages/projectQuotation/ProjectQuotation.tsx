@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { FileText } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
 import { fetchProjectQuotations } from '@/redux/features/projectQuotationSlice';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { RootState } from '@/redux/store';

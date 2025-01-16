@@ -15,7 +15,7 @@ import { fetchProjectDashboard } from '@/redux/features/projectDashboardSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
 import { CURRENCY } from '@/utils/constant';
 import { formatCurrency } from '@/utils/helpers';
-import { Progress } from '@/components/ui/progress';
+// import { Progress } from '@/components/ui/progress';
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { FileText } from 'lucide-react';
@@ -27,7 +27,7 @@ const MainScreen = () => {
   const { user } = useAppSelector((s) => s.authState);
   const [video, setVideo] = useState<string | null>(null);
   const [image, setImage] = useState<any>(null);
-  const [doc, setDoc] = useState<string | null>(null);
+  const [_doc, setDoc] = useState<string | null>(null);
   const { projects, selectedProjects } = useAppSelector((s) => s.projectState);
   const { attachments } = useAppSelector((s) => s.projectAttachmentsState);
   const { dashboard } = useAppSelector((s) => s.projectdashboardState);
@@ -100,13 +100,6 @@ const MainScreen = () => {
     } else {
       setDoc(null);
     }
-  };
-
-  const getColor = (value: any) => {
-    if (value >= 0 && value <= 50) return '#FF0000'; // Red
-    if (value >= 51 && value <= 99) return '#FFD700'; // Yellow
-    if (value === 100) return '#008000'; // Green
-    return '#1a90ff'; // Default color
   };
 
   const startDate: any = dayjs(dashboard?.startDate);
