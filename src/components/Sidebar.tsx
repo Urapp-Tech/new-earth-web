@@ -5,6 +5,8 @@ import React from 'react';
 import Drawer from 'react-modern-drawer';
 import 'react-modern-drawer/dist/index.css';
 import { NavLink, useNavigate } from 'react-router-dom';
+
+import { CircleUserRound } from 'lucide-react';
 import { Button } from './ui/button';
 import {
   Tooltip,
@@ -106,12 +108,13 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="mx-3 basis-[20%] text-center">
-          <Button className="h-[56px] w-[56px] rounded-[28px] bg-transparent p-0">
-            <img
+          <Button className="h-[56px] w-[56px] rounded-[28px] bg-[#F27426] p-0">
+            <CircleUserRound size={35} />
+            {/* <img
               src={assets.images.avatar1}
               alt="icon"
               className="h-full w-full max-w-full object-contain"
-            />
+            /> */}
           </Button>
           <Button
             onClick={handleLogout}
