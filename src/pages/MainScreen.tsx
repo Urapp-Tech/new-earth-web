@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import assets from '@/assets';
 import {
   Select,
@@ -72,6 +72,7 @@ const MainScreen = () => {
       setVideo(null);
     }
   };
+
   const setLastImage = () => {
     const lastVideo: any = attachments
       .filter(
@@ -166,7 +167,90 @@ const MainScreen = () => {
     setLastDoc();
   }, [attachments]);
 
-  //   console.log('daysPassed', image, video);
+  console.log(image, video);
+
+  /* {selectedProjects?.id ? (
+              <div className="mx-auto h-[250px] max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
+                {image &&
+                new Date(image?.uploadedAt).getTime() > new Date(video?.uploadedAt).getTime() &&
+                image?.filePath ? (
+                  <div className="flex h-full items-center justify-center">
+                    <img
+                      src={image?.filePath}
+                      alt="3D-3dImage"
+                      className="mt-10 max-h-[300px] rounded object-cover"
+                    />
+                  </div>
+                ) : (
+                  image?.uploadedAt > video?.uploadedAt && (
+                    <img
+                      src={assets.images.noFile}
+                      alt="img"
+                      className="h-[350px] w-[700px] rounded-3xl object-cover"
+                    />
+                  )
+                )}
+
+                {video &&
+                video?.uploadedAt >= image?.uploadedAt &&
+                video?.filePath ? (
+                  <video
+                    className="h-full max-h-[350px] w-full rounded-[20px]"
+                    controls
+                  >
+                    <source src={video?.filePath} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                ) : (
+                  video?.uploadedAt > image?.uploadedAt && (
+                    <img
+                      src={assets.images.noVideo}
+                      alt="video"
+                      className="h-[350px] w-[700px] rounded-3xl object-cover"
+                    />
+                  )
+                )}
+              </div>
+            ) : (
+              
+            )} */
+
+  const renderRecent = useMemo(() => {
+    if (!image && !video) {
+      return (
+        <div className="flex items-center justify-center">
+          <img
+            src={assets.images.noFile}
+            alt="3D-3dImage"
+            className="mt-3 max-h-[300px] rounded object-cover"
+          />
+        </div>
+      );
+    }
+    let imageElement = (
+      <div className="flex h-full items-center justify-center">
+        <img
+          src={image?.filePath}
+          alt="3D-3dImage"
+          className="mt-10 max-h-[300px] rounded object-cover"
+        />
+      </div>
+    );
+    let videoElement = (
+      <video className="h-full max-h-[350px] w-full rounded-[20px]" controls>
+        <source src={video?.filePath} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    );
+
+    if (image && !video) {
+      return imageElement;
+    }
+    if (!image && video) {
+      return videoElement;
+    }
+    return video.uploadedAt >= image.uploadedAt ? videoElement : imageElement;
+  }, [image, video]);
 
   return (
     <>
@@ -298,53 +382,7 @@ const MainScreen = () => {
                 </svg>
               </div>
             </NavLink>
-            {selectedProjects?.id ? (
-              <div className="mx-auto h-[250px] max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
-                {image?.uploadedAt > video?.uploadedAt && image?.filePath ? (
-                  <div className="flex h-full items-center justify-center">
-                    <img
-                      src={image?.filePath}
-                      alt="3D-3dImage"
-                      className="mt-10 max-h-[300px] rounded object-cover"
-                    />
-                  </div>
-                ) : (
-                  image?.uploadedAt > video?.uploadedAt && (
-                    <img
-                      src={assets.images.noFile}
-                      alt="img"
-                      className="h-[350px] w-[700px] rounded-3xl object-cover"
-                    />
-                  )
-                )}
-
-                {video?.uploadedAt >= image?.uploadedAt && video?.filePath ? (
-                  <video
-                    className="h-full max-h-[350px] w-full rounded-[20px]"
-                    controls
-                  >
-                    <source src={video?.filePath} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                ) : (
-                  video?.uploadedAt > image?.uploadedAt && (
-                    <img
-                      src={assets.images.noVideo}
-                      alt="video"
-                      className="h-[350px] w-[700px] rounded-3xl object-cover"
-                    />
-                  )
-                )}
-              </div>
-            ) : (
-              <div className="flex items-center justify-center">
-                <img
-                  src={assets.images.noFile}
-                  alt="3D-3dImage"
-                  className="mt-3 max-h-[300px] rounded object-cover"
-                />
-              </div>
-            )}
+            {Boolean(selectedProjects?.id) && renderRecent}
           </div>
         </div>
         <div className="basis-1/2 px-1 max-[1024px]:basis-full max-[1024px]:px-3 max-[768px]:px-0">
