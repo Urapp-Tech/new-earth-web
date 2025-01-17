@@ -3,15 +3,15 @@ import ViewApp from '@/components/common/Viewer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ProjectAttachment } from '@/interfaces/project-attachments';
 import { fetchProjectAttachments } from '@/redux/features/projectAttachmentsSlice';
-import { FileText } from 'lucide-react';
 import {
   fetchProjects,
   setSelectedProject,
 } from '@/redux/features/projectSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
+import dayjs from 'dayjs';
+import { FileText } from 'lucide-react';
 import { memo, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import dayjs from 'dayjs';
 
 const GalleryScreen = () => {
   const dispatch = useAppDispatch();
@@ -43,25 +43,6 @@ const GalleryScreen = () => {
     }
   }, [selectedProjects]);
 
-  //   const openImageViewer = useCallback((index: number, type = '3d') => {
-  //     if (type === '3d') {
-  //       setAllImages(
-  //         attachments.filter(
-  //           (a) => a.attachmentType === 'image' && a.category === '3d'
-  //         )
-  //       );
-  //     } else if ('blue') {
-  //       setAllImages(
-  //         attachments.filter(
-  //           (a) => a.attachmentType === 'image' && a.category !== '3d'
-  //         )
-  //       );
-  //     }
-  //     setCurrentImage(index);
-
-  //     setIsViewerOpen(true);
-  //   }, []);
-
   return (
     <>
       <div className=" p-2 max-[1024px]:px-[40px] max-[768px]:p-0">
@@ -79,8 +60,8 @@ const GalleryScreen = () => {
         </div>
         <div className="rounded-[20px]  bg-white">
           <Tabs defaultValue={tab} className="w-full ">
-            <div className="tabs--head max-[576px]:overflow-y-hidden max-[490px]:overflow-x-scroll">
-              <TabsList className="w-full justify-start p-0 max-[490px]:w-[580px]">
+            <div className="tabs--head max-[768px]:overflow-y-hidden max-[768px]:overflow-x-scroll">
+              <TabsList className="w-full justify-start p-0 max-[768px]:w-[780px]">
                 <TabsTrigger
                   value="ImagesandVideos"
                   className="ne-tabs h-auto min-w-[184px] rounded-t-[20px] p-[12px] max-[768px]:min-w-[148px] max-[576px]:text-[16px]"
@@ -103,16 +84,16 @@ const GalleryScreen = () => {
             </div>
 
             <TabsContent value="ImagesandVideos" className="m-0">
-              <div className="flex flex-wrap justify-start gap-[15px] p-5 ">
+              <div className="flex flex-wrap justify-start gap-[15px] p-5 max-[576px]:justify-center">
                 {attachments
                   .filter(
-                    (a) =>
+                    (a: any) =>
                       (a.attachmentType === 'image' ||
                         a.attachmentType === 'video') &&
                       a.category !== 'Blueprint' &&
                       a.category !== '3d'
                   )
-                  .map((image, i) => {
+                  .map((image: any, i: number) => {
                     return (
                       <div key={i} className="my-4 basis-[20%]">
                         <div className="mx-auto mb-3 h-[210px] w-[210px] cursor-pointer rounded-[20px] border-[1px] border-[#e3e3e3]">
@@ -148,15 +129,15 @@ const GalleryScreen = () => {
               </div>
             </TabsContent>
             <TabsContent value="3drendersandblueprints" className="m-0">
-              <div className="flex flex-wrap justify-start gap-[15px] p-5 ">
+              <div className="flex flex-wrap justify-start gap-[15px] p-5  max-[576px]:justify-center">
                 {attachments
                   .filter(
-                    (a) =>
+                    (a: any) =>
                       (a.attachmentType === 'document' ||
                         a.attachmentType === 'image') &&
                       (a.category === '3d' || a.category === 'Blueprint')
                   )
-                  .map((image, i) => {
+                  .map((image: any, i: number) => {
                     return (
                       <div key={i} className="my-4 basis-[20%]">
                         <div className="mx-auto mb-3 h-[210px] w-[210px] cursor-pointer rounded-[20px] border-[1px] border-[#e3e3e3]">

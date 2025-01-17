@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import assets from '@/assets';
 import {
   Select,
@@ -8,18 +8,18 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { fetchProjectAttachments } from '@/redux/features/projectAttachmentsSlice';
+import { fetchProjectDashboard } from '@/redux/features/projectDashboardSlice';
 import {
   fetchProjects,
   setSelectedProject,
 } from '@/redux/features/projectSlice';
-import { fetchProjectDashboard } from '@/redux/features/projectDashboardSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
 import { CURRENCY } from '@/utils/constant';
 import { formatCurrency } from '@/utils/helpers';
 // import { Progress } from '@/components/ui/progress';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { FileText } from 'lucide-react';
 import dayjs from 'dayjs';
+import { FileText } from 'lucide-react';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const MainScreen = () => {
   const navigate = useNavigate();
@@ -171,8 +171,8 @@ const MainScreen = () => {
   return (
     <>
       {selectedProjects?.id && daysPassed >= 1 && (
-        <div className="mb-5">
-          <div className="relative h-[40px] w-[99%] rounded-xl bg-gray-200">
+        <div className="mb-5 px-1">
+          <div className="relative mx-auto h-[40px] w-[99%] rounded-xl bg-gray-200">
             <div
               className="absolute left-0 top-0 h-full rounded-xl bg-green-500"
               style={{
@@ -191,7 +191,7 @@ const MainScreen = () => {
             </span>
           </div>
 
-          <div className="mt-1 flex justify-between text-sm text-gray-500">
+          <div className="mt-1 flex justify-between px-3 text-sm text-gray-500">
             <span>{startDate.format('YYYY-MM-DD')} ( Day 01 )</span>
             <span>{totalDays} Days </span>
           </div>
@@ -224,9 +224,57 @@ const MainScreen = () => {
           </SelectContent>
         </Select>
       </div>
-      <div className="flex gap-3 rounded-[40px] max-[1024px]:flex-col">
+      <div className="my-6 flex gap-3 rounded-[40px] max-[1024px]:flex-col">
+        {/* <div className="flex basis-[50%] items-center max-[1024px]:basis-[100%]">
+          <div className="max-w-[656px] max-[1024px]:mx-auto max-[1024px]:max-w-[90%] max-[768px]:max-w-full">
+            <div className="mb-2 flex items-center justify-between px-4">
+              <span className="mb-2 block text-[16px] font-medium capitalize leading-normal text-secondary">
+                Most recent progress videos and images
+              </span>
+              <NavLink
+                to="gallery"
+                className="block text-[14px] font-medium capitalize leading-normal text-secondary underline"
+              >
+                see all
+              </NavLink>
+            </div>
+            {image?.uploadedAt > video?.uploadedAt && image?.filePath ? (
+              <img
+                src={image?.filePath}
+                alt="3D-3dImage"
+                className="h-[200px] object-cover"
+              />
+            ) : (
+              image?.uploadedAt > video?.uploadedAt && (
+                <img
+                  src={assets.images.noFile}
+                  alt="img"
+                  className="h-[350px] w-[700px] rounded-3xl object-cover"
+                />
+              )
+            )}
+
+            {video?.uploadedAt > image?.uploadedAt && video?.filePath ? (
+              <video
+                className="h-full max-h-[350px] w-full rounded-[20px]"
+                controls
+              >
+                <source src={video?.filePath} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              video?.uploadedAt > image?.uploadedAt && (
+                <img
+                  src={assets.images.noVideo}
+                  alt="video"
+                  className="h-[350px] w-[700px] rounded-3xl object-cover"
+                />
+              )
+            )}
+          </div>
+        </div> */}
         <div className="basis-[50%] px-4 max-[1260px]:my-2">
-          <div className="h-[400px] rounded-[40px] border-2 p-5">
+          <div className="h-[400px] rounded-[40px] border-2 p-5 max-[1024px]:h-auto">
             <NavLink to="/gallery">
               <div className="mb-[15px] flex items-center justify-start gap-2">
                 <img
@@ -301,7 +349,7 @@ const MainScreen = () => {
         </div>
         <div className="basis-1/2 px-1 max-[1024px]:basis-full max-[1024px]:px-3 max-[768px]:px-0">
           <div className="flex flex-wrap items-center justify-around gap-4 max-[1024px]:justify-start max-[768px]:gap-6 max-[576px]:flex-col">
-            <div className="w-full px-2 pt-2">
+            <div className="w-full px-2 ">
               <div className="flex flex-col gap-4">
                 <div className="bg-ban-three min-h-[400px] w-full rounded-[25px] p-6 max-[768px]:min-h-[350px] max-[768px]:w-full max-[576px]:min-h-[300px]">
                   <div className="flex items-center justify-between max-[768px]:flex-col max-[768px]:items-start">
@@ -322,11 +370,11 @@ const MainScreen = () => {
         </div>
       </div>
 
-      <div className="mt-4 flex min-h-[420px] max-[1260px]:flex-col">
-        <div className="basis-[50%] max-[1260px]:my-3 max-[1260px]:max-w-[600px]">
-          <div className="bg-ban-two p-5">
-            <div className="flex max-w-full items-center justify-between py-2 text-[24px] font-medium leading-normal text-secondary">
-              <span>Project Quotations and Payments</span>
+      <div className="mt-4 flex min-h-[400px] max-[1260px]:flex-col">
+        <div className="basis-[50%] max-[1260px]:my-3 max-[1260px]:max-w-[600px] max-[1024px]:max-w-full">
+          <div className="bg-ban-two p-5 max-[1024px]:min-h-[500px] max-[1024px]:p-7 max-[576px]:p-[20px]">
+            <div className="flex max-w-full items-center justify-between gap-2 py-2 text-[22px] font-medium leading-normal text-secondary  max-[768px]:text-[20px]">
+              <span className="">Project Quotations and Payments</span>
               <span
                 onClick={() => navigate('./project-quotations')}
                 className="cursor-pointer text-sm underline underline-offset-2"
@@ -369,7 +417,7 @@ const MainScreen = () => {
                   </clipPath>
                 </defs>
               </svg>
-              <span className="text-[14px] font-medium leading-normal text-secondary">
+              <span className="text-[14px] font-medium capitalize leading-normal text-secondary">
                 {user?.firstName ? user?.firstName : ''}
               </span>
             </div>
@@ -411,7 +459,7 @@ const MainScreen = () => {
               </span>
             </div>
             <div className="mt-4 flex items-center gap-2 max-[576px]:flex-col max-[576px]:items-start">
-              <span className="text-[14px] font-medium capitalize leading-normal text-secondary ">
+              <span className="text-[14px] font-medium capitalize leading-normal text-secondary max-[480px]:max-w-[120px]">
                 Labor & Material amount
               </span>
               {/* <span className="text-[14px] font-medium capitalize leading-normal text-secondary ">

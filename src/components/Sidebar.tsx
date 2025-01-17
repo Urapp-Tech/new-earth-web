@@ -7,14 +7,14 @@ import Drawer from 'react-modern-drawer';
 import 'react-modern-drawer/dist/index.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import { CircleUserRound } from 'lucide-react';
-import { Button } from './ui/button';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { CircleUserRound } from 'lucide-react';
+import { Button } from './ui/button';
 const Sidebar = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -131,10 +131,10 @@ const Sidebar = () => {
         </div>
       </div>
       {/* drawer */}
-      <div className="side-draw flex w-[10%] max-w-[100px] flex-col gap-[70px] bg-lightgrey px-[20px] max-[768px]:w-[15%] max-[576px]:absolute max-[576px]:left-0 max-[576px]:top-[40px] max-[576px]:h-0">
+      <div className="side-draw flex w-[10%] max-w-[100px] flex-col gap-[70px] bg-lightgrey px-[20px] max-[768px]:w-[15%] max-[576px]:absolute max-[576px]:left-[-8px] max-[576px]:top-[24px] max-[576px]:h-0">
         <button
           onClick={toggleDrawer}
-          className="h-[40px] w-[40px] rounded-lg bg-white shadow-gray-800 min-[768px]:hidden"
+          className="h-[40px] w-[40px] rounded-lg bg-white shadow-gray-800 max-[576px]:h-[30px] max-[576px]:w-[30px] min-[768px]:hidden "
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -223,12 +223,8 @@ const Sidebar = () => {
               </div>
             </div>
             <div className="basis-[20%] text-center">
-              <Button className="my-[10px] h-[56px] w-[56px] rounded-[28px] bg-transparent p-0">
-                <img
-                  src={assets.images.avatar1}
-                  alt="icon"
-                  className="h-full w-full max-w-full object-contain"
-                />
+              <Button className="my-[8px] h-[56px] w-[56px] rounded-[28px] bg-[#F27426] p-0">
+                <CircleUserRound size={65} />
               </Button>
               <Button
                 onClick={handleLogout}
