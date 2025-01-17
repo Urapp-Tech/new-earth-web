@@ -80,8 +80,8 @@ const LoginPage = () => {
 
   return (
     <div className="w-full">
-      <div className="mx-auto  flex w-full  items-center justify-around max-[1560px]:items-center">
-        <div className="my-[10px] h-screen w-[50%] self-center bg-white px-[30px] py-[10%]">
+      <div className="mx-auto  flex w-full  items-center justify-around max-[1560px]:items-center max-[1024px]:flex-col">
+        <div className="my-[10px] h-screen w-[50%] self-center bg-white px-[30px] py-[10%] max-[1024px]:w-full">
           <div className=" mx-auto max-w-[460px]">
             <div className="py-[20px] ">
               <h1 className="text-center text-[64px] font-semibold leading-normal text-secondary">
@@ -181,7 +181,7 @@ const LoginPage = () => {
             </form>
           </div>
         </div>
-        <div className="w-[50%] px-3 py-2 max-[768px]:w-full max-[768px]:flex-1 max-[768px]:py-0">
+        <div className="w-[50%] px-3 py-2 max-[768px]:w-full max-[768px]:flex-1 max-[768px]:py-0 max-[1024px]:hidden">
           <div className="mx-auto  flex max-h-[834px] items-center justify-center overflow-hidden rounded-lg max-[1560px]:max-h-[96vh] max-[768px]:max-h-screen">
             <div className="flex">
               <div className="relative min-h-[984px] w-[735px] flex-1 overflow-hidden">

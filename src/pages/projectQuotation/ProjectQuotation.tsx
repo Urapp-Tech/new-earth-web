@@ -3,14 +3,14 @@
 // import ViewApp from '@/components/common/Viewer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 // import { fetchProjectAttachments } from '@/redux/features/projectAttachmentsSlice';
-import { FileText } from 'lucide-react';
-import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
 import { fetchProjectQuotations } from '@/redux/features/projectQuotationSlice';
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import dayjs from 'dayjs';
+import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
 import { RootState } from '@/redux/store';
 import { formatCurrency } from '@/utils/helpers';
+import dayjs from 'dayjs';
+import { FileText } from 'lucide-react';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 export default function ProjectQuotation() {
   const dispatch = useAppDispatch();
@@ -65,16 +65,16 @@ export default function ProjectQuotation() {
   return (
     <div>
       <div className="p-2 max-[1024px]:px-[40px] max-[768px]:p-0">
-        <div className="mb-5 text-[28px] text-secondary max-[576px]:text-center">
+        <div className="mb-5 text-[28px] text-secondary max-[576px]:text-center max-[768px]:text-[18px] max-[576px]:text-{16px}">
           Project Quotations and Payments
         </div>
         <div className="rounded-[20px]  bg-white">
           <Tabs defaultValue={tab} className="w-full ">
-            <div className="tabs--head max-[576px]:overflow-y-hidden max-[490px]:overflow-x-scroll">
-              <TabsList className="w-full justify-start p-0 max-[490px]:w-[580px]">
+            <div className="tabs--head max-[768px]:overflow-y-hidden max-[768px]:overflow-x-scroll">
+              <TabsList className="w-full justify-start p-0 max-[768px]:w-[780px]">
                 <TabsTrigger
                   value="Quotation"
-                  className="ne-tabs h-auto min-w-[184px] rounded-t-[20px] p-[12px] max-[768px]:min-w-[148px] max-[576px]:text-[16px]"
+                  className="ne-tabs h-auto min-w-[184px] rounded-t-[20px] p-[12px] max-[768px]:min-w-[148px] truncate max-[576px]:text-[16px] "
                 >
                   Quotation Cost Slips
                 </TabsTrigger>

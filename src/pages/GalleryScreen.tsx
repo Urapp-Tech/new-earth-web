@@ -3,15 +3,15 @@ import ViewApp from '@/components/common/Viewer';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ProjectAttachment } from '@/interfaces/project-attachments';
 import { fetchProjectAttachments } from '@/redux/features/projectAttachmentsSlice';
-import { FileText } from 'lucide-react';
 import {
   fetchProjects,
   setSelectedProject,
 } from '@/redux/features/projectSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
+import dayjs from 'dayjs';
+import { FileText } from 'lucide-react';
 import { memo, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import dayjs from 'dayjs';
 
 const GalleryScreen = () => {
   const dispatch = useAppDispatch();
@@ -79,8 +79,8 @@ const GalleryScreen = () => {
         </div>
         <div className="rounded-[20px]  bg-white">
           <Tabs defaultValue={tab} className="w-full ">
-            <div className="tabs--head max-[576px]:overflow-y-hidden max-[490px]:overflow-x-scroll">
-              <TabsList className="w-full justify-start p-0 max-[490px]:w-[580px]">
+            <div className="tabs--head max-[768px]:overflow-y-hidden max-[768px]:overflow-x-scroll">
+              <TabsList className="w-full justify-start p-0 max-[768px]:w-[780px]">
                 <TabsTrigger
                   value="ImagesandVideos"
                   className="ne-tabs h-auto min-w-[184px] rounded-t-[20px] p-[12px] max-[768px]:min-w-[148px] max-[576px]:text-[16px]"
@@ -103,7 +103,7 @@ const GalleryScreen = () => {
             </div>
 
             <TabsContent value="ImagesandVideos" className="m-0">
-              <div className="flex flex-wrap justify-start gap-[15px] p-5 ">
+              <div className="flex flex-wrap justify-start gap-[15px] p-5 max-[576px]:justify-center">
                 {attachments
                   .filter(
                     (a) =>
@@ -148,7 +148,7 @@ const GalleryScreen = () => {
               </div>
             </TabsContent>
             <TabsContent value="3drendersandblueprints" className="m-0">
-              <div className="flex flex-wrap justify-start gap-[15px] p-5 ">
+              <div className="flex flex-wrap justify-start gap-[15px] p-5  max-[576px]:justify-center">
                 {attachments
                   .filter(
                     (a) =>
