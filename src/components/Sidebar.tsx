@@ -1,5 +1,6 @@
 import assets from '@/assets';
 import { logout } from '@/redux/features/authStateSlice';
+import { setRemoveProject } from '@/redux/features/projectSlice';
 import { useAppDispatch } from '@/redux/redux-hooks';
 import React from 'react';
 import Drawer from 'react-modern-drawer';
@@ -20,6 +21,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(setRemoveProject());
     navigate('/auth/login');
   };
   const [isOpen, setIsOpen] = React.useState(false);

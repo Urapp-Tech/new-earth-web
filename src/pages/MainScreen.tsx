@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import assets from '@/assets';
 import {
   Select,
@@ -16,7 +17,6 @@ import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
 import { CURRENCY } from '@/utils/constant';
 import { formatCurrency } from '@/utils/helpers';
 // import { Progress } from '@/components/ui/progress';
-import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { FileText } from 'lucide-react';
 import dayjs from 'dayjs';
@@ -33,34 +33,22 @@ const MainScreen = () => {
   const { attachments } = useAppSelector((s) => s.projectAttachmentsState);
   const { dashboard } = useAppSelector((s) => s.projectdashboardState);
 
-  const fetchProjectsData = () => {
-    dispatch(fetchProjects({}));
-  };
-
   useEffect(() => {
-    fetchProjectsData();
+    dispatch(fetchProjects({}));
   }, [dispatch]);
 
   useEffect(() => {
-    if (projects.length > 0 && selectedProjects?.id === null) {
+    if (projects.length > 0 && selectedProjects === null) {
       dispatch(setSelectedProject(projects[0]));
     }
   }, [projects]);
 
-  console.log('selectedProjects', selectedProjects);
-
   useEffect(() => {
-    if (selectedProjects) {
-      dispatch(fetchProjectAttachments({ project_id: selectedProjects.id }));
+    if (selectedProjects?.id) {
+      dispatch(fetchProjectAttachments({ project_id: selectedProjects?.id }));
       dispatch(fetchProjectDashboard({ projectId: selectedProjects?.id }));
     }
   }, [selectedProjects]);
-
-  //   const fetchProjectActivityData = () => {
-  //     if (selectedProjects) {
-  //       dispatch(fetchProjectDashboard({ projectId: selectedProjects?.id }));
-  //     }
-  //   };
 
   const setLastVideo = () => {
     const lastVideo: any = attachments
@@ -70,7 +58,7 @@ const MainScreen = () => {
           attachment.category !== '3d' &&
           attachment.category !== 'Blueprint'
       )
-      .sort((a, b) => {
+      .sort((a: any, b: any) => {
         const dateA = new Date(a.uploadedAt).getTime();
         const dateB = new Date(b.uploadedAt).getTime();
 
@@ -92,7 +80,7 @@ const MainScreen = () => {
           attachment.category !== '3d' &&
           attachment.category !== 'Blueprint'
       )
-      .sort((a, b) => {
+      .sort((a: any, b: any) => {
         const dateA = new Date(a.uploadedAt).getTime();
         const dateB = new Date(b.uploadedAt).getTime();
 
@@ -104,7 +92,6 @@ const MainScreen = () => {
     //     attachment.attachmentType === 'image' &&
     //     (attachment.category !== '3d' || attachment.category !== 'Blueprint')
     // );
-    console.log('lastVideo', lastVideo);
 
     if (lastVideo) {
       setImage(lastVideo);
@@ -114,7 +101,7 @@ const MainScreen = () => {
   };
   const set3dLastImage = () => {
     const lastVideo = attachments.find(
-      (attachment) =>
+      (attachment: any) =>
         (attachment.attachmentType === 'document' ||
           attachment.attachmentType === 'image') &&
         attachment.category === '3d'
@@ -129,7 +116,7 @@ const MainScreen = () => {
 
   const setLastDoc = () => {
     const lastVideo = attachments.find(
-      (attachment) =>
+      (attachment: any) =>
         attachment.attachmentType === 'document' &&
         attachment.category === 'Blueprint'
     );
@@ -179,11 +166,11 @@ const MainScreen = () => {
     setLastDoc();
   }, [attachments]);
 
-  console.log('daysPassed', image, video);
+  //   console.log('daysPassed', image, video);
 
   return (
     <>
-      {daysPassed >= 1 && (
+      {selectedProjects?.id && daysPassed >= 1 && (
         <div className="mb-5">
           <div className="relative h-[40px] w-[99%] rounded-xl bg-gray-200">
             <div
@@ -238,54 +225,6 @@ const MainScreen = () => {
         </Select>
       </div>
       <div className="flex gap-3 rounded-[40px] max-[1024px]:flex-col">
-        {/* <div className="flex basis-[50%] items-center max-[1024px]:basis-[100%]">
-          <div className="max-w-[656px] max-[1024px]:mx-auto max-[1024px]:max-w-[90%] max-[768px]:max-w-full">
-            <div className="mb-2 flex items-center justify-between px-4">
-              <span className="mb-2 block text-[16px] font-medium capitalize leading-normal text-secondary">
-                Most recent progress videos and images
-              </span>
-              <NavLink
-                to="gallery"
-                className="block text-[14px] font-medium capitalize leading-normal text-secondary underline"
-              >
-                see all
-              </NavLink>
-            </div>
-            {image?.uploadedAt > video?.uploadedAt && image?.filePath ? (
-              <img
-                src={image?.filePath}
-                alt="3D-3dImage"
-                className="h-[200px] object-cover"
-              />
-            ) : (
-              image?.uploadedAt > video?.uploadedAt && (
-                <img
-                  src={assets.images.noFile}
-                  alt="img"
-                  className="h-[350px] w-[700px] rounded-3xl object-cover"
-                />
-              )
-            )}
-
-            {video?.uploadedAt > image?.uploadedAt && video?.filePath ? (
-              <video
-                className="h-full max-h-[350px] w-full rounded-[20px]"
-                controls
-              >
-                <source src={video?.filePath} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            ) : (
-              video?.uploadedAt > image?.uploadedAt && (
-                <img
-                  src={assets.images.noVideo}
-                  alt="video"
-                  className="h-[350px] w-[700px] rounded-3xl object-cover"
-                />
-              )
-            )}
-          </div>
-        </div> */}
         <div className="basis-[50%] px-4 max-[1260px]:my-2">
           <div className="h-[400px] rounded-[40px] border-2 p-5">
             <NavLink to="/gallery">
@@ -311,43 +250,53 @@ const MainScreen = () => {
                 </svg>
               </div>
             </NavLink>
-            <div className="mx-auto h-[250px] max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
-              {image?.uploadedAt > video?.uploadedAt && image?.filePath ? (
-                <div className="flex h-full items-center justify-center">
-                  <img
-                    src={image?.filePath}
-                    alt="3D-3dImage"
-                    className="h-[150px] object-contain"
-                  />
-                </div>
-              ) : (
-                image?.uploadedAt > video?.uploadedAt && (
-                  <img
-                    src={assets.images.noFile}
-                    alt="img"
-                    className="h-[350px] w-[700px] rounded-3xl object-cover"
-                  />
-                )
-              )}
+            {selectedProjects?.id ? (
+              <div className="mx-auto h-[250px] max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
+                {image?.uploadedAt > video?.uploadedAt && image?.filePath ? (
+                  <div className="flex h-full items-center justify-center">
+                    <img
+                      src={image?.filePath}
+                      alt="3D-3dImage"
+                      className="mt-10 max-h-[300px] rounded object-cover"
+                    />
+                  </div>
+                ) : (
+                  image?.uploadedAt > video?.uploadedAt && (
+                    <img
+                      src={assets.images.noFile}
+                      alt="img"
+                      className="h-[350px] w-[700px] rounded-3xl object-cover"
+                    />
+                  )
+                )}
 
-              {video?.uploadedAt > image?.uploadedAt && video?.filePath ? (
-                <video
-                  className="h-full max-h-[350px] w-full rounded-[20px]"
-                  controls
-                >
-                  <source src={video?.filePath} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              ) : (
-                video?.uploadedAt > image?.uploadedAt && (
-                  <img
-                    src={assets.images.noVideo}
-                    alt="video"
-                    className="h-[350px] w-[700px] rounded-3xl object-cover"
-                  />
-                )
-              )}
-            </div>
+                {video?.uploadedAt >= image?.uploadedAt && video?.filePath ? (
+                  <video
+                    className="h-full max-h-[350px] w-full rounded-[20px]"
+                    controls
+                  >
+                    <source src={video?.filePath} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                ) : (
+                  video?.uploadedAt > image?.uploadedAt && (
+                    <img
+                      src={assets.images.noVideo}
+                      alt="video"
+                      className="h-[350px] w-[700px] rounded-3xl object-cover"
+                    />
+                  )
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center justify-center">
+                <img
+                  src={assets.images.noFile}
+                  alt="3D-3dImage"
+                  className="mt-3 max-h-[300px] rounded object-cover"
+                />
+              </div>
+            )}
           </div>
         </div>
         <div className="basis-1/2 px-1 max-[1024px]:basis-full max-[1024px]:px-3 max-[768px]:px-0">

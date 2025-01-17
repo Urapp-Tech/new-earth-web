@@ -5,7 +5,7 @@ import LocalStorageUtil from '@/utils/LocalStorageUtil';
 
 type InitialState = {
   projects: Project[];
-  selectedProjects?: Project;
+  selectedProjects?: Project | any;
   loading: boolean;
   notify: boolean;
   total_count: number;
@@ -22,19 +22,13 @@ const initialState: InitialState = {
   notifyMessage: {},
 };
 
-
-
 export const fetchProjects = createAsyncThunk(
   'projects/fetchProjects',
-  async (
-    data: {},
-    { rejectWithValue }
-  ) => {
+  async (data: {}, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(
-        `/app/new-earth/projects/list`,
-        { params: data }
-      );
+      const response = await axiosInstance.get(`/app/new-earth/projects/list`, {
+        params: data,
+      });
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error);
@@ -59,6 +53,11 @@ export const projectSlice = createSlice({
     showNotifyMessage: (state, action: PayloadAction<any>) => {
       state.notifyMessage = action.payload;
       state.notify = true;
+    },
+    setRemoveProject: (state) => {
+      LocalStorageUtil.removeItem('SELECTED_PROJECT');
+      state.projects = [];
+      state.selectedProjects = null;
     },
   },
   extraReducers: (builder) => {
@@ -87,7 +86,12 @@ export const projectSlice = createSlice({
   },
 });
 
-export const { setProjects, setNotifyState, showNotifyMessage, setSelectedProject } =
-projectSlice.actions;
+export const {
+  setProjects,
+  setNotifyState,
+  showNotifyMessage,
+  setSelectedProject,
+  setRemoveProject,
+} = projectSlice.actions;
 
 export default projectSlice.reducer;

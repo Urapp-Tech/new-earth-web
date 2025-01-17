@@ -3,7 +3,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ProjectAttachment } from '@/interfaces/project-attachments';
 
 type InitialState = {
-  attachments: ProjectAttachment[];
+  attachments: ProjectAttachment[] | any;
   loading: boolean;
   notify: boolean;
   total_count: number;
@@ -22,7 +22,7 @@ export const fetchProjectAttachments = createAsyncThunk(
   'projects/fetchProjectAttachments',
   async (
     data: {
-      project_id: string;
+      project_id: string | any;
     },
     { rejectWithValue }
   ) => {
