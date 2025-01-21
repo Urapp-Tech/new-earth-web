@@ -131,7 +131,7 @@ const Sidebar = () => {
         </div>
       </div>
       {/* drawer */}
-      <div className="side-draw flex w-[10%] max-w-[100px] flex-col gap-[70px] bg-lightgrey px-[20px] max-[768px]:w-[15%] max-[576px]:absolute max-[576px]:left-[-8px] max-[576px]:top-[24px] max-[576px]:h-0">
+      <div className="side-draw flex w-[10%] max-w-[100px] flex-col gap-[70px] bg-lightgrey px-[20px] max-[768px]:w-[15%] max-[576px]:absolute max-[576px]:left-[-8px] max-[576px]:top-[25px] max-[576px]:h-0">
         <button
           onClick={toggleDrawer}
           className="h-[40px] w-[40px] rounded-lg bg-white shadow-gray-800 max-[576px]:h-[30px] max-[576px]:w-[30px] min-[768px]:hidden "

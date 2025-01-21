@@ -61,16 +61,16 @@ const GalleryScreen = () => {
         <div className="rounded-[20px]  bg-white">
           <Tabs defaultValue={tab} className="w-full ">
             <div className="tabs--head max-[768px]:overflow-y-hidden max-[768px]:overflow-x-scroll">
-              <TabsList className="w-full justify-start p-0 max-[768px]:w-[780px]">
+              <TabsList className="w-full justify-start p-0 max-[768px]:w-[780px] max-[576px]:w-[600px] max-[400px]:w-[500px]">
                 <TabsTrigger
                   value="ImagesandVideos"
-                  className="ne-tabs h-auto min-w-[184px] rounded-t-[20px] p-[12px] max-[768px]:min-w-[148px] max-[576px]:text-[16px]"
+                  className="ne-tabs h-auto min-w-[184px] rounded-t-[20px] p-[12px] max-[768px]:min-w-[148px] max-[576px]:text-[16px] max-[480px]:text-[13px]"
                 >
                   Images and Videos
                 </TabsTrigger>
                 <TabsTrigger
                   value="3drendersandblueprints"
-                  className="ne-tabs h-auto min-w-[184px] rounded-t-[20px]  p-[12px] shadow-none max-[768px]:min-w-[148px] max-[576px]:text-[16px]"
+                  className="ne-tabs h-auto min-w-[184px] rounded-t-[20px]  p-[12px] shadow-none max-[768px]:min-w-[148px] max-[576px]:text-[16px] max-[480px]:text-[13px]"
                 >
                   3d-renders and blueprints
                 </TabsTrigger>

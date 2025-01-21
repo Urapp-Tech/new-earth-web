@@ -33,7 +33,7 @@ const TopBar = () => {
           </span>
         </div>
         <div className="basis-[50%] max-[1024px]:basis-[65%] max-[768px]:basis-[30%] max-[576px]:absolute right-[4px]">
-          <div className="  flex items-center justify-between gap-4 max-[576px]:gap-0 max-[400px]:gap-2">
+          <div className="  flex items-center justify-between gap-4 max-[576px]:gap-0 max-[400px]:gap-2 max-[400px]:pr-[4px]">
             <div className="w-full max-[768px]:hidden">
               <Input
                 type="search"

@@ -1,4 +1,3 @@
-import { useEffect, useMemo, useState } from 'react';
 import assets from '@/assets';
 import {
   Select,
@@ -16,6 +15,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
 import { CURRENCY } from '@/utils/constant';
 import { formatCurrency } from '@/utils/helpers';
+import { useEffect, useMemo, useState } from 'react';
 // import { Progress } from '@/components/ui/progress';
 import dayjs from 'dayjs';
 import { FileText } from 'lucide-react';
@@ -255,7 +255,7 @@ const MainScreen = () => {
   return (
     <>
       {selectedProjects?.id && daysPassed >= 1 && (
-        <div className="mb-5 px-1">
+        <div className="mb-5 px-1 max-[768px]:my-5">
           <div className="relative mx-auto h-[40px] w-[99%] rounded-xl bg-gray-200">
             <div
               className="absolute left-0 top-0 h-full rounded-xl bg-green-500"
@@ -265,17 +265,17 @@ const MainScreen = () => {
             />
 
             <span
-              className="absolute top-2 translate-y-full text-sm font-medium text-black"
+              className="absolute top-[-33px] translate-y-full text-sm font-medium text-black flex justify-center w-full "
               style={{
-                left: `${calculateProgressWidth(dashboard?.startDate, dashboard?.endDate, dashboard?.currentDate)}%`,
-                transform: 'translateX(-15%)',
+                left: '0',
+                transform: 'translateX(0)',
               }}
             >
               Day {daysPassed}
             </span>
           </div>
 
-          <div className="mt-1 flex justify-between px-3 text-sm text-gray-500">
+          <div className="mt-1 flex justify-between px-3 text-sm text-gray-500 py-2">
             <span>{startDate.format('YYYY-MM-DD')} ( Day 01 )</span>
             <span>{totalDays} Days </span>
           </div>
@@ -358,7 +358,7 @@ const MainScreen = () => {
           </div>
         </div> */}
         <div className="basis-[50%] px-4 max-[1260px]:my-2">
-          <div className="h-[400px] rounded-[40px] border-2 p-5 max-[1024px]:h-auto">
+          <div className=" rounded-[40px] border-2 p-5 max-[1024px]:h-auto">
             <NavLink to="/gallery">
               <div className="mb-[15px] flex items-center justify-start gap-2">
                 <img
@@ -409,9 +409,9 @@ const MainScreen = () => {
       </div>
 
       <div className="mt-4 flex min-h-[400px] max-[1260px]:flex-col">
-        <div className="basis-[50%] max-[1260px]:my-3 max-[1260px]:max-w-[600px] max-[1024px]:max-w-full">
-          <div className="bg-ban-two p-5 max-[1024px]:min-h-[500px] max-[1024px]:p-7 max-[576px]:p-[20px]">
-            <div className="flex max-w-full items-center justify-between gap-2 py-2 text-[22px] font-medium leading-normal text-secondary  max-[768px]:text-[20px]">
+        <div className="basis-[50%] max-[1260px]:my-3 max-[1260px]:max-w-[600px] max-[1024px]:max-w-full ">
+          <div className="bg-ban-two p-5 max-[1024px]:min-h-[500px] max-[1024px]:p-7 max-[576px]:p-[20px] max-[480px]:background-[#fff]">
+            <div className="flex max-w-full items-center justify-between gap-2 py-2 text-[22px] font-medium leading-normal text-secondary  max-[768px]:text-[20px] max-[480px]:flex-col max-[480px]:items-start">
               <span className="">Project Quotations and Payments</span>
               <span
                 onClick={() => navigate('./project-quotations')}
@@ -545,7 +545,7 @@ const MainScreen = () => {
                 </svg>
               </div>
             </NavLink>
-            <div className="mx-auto h-[250px] max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
+            <div className="mx-auto h-full max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
               {dImage?.filePath ? (
                 <>
                   <div className="flex justify-center p-1">
