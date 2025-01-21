@@ -31,7 +31,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className=" flex w-[10%] max-w-[100px] flex-col gap-[70px] bg-lightgrey px-[20px] max-[1024px]:w-[70px] max-[768px]:hidden">
+      <div className=" flex w-[10%] max-w-[100px] flex-col gap-[70px] bg-lightgrey px-[20px] max-[1024px]:w-[70px] max-[767.98px]:hidden">
         <div className="mx-auto basis-[60%]">
           <div className="max-h-[380px] w-[80px] rounded-[45px] bg-grey text-center">
             <TooltipProvider delayDuration={0}>
