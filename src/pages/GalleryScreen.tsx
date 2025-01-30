@@ -48,10 +48,6 @@ const GalleryScreen = () => {
     }
   }, [selectedProjects]);
 
-  const handlePreviewer = (file: string) => {
-    setIsPreview({ state: true, source: file });
-  };
-
   return (
     <>
       <div className=" p-2 max-[1024px]:px-[40px] max-[768px]:p-0">

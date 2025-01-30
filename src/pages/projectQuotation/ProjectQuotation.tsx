@@ -8,7 +8,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { fetchProjectQuotations } from '@/redux/features/projectQuotationSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
 import { RootState } from '@/redux/store';
-import { formatCurrency } from '@/utils/helpers';
 import dayjs from 'dayjs';
 import { FileText } from 'lucide-react';
 import { useParams } from 'react-router-dom';
