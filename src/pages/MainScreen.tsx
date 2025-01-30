@@ -101,12 +101,20 @@ const MainScreen = () => {
     }
   };
   const set3dLastImage = () => {
-    const lastVideo = attachments.find(
-      (attachment: any) =>
-        (attachment.attachmentType === 'document' ||
-          attachment.attachmentType === 'image') &&
-        attachment.category === '3d'
-    );
+    const lastVideo = attachments
+      .filter(
+        (attachment: any) =>
+          (attachment.attachmentType === 'document' ||
+            attachment.attachmentType === 'image') &&
+          attachment.category === '3d'
+      )
+      .sort((a: any, b: any) => {
+        const dateA = new Date(a.uploadedAt).getTime();
+        const dateB = new Date(b.uploadedAt).getTime();
+
+        return dateB - dateA; // Sort in descending order (latest first)
+      })
+      .shift();
 
     if (lastVideo) {
       setdImage(lastVideo);
@@ -252,6 +260,8 @@ const MainScreen = () => {
     return video.uploadedAt >= image.uploadedAt ? videoElement : imageElement;
   }, [image, video]);
 
+  console.log('dImage', dImage);
+
   return (
     <>
       {selectedProjects?.id && daysPassed >= 1 && (
@@ -265,7 +275,7 @@ const MainScreen = () => {
             />
 
             <span
-              className="absolute top-[-33px] translate-y-full text-sm font-medium text-black flex justify-center w-full "
+              className="absolute top-[-33px] flex w-full translate-y-full justify-center text-sm font-medium text-black "
               style={{
                 left: '0',
                 transform: 'translateX(0)',
@@ -275,7 +285,7 @@ const MainScreen = () => {
             </span>
           </div>
 
-          <div className="mt-1 flex justify-between px-3 text-sm text-gray-500 py-2">
+          <div className="mt-1 flex justify-between px-3 py-2 text-sm text-gray-500">
             <span>{startDate.format('YYYY-MM-DD')} ( Day 01 )</span>
             <span>{totalDays} Days </span>
           </div>
@@ -410,7 +420,7 @@ const MainScreen = () => {
 
       <div className="mt-4 flex min-h-[400px] max-[1260px]:flex-col">
         <div className="basis-[50%] max-[1260px]:my-3 max-[1260px]:max-w-[600px] max-[1024px]:max-w-full ">
-          <div className="bg-ban-two p-5 max-[1024px]:min-h-[500px] max-[1024px]:p-7 max-[576px]:p-[20px] max-[480px]:background-[#fff]">
+          <div className="bg-ban-two max-[480px]:background-[#fff] p-5 max-[1024px]:min-h-[500px] max-[1024px]:p-7 max-[576px]:p-[20px]">
             <div className="flex max-w-full items-center justify-between gap-2 py-2 text-[22px] font-medium leading-normal text-secondary  max-[768px]:text-[20px] max-[480px]:flex-col max-[480px]:items-start">
               <span className="">Project Quotations and Payments</span>
               <span
@@ -496,15 +506,15 @@ const MainScreen = () => {
                 }
               </span>
             </div>
-            <div className="mt-4 flex items-center gap-2 max-[576px]:flex-col max-[576px]:items-start">
-              <span className="text-[14px] font-medium capitalize leading-normal text-secondary max-[480px]:max-w-[120px]">
+            {/* <div className="mt-4 flex items-center gap-2 max-[576px]:flex-col max-[576px]:items-start"> */}
+            {/* <span className="text-[14px] font-medium capitalize leading-normal text-secondary max-[480px]:max-w-[120px]">
                 Labor & Material amount
-              </span>
-              {/* <span className="text-[14px] font-medium capitalize leading-normal text-secondary ">
+              </span> */}
+            {/* <span className="text-[14px] font-medium capitalize leading-normal text-secondary ">
                 27th June 2024
               </span> */}
-            </div>
-            <div className="mb-4 max-w-[200px] text-[24px] font-bold leading-normal text-[#EB5A00]">
+            {/* </div> */}
+            {/* <div className="mb-4 max-w-[200px] text-[24px] font-bold leading-normal text-[#EB5A00]">
               {
                 formatCurrency(dashboard?.totalLabor ?? 0, CURRENCY).split(
                   '.'
@@ -517,12 +527,12 @@ const MainScreen = () => {
                   )[1]
                 }
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="basis-[50%] px-4 max-[1260px]:my-2">
           <div className="h-[400px] rounded-[40px] border-2 bg-[#BBCDD2] p-5">
-            <NavLink to="/gallery">
+            <NavLink to="/gallery" state={{ tab: '3drendersandblueprints' }}>
               <div className="mb-[15px] flex items-center justify-start gap-2">
                 <img
                   src={assets.images.playIcon}
@@ -546,24 +556,36 @@ const MainScreen = () => {
               </div>
             </NavLink>
             <div className="mx-auto h-full max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
-              {dImage?.filePath ? (
-                <>
-                  <div className="flex justify-center p-1">
-                    <a href={dImage.filePath} rel="noopener noreferrer">
-                      <FileText size={250} className="opacity-[.7]" />
-                    </a>
-                  </div>
-                  <div className="text-center font-semibold capitalize">
-                    <h5 className="text-[16px]">{dImage.title}</h5>
-                  </div>
-                </>
+              {dImage?.attachmentType === 'document' ? (
+                dImage?.filePath && (
+                  <>
+                    <div className="flex justify-center p-1">
+                      <a href={dImage.filePath} rel="noopener noreferrer">
+                        <FileText size={250} className="opacity-[.7]" />
+                      </a>
+                    </div>
+                    <div className="text-center font-semibold capitalize">
+                      <h5 className="text-[16px]">{dImage.title}</h5>
+                    </div>
+                  </>
+                )
+              ) : dImage?.attachmentType === 'image' ? (
+                <div className="flex items-center justify-center">
+                  <img
+                    src={dImage.filePath}
+                    alt="model"
+                    className="min-w-[40%] max-w-[100%] object-contain"
+                  />
+                </div>
               ) : (
                 <>
-                  <img
-                    src={assets.images.noFile}
-                    alt="3D-3dImage"
-                    className="h-full w-full object-contain p-5 max-[1260px]:object-cover"
-                  />
+                  <div className="flex items-center justify-center">
+                    <img
+                      src={assets.images.noFile}
+                      alt="3D-3dImage"
+                      className="min-w-[40%] max-w-[50%] object-contain p-5 max-[1260px]:object-cover"
+                    />
+                  </div>
                   <div className="text-center">
                     <h5 className="text-[16px] opacity-[0.5]">
                       No Renders Found
@@ -580,3 +602,18 @@ const MainScreen = () => {
 };
 
 export default MainScreen;
+
+{
+  /* <>
+                  <img
+                    src={assets.images.noFile}
+                    alt="3D-3dImage"
+                    className="h-full w-full object-contain p-5 max-[1260px]:object-cover"
+                  />
+                  <div className="text-center">
+                    <h5 className="text-[16px] opacity-[0.5]">
+                      No Renders Found
+                    </h5>
+                  </div>
+                </> */
+}

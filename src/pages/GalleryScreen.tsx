@@ -1,5 +1,6 @@
 // import assets from '@/assets';
 import ViewApp from '@/components/common/Viewer';
+import ImagePreview from '@/components/PreviewImageBox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ProjectAttachment } from '@/interfaces/project-attachments';
 import { fetchProjectAttachments } from '@/redux/features/projectAttachmentsSlice';
@@ -11,21 +12,25 @@ import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
 import dayjs from 'dayjs';
 import { FileText } from 'lucide-react';
 import { memo, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 const GalleryScreen = () => {
   const dispatch = useAppDispatch();
   const [currentImage, setCurrentImage] = useState(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [allImages] = useState<ProjectAttachment[]>([]);
+  const [isPreview, setIsPreview] = useState<{
+    state: boolean;
+    source: string;
+  }>({ state: false, source: '' });
 
   const { projects, selectedProjects } = useAppSelector((s) => s.projectState);
   const { attachments } = useAppSelector((s) => s.projectAttachmentsState);
   const fetchProjectsData = () => {
     dispatch(fetchProjects({}));
   };
-
-  const { tab = 'ImagesandVideos' } = useParams();
+  const { state } = useLocation();
+  const { tab = state?.tab || 'ImagesandVideos' } = useParams();
 
   useEffect(() => {
     fetchProjectsData();
@@ -43,6 +48,10 @@ const GalleryScreen = () => {
     }
   }, [selectedProjects]);
 
+  const handlePreviewer = (file: string) => {
+    setIsPreview({ state: true, source: file });
+  };
+
   return (
     <>
       <div className=" p-2 max-[1024px]:px-[40px] max-[768px]:p-0">
@@ -53,6 +62,13 @@ const GalleryScreen = () => {
             setCurrentImage={setCurrentImage}
             currentImage={currentImage}
             images={allImages}
+          />
+        )}
+        {isPreview?.state && (
+          <ImagePreview
+            open={isPreview.state}
+            setOpen={setIsPreview}
+            src={isPreview.source}
           />
         )}
         <div className="mb-5 text-[28px] text-secondary max-[576px]:text-center">
@@ -109,13 +125,19 @@ const GalleryScreen = () => {
                             </a>
                           )}
                           {image.attachmentType === 'image' && (
-                            <a href={image.filePath} rel="noopener noreferrer">
-                              <img
-                                src={image.filePath}
-                                alt="model"
-                                className="h-full  w-full rounded-[20px] object-contain"
-                              />
-                            </a>
+                            // <a href={image.filePath} rel="noopener noreferrer">
+                            <img
+                              onClick={() =>
+                                setIsPreview({
+                                  state: true,
+                                  source: image.filePath,
+                                })
+                              }
+                              src={image.filePath}
+                              alt="model"
+                              className="h-full  w-full rounded-[20px] object-contain"
+                            />
+                            // </a>
                           )}
                         </div>
 
@@ -142,9 +164,28 @@ const GalleryScreen = () => {
                       <div key={i} className="my-4 basis-[20%]">
                         <div className="mx-auto mb-3 h-[210px] w-[210px] cursor-pointer rounded-[20px] border-[1px] border-[#e3e3e3]">
                           <div className="flex h-full items-center justify-center">
-                            <a href={image.filePath} rel="noopener noreferrer">
-                              <FileText size={150} />
-                            </a>
+                            {image.attachmentType === 'document' ? (
+                              <a
+                                href={image.filePath}
+                                rel="noopener noreferrer"
+                              >
+                                <FileText size={150} />
+                              </a>
+                            ) : (
+                              image.attachmentType === 'image' && (
+                                <img
+                                  onClick={() =>
+                                    setIsPreview({
+                                      state: true,
+                                      source: image.filePath,
+                                    })
+                                  }
+                                  src={image.filePath}
+                                  alt="model"
+                                  className="h-full w-full object-contain"
+                                />
+                              )
+                            )}
                           </div>
                           {/* <img
                             src={image.filePath}

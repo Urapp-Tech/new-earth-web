@@ -1,6 +1,8 @@
 // import React from 'react';
 // import assets from '@/assets';
 // import ViewApp from '@/components/common/Viewer';
+import { useEffect, useState } from 'react';
+import ImagePreview from '@/components/PreviewImageBox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 // import { fetchProjectAttachments } from '@/redux/features/projectAttachmentsSlice';
 import { fetchProjectQuotations } from '@/redux/features/projectQuotationSlice';
@@ -9,14 +11,15 @@ import { RootState } from '@/redux/store';
 import { formatCurrency } from '@/utils/helpers';
 import dayjs from 'dayjs';
 import { FileText } from 'lucide-react';
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 export default function ProjectQuotation() {
   const dispatch = useAppDispatch();
-  // const [currentImage, setCurrentImage] = useState(0);
-  // const [isViewerOpen, setIsViewerOpen] = useState(false);
-  // const [allImages, setAllImages] = useState<any[]>([]);
+  const { tab = 'Quotation' } = useParams();
+  const [isPreview, setIsPreview] = useState<{
+    state: boolean;
+    source: string;
+  }>({ state: false, source: '' });
 
   const { projectQuotations } = useAppSelector(
     (s: RootState) => s.projectQuotationState
@@ -37,35 +40,23 @@ export default function ProjectQuotation() {
     fetchQuotationsData();
   }, []);
 
-  //   const fetchProjectsData = () => {
-  //     dispatch(fetchProjectQuotations({}));
-  //   };
-  //   type: 'QUOTATION',
-  //           projectId: watch('projectId') ? watch('projectId') : '',
+  const isImage = (filePath: string): boolean => {
+    const imageExtensions = ['jpg', 'jpeg', 'png'];
+    const extension = filePath.split('.').pop()?.toLowerCase();
+    return extension ? imageExtensions.includes(extension) : false;
+  };
 
-  // console.log(
-  //   '🚀 ~ ProjectQuotation ~ projectQuotations:',
-  //   projects,
-  //   selectedProjects,
-  //   projectQuotations
-  // );
-  const { tab = 'Quotation' } = useParams();
-
-  //   useEffect(() => {
-  //     if (projects.length > 0 && !selectedProjects) {
-  //       dispatch(setSelectedProject(projects[0]));
-  //     }
-  //   }, [projects]);
-
-  //   useEffect(() => {
-  //     if (selectedProjects) {
-  //       dispatch(fetchProjectAttachments({ project_id: selectedProjects.id }));
-  //     }
-  //   }, [selectedProjects]);
   return (
     <div>
+      {isPreview?.state && (
+        <ImagePreview
+          open={isPreview.state}
+          setOpen={setIsPreview}
+          src={isPreview.source}
+        />
+      )}
       <div className="p-2 max-[1024px]:px-[40px] max-[768px]:p-0">
-        <div className="mb-5 text-[28px] text-secondary max-[576px]:text-center max-[768px]:text-[18px] max-[576px]:text-{16px}">
+        <div className="max-[576px]:text-{16px} mb-5 text-[28px] text-secondary max-[768px]:text-[18px] max-[576px]:text-center">
           Project Quotations and Payments
         </div>
         <div className="rounded-[20px]  bg-white">
@@ -74,21 +65,21 @@ export default function ProjectQuotation() {
               <TabsList className="w-full justify-start p-0 max-[768px]:w-[780px] max-[576px]:w-[600px] max-[400px]:w-[500px]">
                 <TabsTrigger
                   value="Quotation"
-                  className="ne-tabs h-auto min-w-[184px] rounded-t-[20px] p-[12px] max-[768px]:min-w-[148px] truncate max-[576px]:text-[16px] max-[480px]:text-[13px]"
+                  className="ne-tabs h-auto min-w-[184px] truncate rounded-t-[20px] p-[12px] max-[768px]:min-w-[148px] max-[576px]:text-[16px] max-[480px]:text-[13px]"
                 >
-                  Quotation Cost Slips
+                  Quotation Cost
                 </TabsTrigger>
                 <TabsTrigger
                   value="TotalPaid"
                   className="ne-tabs h-auto min-w-[184px] rounded-t-[20px]  p-[12px] shadow-none max-[768px]:min-w-[148px] max-[576px]:text-[16px] max-[480px]:text-[13px]"
                 >
-                  Total Paid Cost Slips
+                  Total Paid Cost
                 </TabsTrigger>
                 <TabsTrigger
                   value="Labor"
                   className="ne-tabs h-auto min-w-[184px] rounded-t-[20px]  p-[12px] shadow-none max-[768px]:min-w-[148px] max-[576px]:text-[16px] max-[480px]:text-[13px]"
                 >
-                  Labor & Material Cost Slips
+                  Labor & Material Cost
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -102,15 +93,32 @@ export default function ProjectQuotation() {
                       <div key={i} className="my-4 basis-[20%]">
                         <div className="mx-auto mb-3 h-[210px] w-[210px] cursor-pointer rounded-[20px] border-[1px] border-[#e3e3e3]">
                           <div className="flex h-full items-center justify-center">
-                            <a href={x.filePath} rel="noopener noreferrer">
+                            {isImage(x.filePath) ? (
+                              <img
+                                onClick={() =>
+                                  setIsPreview({
+                                    state: true,
+                                    source: x.filePath,
+                                  })
+                                }
+                                src={x.filePath}
+                                alt="Uploaded File"
+                                className="h-full w-full rounded-[20px] object-cover"
+                              />
+                            ) : (
+                              <a href={x.filePath} rel="noopener noreferrer">
+                                <FileText size={150} />
+                              </a>
+                            )}
+                            {/* <a href={x.filePath} rel="noopener noreferrer">
                               <FileText size={150} />
-                            </a>
+                            </a> */}
                           </div>
                         </div>
 
-                        <h5 className="text-center text-[16px] font-extrabold">
+                        {/* <h5 className="text-center text-[16px] font-extrabold">
                           {formatCurrency(x.quotationCost, 'PKR')}
-                        </h5>
+                        </h5> */}
                         <h6 className="text-center text-sm opacity-[0.5]">
                           {' '}
                           {dayjs(x.createdAt).format('YYYY-MM-DD')}
@@ -129,15 +137,29 @@ export default function ProjectQuotation() {
                       <div key={i} className="my-4 basis-[20%]">
                         <div className="mx-auto mb-3 h-[210px] w-[210px] cursor-pointer rounded-[20px] border-[1px] border-[#e3e3e3]">
                           <div className="flex h-full items-center justify-center">
-                            <a href={x.filePath} rel="noopener noreferrer">
-                              <FileText size={150} />
-                            </a>
+                            {isImage(x.filePath) ? (
+                              <img
+                                onClick={() =>
+                                  setIsPreview({
+                                    state: true,
+                                    source: x.filePath,
+                                  })
+                                }
+                                src={x.filePath}
+                                alt="Uploaded File"
+                                className="h-full w-full rounded-[20px] object-cover"
+                              />
+                            ) : (
+                              <a href={x.filePath} rel="noopener noreferrer">
+                                <FileText size={150} />
+                              </a>
+                            )}
                           </div>
                         </div>
 
-                        <h5 className="text-center text-[16px] font-extrabold">
+                        {/* <h5 className="text-center text-[16px] font-extrabold">
                           {formatCurrency(x.totalPaidCost, 'PKR')}
-                        </h5>
+                        </h5> */}
                         <h6 className="text-center text-sm opacity-[0.5]">
                           {' '}
                           {dayjs(x.createdAt).format('YYYY-MM-DD')}
@@ -156,15 +178,29 @@ export default function ProjectQuotation() {
                       <div key={i} className="my-4 basis-[20%]">
                         <div className="mx-auto mb-3 h-[210px] w-[210px] cursor-pointer rounded-[20px] border-[1px] border-[#e3e3e3]">
                           <div className="flex h-full items-center justify-center">
-                            <a href={x.filePath} rel="noopener noreferrer">
-                              <FileText size={150} />
-                            </a>
+                            {isImage(x.filePath) ? (
+                              <img
+                                onClick={() =>
+                                  setIsPreview({
+                                    state: true,
+                                    source: x.filePath,
+                                  })
+                                }
+                                src={x.filePath}
+                                alt="Uploaded File"
+                                className="h-full w-full rounded-[20px] object-cover"
+                              />
+                            ) : (
+                              <a href={x.filePath} rel="noopener noreferrer">
+                                <FileText size={150} />
+                              </a>
+                            )}
                           </div>
                         </div>
 
-                        <h5 className="text-center text-[16px] font-extrabold">
+                        {/* <h5 className="text-center text-[16px] font-extrabold">
                           {formatCurrency(x.laborCost, 'PKR')}
-                        </h5>
+                        </h5> */}
                         <h6 className="text-center text-sm opacity-[0.5]">
                           {' '}
                           {dayjs(x.createdAt).format('YYYY-MM-DD')}

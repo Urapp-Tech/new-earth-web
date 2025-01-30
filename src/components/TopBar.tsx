@@ -28,11 +28,11 @@ const TopBar = () => {
           </div>
         </div>
         <div className="basis-[40%] max-[1024px]:basis-[25%] max-[768px]:basis-[50%] max-[460px]:basis-[40%] max-[400px]:basis-[55%]">
-          <span className="block text-[32px] font-medium capitalize leading-normal text-secondary max-[576px]:text-[20px] max-[576px]:truncate max-[360px]:w-[60px]">
+          <span className="block text-[32px] font-medium capitalize leading-normal text-secondary max-[576px]:truncate max-[576px]:text-[20px] max-[360px]:w-[60px]">
             {user?.firstName ?? ''}
           </span>
         </div>
-        <div className="basis-[50%] max-[1024px]:basis-[65%] max-[768px]:basis-[30%] max-[576px]:absolute right-[4px]">
+        <div className="right-[4px] basis-[50%] max-[1024px]:basis-[65%] max-[768px]:basis-[30%] max-[576px]:absolute">
           <div className="  flex items-center justify-between gap-4 max-[576px]:gap-0 max-[400px]:gap-2 max-[400px]:pr-[4px]">
             <div className="w-full max-[768px]:hidden">
               <Input
@@ -40,15 +40,6 @@ const TopBar = () => {
                 placeholder="Search"
                 className="ne-tabs hidden w-full rounded-[20px] border-none outline-none focus-visible:ring-0"
               />
-            </div>
-            <div className="px-2 max-[400px]:p-0">
-              <Button className="h-[40px] w-[40px] rounded-[20px] bg-white p-2 hover:bg-[#ccc]">
-                <img
-                  src={assets.images.bellIcon}
-                  alt="bellIcon"
-                  className="h-full w-full object-contain"
-                />
-              </Button>
             </div>
             <div className="px-2 max-[400px]:p-0">
               <div className="h-[40px] w-[100px] rounded-[20px] bg-white p-[10px] text-center hover:bg-[#ccc] max-[400px]:w-[75px]">
