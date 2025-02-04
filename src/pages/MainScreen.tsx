@@ -531,7 +531,7 @@ const MainScreen = () => {
           </div>
         </div>
         <div className="basis-[50%] px-4 max-[1260px]:my-2">
-          <div className="h-[400px] rounded-[40px] border-2 bg-[#BBCDD2] p-5">
+          <div className="h-[400px] rounded-[40px] border-2 p-5">
             <NavLink to="/gallery" state={{ tab: '3drendersandblueprints' }}>
               <div className="mb-[15px] flex items-center justify-start gap-2">
                 <img
@@ -574,7 +574,7 @@ const MainScreen = () => {
                   <img
                     src={dImage.filePath}
                     alt="model"
-                    className="min-w-[40%] max-w-[80%] object-contain"
+                    className="object-contain sm:max-w-[80%] lg:max-w-[50%]"
                   />
                 </div>
               ) : (
