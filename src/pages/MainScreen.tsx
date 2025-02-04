@@ -574,7 +574,7 @@ const MainScreen = () => {
                   <img
                     src={dImage.filePath}
                     alt="model"
-                    className="object-contain sm:max-w-[80%] lg:max-w-[50%]"
+                    className="xs:max-w-[80%] object-contain sm:max-w-[80%] lg:max-w-[80%] 2xl:max-w-[50%]"
                   />
                 </div>
               ) : (
