@@ -16,15 +16,19 @@ const ImagePreview = ({
 }) => {
   return (
     <Dialog open={open} onOpenChange={() => setOpen({ state: !open })}>
-      <DialogContent className="sm:max-w-[425px] md:max-w-[325px] lg:max-w-[625px]">
+      <DialogContent className="min-h-[480px] sm:max-w-[425px] md:max-w-[325px] lg:max-w-[625px]">
         <DialogHeader>
           <DialogTitle className="">Preview</DialogTitle>
         </DialogHeader>
-        <div className="flex items-center justify-center">
-          <a href={src} rel="noopener noreferrer">
+        <div className="flex items-center justify-center overflow-auto">
+          <a
+            href={src}
+            rel="noopener noreferrer"
+            className="mx-auto block h-[450px] max-w-[350px]"
+          >
             <img
               src={src}
-              className="min-w-[40%] max-w-[100%] object-contain"
+              className="h-full w-full max-w-[100%] object-contain"
             />
           </a>
         </div>
