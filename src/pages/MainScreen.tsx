@@ -137,20 +137,20 @@ const MainScreen = () => {
 
     return (
       <div className="">
-        <div className="grid h-4 grid-cols-12 rounded-2xl bg-[#C9C9C9]">
+        <div className="grid h-[10px] grid-cols-12 rounded-2xl bg-[#C9C9C9]">
           <div className="relative col-span-4 w-full">
             <span
               style={{
                 width: `${demolitionProgressPercent}%`,
               }}
-              className={`absolute left-0 h-[16px] rounded-2xl bg-[#26F22D]`}
+              className={`absolute left-0 h-[10px] rounded-2xl bg-[#26F22D]`}
             ></span>
             <span
               style={{
                 backgroundColor:
                   demolitionProgressPercent === 100 ? `#26F22D` : '#C9C9C9',
               }}
-              className="absolute right-[-5px] top-[-15px] z-10 flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#C9C9C9]"
+              className="absolute right-[-5px] top-[-10px] z-10 flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#C9C9C9]"
             >
               {demolitionProgressPercent === 100 ? (
                 <Check size="20px" color="white" />
@@ -158,7 +158,7 @@ const MainScreen = () => {
                 1
               )}
             </span>
-            <span className="absolute right-[-20px] top-[35px] z-10 flex items-center justify-center">
+            <span className="absolute right-[-20px] top-[25px] z-10 flex items-center justify-center">
               Demolition
             </span>
           </div>
@@ -167,14 +167,14 @@ const MainScreen = () => {
               style={{
                 width: `${constructionProgressPercent}%`,
               }}
-              className={`absolute left-0 h-[16px] rounded-2xl bg-[#26F22D]`}
+              className={`absolute left-0  h-[10px] rounded-2xl bg-[#26F22D]`}
             ></span>
             <span
               style={{
                 backgroundColor:
                   constructionProgressPercent === 100 ? `#26F22D` : '#C9C9C9',
               }}
-              className="absolute  right-[-5px] top-[-15px] z-10 flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#C9C9C9]"
+              className="absolute  right-[-5px] top-[-10px] z-10 flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#C9C9C9]"
             >
               {constructionProgressPercent === 100 ? (
                 <Check size="20px" color="white" />
@@ -182,7 +182,7 @@ const MainScreen = () => {
                 2
               )}
             </span>
-            <span className="absolute right-[-20px] top-[35px] z-10 flex items-center justify-center">
+            <span className="absolute right-[-20px] top-[25px] z-10 flex items-center justify-center">
               Construction
             </span>
           </div>
@@ -191,14 +191,14 @@ const MainScreen = () => {
               style={{
                 width: `${finishingProgressPercent}%`,
               }}
-              className={`absolute left-0 h-[16px] rounded-2xl bg-[#26F22D]`}
+              className={`absolute left-0 h-[10px] rounded-2xl bg-[#26F22D]`}
             ></span>
             <span
               style={{
                 backgroundColor:
                   finishingProgressPercent === 100 ? `#26F22D` : '#C9C9C9',
               }}
-              className="absolute  right-[-5px] top-[-15px] z-10 flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#C9C9C9]"
+              className="absolute  right-[-5px] top-[-10px] z-10 flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#C9C9C9]"
             >
               {finishingProgressPercent === 100 ? (
                 <Check size="20px" color="white" />
@@ -206,7 +206,7 @@ const MainScreen = () => {
                 3
               )}
             </span>
-            <span className="absolute right-[-5px] top-[35px] z-10 flex items-center justify-center">
+            <span className="absolute right-[-5px] top-[25px] z-10 flex items-center justify-center">
               Finishing
             </span>
           </div>
