@@ -31,93 +31,69 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className=" flex w-[10%] max-w-[100px] flex-col gap-[70px] bg-lightgrey px-[20px] max-[1024px]:w-[70px] max-[767.98px]:hidden">
+      <div className="fixed flex w-[10%] max-w-[100px] flex-col gap-[70px] bg-lightgrey px-[20px] max-[1024px]:w-[70px] max-[767.98px]:hidden">
         <div className="mx-auto basis-[60%]">
           <div className="max-h-[380px] w-[80px] rounded-[45px] bg-grey text-center">
-            <TooltipProvider delayDuration={0}>
-              <NavLink to="/">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button className="btn-flips my-[10px] h-[56px] w-[56px] rounded-[28px] bg-transparent hover:bg-primary">
-                      <img
-                        src={assets.images.slIcon}
-                        alt="icon"
-                        className="w-[24px]"
-                      />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent className="mx-1" side="bottom" align="center">
+            <NavLink to="/">
+              <div>
+                <Button className="btn-flips my-[12px] h-[56px] w-[56px] flex-col rounded-[28px] bg-transparent hover:bg-primary">
+                  <img
+                    src={assets.images.slIcon}
+                    alt="icon"
+                    className="w-[24px]"
+                  />
+                  <span className="block text-[10px] leading-[14px] text-secondary">
                     Home
-                  </TooltipContent>
-                </Tooltip>
-              </NavLink>
-              <NavLink to="/gallery">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button className="btn-flips my-[10px] h-[56px] w-[56px] rounded-[28px] bg-transparent hover:bg-primary">
-                      <img
-                        src={assets.images.photoIcon}
-                        alt="icon"
-                        className="w-[24px]"
-                      />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent className="mx-1" side="bottom" align="center">
-                    Gallery
-                  </TooltipContent>
-                </Tooltip>
-              </NavLink>
-              <NavLink to="/plans">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button className="btn-flips my-[10px] h-[56px] w-[56px] rounded-[28px] bg-transparent hover:bg-primary">
-                      <img
-                        src={assets.images.clipboardIcon}
-                        alt="icon"
-                        className="w-[24px]"
-                      />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent className="mx-1" side="bottom" align="center">
-                    Plans
-                  </TooltipContent>
-                </Tooltip>
-              </NavLink>
-              <NavLink to="/project-quotations">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button className="btn-flips my-[10px] h-[56px] w-[56px] rounded-[28px] bg-transparent hover:bg-primary">
-                      <img
-                        src={assets.images.supplier}
-                        alt="icon"
-                        className="w-[24px]"
-                      />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent className="mx-1" side="bottom" align="center">
-                    Quotations
-                  </TooltipContent>
-                </Tooltip>
-              </NavLink>
-              {/* <Button className="btn-flips my-[10px] h-[56px] w-[56px] rounded-[28px] bg-transparent hover:bg-primary">
+                  </span>
+                </Button>
+              </div>
+            </NavLink>
+            <NavLink to="/gallery">
+              <Button className="btn-flips my-[12px] h-[56px] w-[56px] flex-col rounded-[28px] bg-transparent hover:bg-primary">
+                <img
+                  src={assets.images.photoIcon}
+                  alt="icon"
+                  className="w-[24px]"
+                />
+                <span className="block text-[10px] leading-[14px] text-secondary">
+                  Gallery
+                </span>
+              </Button>
+            </NavLink>
+            <NavLink to="/plans">
+              <Button className="btn-flips my-[12px] h-[56px] w-[56px] flex-col rounded-[28px] bg-transparent hover:bg-primary">
+                <img
+                  src={assets.images.clipboardIcon}
+                  alt="icon"
+                  className="w-[24px]"
+                />
+                <span className="block text-[10px] leading-[14px] text-secondary">
+                  Plans
+                </span>
+              </Button>
+            </NavLink>
+            <NavLink to="/project-quotations">
+              <Button className="btn-flips my-[12px] h-[56px] w-[56px] flex-col rounded-[28px] bg-transparent hover:bg-primary">
+                <img
+                  src={assets.images.supplier}
+                  alt="icon"
+                  className="w-[24px]"
+                />
+                <span className="block text-[10px] leading-[14px] text-secondary">
+                  Payment
+                </span>
+              </Button>
+            </NavLink>
+            {/* <Button className="btn-flips my-[12px] h-[56px] w-[56px] flex-col rounded-[28px] bg-transparent hover:bg-primary">
                 <img
                   src={assets.images.busnessIcon}
                   alt="icon"
                   className="w-[24px]"
                 />
               </Button> */}
-            </TooltipProvider>
           </div>
         </div>
         <div className="mx-3 basis-[20%] text-center">
-          <Button className="h-[56px] w-[56px] rounded-[28px] bg-[#F27426] p-0">
-            <CircleUserRound size={35} />
-            {/* <img
-              src={assets.images.avatar1}
-              alt="icon"
-              className="h-full w-full max-w-full object-contain"
-            /> */}
-          </Button>
           <Button
             onClick={handleLogout}
             className="btn-flips my-[10px] h-[56px] w-[56px] rounded-[28px] bg-grey"
@@ -223,9 +199,6 @@ const Sidebar = () => {
               </div>
             </div>
             <div className="basis-[20%] text-center">
-              <Button className="my-[8px] h-[56px] w-[56px] rounded-[28px] bg-[#F27426] p-0">
-                <CircleUserRound size={65} />
-              </Button>
               <Button
                 onClick={handleLogout}
                 className="btn-flips my-[10px] h-[56px] w-[56px] rounded-[28px] bg-grey"

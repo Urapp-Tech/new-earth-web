@@ -11,6 +11,7 @@ import { RootState } from '@/redux/store';
 import dayjs from 'dayjs';
 import { FileText } from 'lucide-react';
 import { useParams } from 'react-router-dom';
+import CustomCard from '@/components/ImageBox';
 
 export default function ProjectQuotation() {
   const dispatch = useAppDispatch();
@@ -54,7 +55,7 @@ export default function ProjectQuotation() {
           src={isPreview.source}
         />
       )}
-      <div className="p-2 max-[1024px]:px-[40px] max-[768px]:p-0">
+      <div className="h-screen p-2 max-[1024px]:px-[40px] max-[768px]:p-0">
         <div className="max-[576px]:text-{16px} mb-5 text-[28px] text-secondary max-[768px]:text-[18px] max-[576px]:text-center">
           Project Quotations and Payments
         </div>
@@ -85,128 +86,145 @@ export default function ProjectQuotation() {
 
             <TabsContent value="Quotation" className="m-0">
               <div className="flex flex-wrap justify-start gap-[15px] p-5 ">
-                {projectQuotations
-                  .filter((a: any) => a.type === 'QUOTATION')
-                  .map((x: any, i: number) => {
-                    return (
-                      <div key={i} className="my-4 basis-[20%]">
-                        <div className="mx-auto mb-3 h-[210px] w-[210px] cursor-pointer rounded-[20px] border-[1px] border-[#e3e3e3]">
-                          <div className="flex h-full items-center justify-center">
-                            {isImage(x.filePath) ? (
-                              <img
-                                onClick={() =>
-                                  setIsPreview({
-                                    state: true,
-                                    source: x.filePath,
-                                  })
-                                }
-                                src={x.filePath}
-                                alt="Uploaded File"
-                                className="h-full w-full rounded-[20px] object-cover"
-                              />
-                            ) : (
-                              <a href={x.filePath} rel="noopener noreferrer">
-                                <FileText size={150} />
-                              </a>
-                            )}
-                            {/* <a href={x.filePath} rel="noopener noreferrer">
-                              <FileText size={150} />
-                            </a> */}
+                {projectQuotations?.filter((a: any) => a.type === 'QUOTATION')
+                  ?.length ? (
+                  projectQuotations
+                    .filter((a: any) => a.type === 'QUOTATION')
+                    .map((x: any, i: number) => {
+                      return (
+                        <div key={i} className="my-4 basis-[16%]">
+                          <div className="mx-auto mb-2 h-[210px] w-[210px] cursor-pointer rounded-[20px]">
+                            <div className="">
+                              {isImage(x.filePath) ? (
+                                <CustomCard
+                                  item={{
+                                    filePath: x.filePath,
+                                  }}
+                                  setIsPreview={setIsPreview}
+                                  cardHeight="h-[200px]"
+                                />
+                              ) : (
+                                <CustomCard
+                                  item={{
+                                    filePath: x.filePath,
+                                    attachmentType: 'document',
+                                  }}
+                                  setIsPreview={setIsPreview}
+                                  cardHeight="h-[200px]"
+                                />
+                              )}
+                            </div>
                           </div>
-                        </div>
 
-                        {/* <h5 className="text-center text-[16px] font-extrabold">
+                          {/* <h5 className="text-center text-[16px] font-extrabold">
                           {formatCurrency(x.quotationCost, 'PKR')}
                         </h5> */}
-                        <h6 className="text-center text-sm opacity-[0.5]">
-                          {' '}
-                          {dayjs(x.createdAt).format('YYYY-MM-DD')}
-                        </h6>
-                      </div>
-                    );
-                  })}
+                          <h6 className="text-center text-sm opacity-[0.5]">
+                            {' '}
+                            {dayjs(x.createdAt).format('YYYY-MM-DD')}
+                          </h6>
+                        </div>
+                      );
+                    })
+                ) : (
+                  <div className="p-7">
+                    <span>Quotations not uploaded yet.</span>
+                  </div>
+                )}
               </div>
             </TabsContent>
             <TabsContent value="TotalPaid" className="m-0">
               <div className="flex flex-wrap justify-start gap-[15px] p-5 ">
-                {projectQuotations
-                  .filter((a: any) => a.type === 'TOTAL_PAID')
-                  .map((x: any, i: number) => {
-                    return (
-                      <div key={i} className="my-4 basis-[20%]">
-                        <div className="mx-auto mb-3 h-[210px] w-[210px] cursor-pointer rounded-[20px] border-[1px] border-[#e3e3e3]">
-                          <div className="flex h-full items-center justify-center">
-                            {isImage(x.filePath) ? (
-                              <img
-                                onClick={() =>
-                                  setIsPreview({
-                                    state: true,
-                                    source: x.filePath,
-                                  })
-                                }
-                                src={x.filePath}
-                                alt="Uploaded File"
-                                className="h-full w-full rounded-[20px] object-cover"
-                              />
-                            ) : (
-                              <a href={x.filePath} rel="noopener noreferrer">
-                                <FileText size={150} />
-                              </a>
-                            )}
+                {projectQuotations?.filter((a: any) => a.type === 'TOTAL_PAID')
+                  ?.length ? (
+                  projectQuotations
+                    .filter((a: any) => a.type === 'TOTAL_PAID')
+                    .map((x: any, i: number) => {
+                      return (
+                        <div key={i} className="my-4 basis-[16%]">
+                          <div className="mx-auto mb-3 h-[210px] w-[210px] cursor-pointer rounded-[20px]">
+                            <div className="flex h-full items-center justify-center">
+                              {isImage(x.filePath) ? (
+                                <CustomCard
+                                  item={{
+                                    filePath: x.filePath,
+                                  }}
+                                  setIsPreview={setIsPreview}
+                                  cardHeight="h-[200px]"
+                                />
+                              ) : (
+                                <CustomCard
+                                  item={{
+                                    filePath: x.filePath,
+                                    attachmentType: 'document',
+                                  }}
+                                  setIsPreview={setIsPreview}
+                                  cardHeight="h-[200px]"
+                                />
+                              )}
+                            </div>
                           </div>
+                          <h6 className="text-center text-sm opacity-[0.5]">
+                            {' '}
+                            {dayjs(x.createdAt).format('YYYY-MM-DD')}
+                          </h6>
                         </div>
-
-                        {/* <h5 className="text-center text-[16px] font-extrabold">
-                          {formatCurrency(x.totalPaidCost, 'PKR')}
-                        </h5> */}
-                        <h6 className="text-center text-sm opacity-[0.5]">
-                          {' '}
-                          {dayjs(x.createdAt).format('YYYY-MM-DD')}
-                        </h6>
-                      </div>
-                    );
-                  })}
+                      );
+                    })
+                ) : (
+                  <div className="p-7">
+                    <span>Total Paid not uploaded yet.</span>
+                  </div>
+                )}
               </div>
             </TabsContent>
             <TabsContent value="Labor" className="m-0">
-              <div className="mb-3 flex min-h-[400px] flex-wrap justify-start  gap-[15px] p-5">
-                {projectQuotations
-                  .filter((a: any) => a.type === 'LABOR_PAID')
-                  .map((x: any, i: number) => {
-                    return (
-                      <div key={i} className="my-4 basis-[20%]">
-                        <div className="mx-auto mb-3 h-[210px] w-[210px] cursor-pointer rounded-[20px] border-[1px] border-[#e3e3e3]">
-                          <div className="flex h-full items-center justify-center">
-                            {isImage(x.filePath) ? (
-                              <img
-                                onClick={() =>
-                                  setIsPreview({
-                                    state: true,
-                                    source: x.filePath,
-                                  })
-                                }
-                                src={x.filePath}
-                                alt="Uploaded File"
-                                className="h-full w-full rounded-[20px] object-cover"
-                              />
-                            ) : (
-                              <a href={x.filePath} rel="noopener noreferrer">
-                                <FileText size={150} />
-                              </a>
-                            )}
+              <div className="mb-3 flex flex-wrap justify-start  gap-[15px] p-5">
+                {projectQuotations?.filter((a: any) => a.type === 'LABOR_PAID')
+                  ?.length ? (
+                  projectQuotations
+                    .filter((a: any) => a.type === 'LABOR_PAID')
+                    .map((x: any, i: number) => {
+                      return (
+                        <div key={i} className="my-4 basis-[16%]">
+                          <div className="mx-auto mb-3 h-[210px] w-[210px] cursor-pointer rounded-[20px]">
+                            <div className="flex h-full items-center justify-center">
+                              {isImage(x.filePath) ? (
+                                <CustomCard
+                                  item={{
+                                    filePath: x.filePath,
+                                  }}
+                                  setIsPreview={setIsPreview}
+                                  cardHeight="h-[200px]"
+                                />
+                              ) : (
+                                <CustomCard
+                                  item={{
+                                    filePath: x.filePath,
+                                    attachmentType: 'document',
+                                  }}
+                                  setIsPreview={setIsPreview}
+                                  cardHeight="h-[200px]"
+                                />
+                              )}
+                            </div>
                           </div>
-                        </div>
 
-                        {/* <h5 className="text-center text-[16px] font-extrabold">
+                          {/* <h5 className="text-center text-[16px] font-extrabold">
                           {formatCurrency(x.laborCost, 'PKR')}
                         </h5> */}
-                        <h6 className="text-center text-sm opacity-[0.5]">
-                          {' '}
-                          {dayjs(x.createdAt).format('YYYY-MM-DD')}
-                        </h6>
-                      </div>
-                    );
-                  })}
+                          <h6 className="text-center text-sm opacity-[0.5]">
+                            {' '}
+                            {dayjs(x.createdAt).format('YYYY-MM-DD')}
+                          </h6>
+                        </div>
+                      );
+                    })
+                ) : (
+                  <div className="p-7">
+                    <span>Labor & Material not uploaded yet.</span>
+                  </div>
+                )}
               </div>
             </TabsContent>
           </Tabs>

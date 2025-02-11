@@ -79,17 +79,16 @@ const PlanDetailsDialog: React.FC<DialogProps> = ({ open, setOpen, plan }) => {
                     const additionalColumns = Object.keys(item).filter(
                       (key) => !fixedColumns.includes(key)
                     );
-
                     return (
                       <tr key={index}>
-                        <td className=" px-5 py-1">
+                        <td className="px-5 py-1">
                           {item.stage ? item.stage : '--'}
                         </td>
-                        <td className=" px-5 py-1">
+                        <td className="px-5 py-1">
                           {item.room ? (
                             <span
                               key={item.room}
-                              className="me-2 rounded-[15px] border border-grey bg-lightgrey px-2.5 py-0.5 text-xs font-medium text-secondary dark:bg-gray-700 dark:text-blue-300"
+                              className="me-2 whitespace-nowrap rounded-[15px] border border-grey bg-lightgrey px-2.5 py-0.5 text-xs font-medium text-secondary dark:bg-gray-700 dark:text-blue-300"
                             >
                               {item.room}
                             </span>

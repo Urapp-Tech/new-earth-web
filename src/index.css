@@ -3,12 +3,11 @@
 @tailwind utilities;
 
 body {
-
-  font-family: "Space Grotesk", sans-serif;
-
+  font-family: 'Space Grotesk', sans-serif;
 }
 
-.btn-flips:hover img {
+.btn-flips:hover img,
+.btn-flips:hover span {
   filter: invert(1) brightness(1);
   mix-blend-mode: color-dodge;
 }
@@ -17,7 +16,6 @@ body {
   background-image: url('assets/images/banner/main-banner-1.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
-
 }
 
 .bg-ban-two {
@@ -112,12 +110,11 @@ li.group.destructive.group.border-destructive.bg-destructive.text-destructive-fo
 
 /* Handle */
 .tabs--head::-webkit-scrollbar-thumb {
-  background: #F47F4A;
+  background: #f47f4a;
   border-radius: 7px;
 }
 
 /* Handle on hover */
-
 
 @media screen and (min-width: 768px) {
   .side-draw {
@@ -128,7 +125,6 @@ li.group.destructive.group.border-destructive.bg-destructive.text-destructive-fo
 @media screen and (max-width: 991.98px) {
   .ne-tabs {
     font-size: 14px;
-
   }
 }
 
@@ -136,7 +132,6 @@ li.group.destructive.group.border-destructive.bg-destructive.text-destructive-fo
   .ne-tabs {
     overflow: hidden;
     text-overflow: ellipsis;
-
   }
 }
 
