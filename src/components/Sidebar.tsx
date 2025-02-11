@@ -7,13 +7,6 @@ import Drawer from 'react-modern-drawer';
 import 'react-modern-drawer/dist/index.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { CircleUserRound } from 'lucide-react';
 import { Button } from './ui/button';
 const Sidebar = () => {
   const dispatch = useAppDispatch();

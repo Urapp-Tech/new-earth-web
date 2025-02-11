@@ -1,15 +1,10 @@
-// import React from 'react';
-// import assets from '@/assets';
-// import ViewApp from '@/components/common/Viewer';
 import { useEffect, useState } from 'react';
 import ImagePreview from '@/components/PreviewImageBox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-// import { fetchProjectAttachments } from '@/redux/features/projectAttachmentsSlice';
 import { fetchProjectQuotations } from '@/redux/features/projectQuotationSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
 import { RootState } from '@/redux/store';
 import dayjs from 'dayjs';
-import { FileText } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import CustomCard from '@/components/ImageBox';
 

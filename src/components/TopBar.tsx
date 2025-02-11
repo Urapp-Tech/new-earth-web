@@ -1,4 +1,3 @@
-import { Input } from '@/components/ui/input';
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
@@ -17,7 +16,6 @@ import {
 
 const TopBar = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((s) => s.authState);
   const [time, setTime] = useState(new Date());
   const { projects, selectedProjects } = useAppSelector((s) => s.projectState);
 

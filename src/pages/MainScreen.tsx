@@ -1,11 +1,4 @@
 import assets from '@/assets';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { fetchProjectAttachments } from '@/redux/features/projectAttachmentsSlice';
 import { fetchProjectDashboard } from '@/redux/features/projectDashboardSlice';
 import {
@@ -15,12 +8,11 @@ import {
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
 import { CURRENCY } from '@/utils/constant';
 import { formatCurrency, sortArrayByKey } from '@/utils/helpers';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 // import { Progress } from '@/components/ui/progress';
 import dayjs from 'dayjs';
-import { Check, EyeIcon, FileText } from 'lucide-react';
+import { Check, EyeIcon } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import CustomCard from '@/components/ImageBox';
 import { CarouselItems } from '@/components/Carousel';
 import PlanDetailsDialog from './plans/PlanDetailsDialog';
 import { Button } from '@/components/ui/button';
@@ -32,11 +24,6 @@ dayjs.extend(relativeTime);
 const MainScreen = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((s) => s.authState);
-  const [video, setVideo] = useState<any>(null);
-  const [dImage, setdImage] = useState<any>(null);
-  const [image, setImage] = useState<any>(null);
-  const [_doc, setDoc] = useState<string | null>(null);
 
   const [mediaItems, setMediaItems] = useState<any>(null);
   const [threeditems, setThreedItems] = useState<any>(null);
@@ -64,92 +51,6 @@ const MainScreen = () => {
       dispatch(fetchProjectDashboard({ projectId: selectedProjects?.id }));
     }
   }, [selectedProjects]);
-
-  const setLastVideo = () => {
-    const lastVideo: any = attachments
-      .filter(
-        (attachment: any) =>
-          attachment.attachmentType === 'video' &&
-          attachment.category !== '3d' &&
-          attachment.category !== 'Blueprint'
-      )
-      .sort((a: any, b: any) => {
-        const dateA = new Date(a.uploadedAt).getTime();
-        const dateB = new Date(b.uploadedAt).getTime();
-
-        return dateB - dateA; // Sort in descending order (latest first)
-      })
-      .shift(); // Get the first (latest) video
-
-    if (lastVideo) {
-      setVideo(lastVideo);
-    } else {
-      setVideo(null);
-    }
-  };
-
-  const setLastImage = () => {
-    const lastVideo: any = attachments
-      .filter(
-        (attachment: any) =>
-          attachment.attachmentType === 'image' &&
-          attachment.category !== '3d' &&
-          attachment.category !== 'Blueprint'
-      )
-      .sort((a: any, b: any) => {
-        const dateA = new Date(a.uploadedAt).getTime();
-        const dateB = new Date(b.uploadedAt).getTime();
-
-        return dateB - dateA; // Sort in descending order (latest first)
-      })
-      .shift();
-    // const lastVideo: any = attachments.find(
-    //   (attachment: any) =>
-    //     attachment.attachmentType === 'image' &&
-    //     (attachment.category !== '3d' || attachment.category !== 'Blueprint')
-    // );
-
-    if (lastVideo) {
-      setImage(lastVideo);
-    } else {
-      setImage(null);
-    }
-  };
-  const set3dLastImage = () => {
-    const lastVideo = attachments
-      .filter(
-        (attachment: any) =>
-          (attachment.attachmentType === 'document' ||
-            attachment.attachmentType === 'image') &&
-          attachment.category === '3d'
-      )
-      .sort((a: any, b: any) => {
-        const dateA = new Date(a.uploadedAt).getTime();
-        const dateB = new Date(b.uploadedAt).getTime();
-
-        return dateB - dateA; // Sort in descending order (latest first)
-      })
-      .shift();
-
-    if (lastVideo) {
-      setdImage(lastVideo);
-    } else {
-      setdImage(null);
-    }
-  };
-
-  const setLastDoc = () => {
-    const lastVideo = attachments.find(
-      (attachment: any) =>
-        attachment.attachmentType === 'document' &&
-        attachment.category === 'Blueprint'
-    );
-    if (lastVideo) {
-      setDoc(lastVideo.filePath);
-    } else {
-      setDoc(null);
-    }
-  };
 
   const setImagesVideos = () => {
     const resp: any = attachments?.filter(
@@ -186,40 +87,7 @@ const MainScreen = () => {
   const endDate = dayjs(dashboard?.endDate);
   const currentDate = dayjs();
 
-  const totalDays = endDate.diff(startDate, 'day');
-
-  const daysPassed = currentDate.diff(startDate, 'day');
-
-  //   const progressPercentage = (daysPassed / totalDays) * 100;
-
-  //   const finalProgress = Math.min(Math.max(progressPercentage, 0), 100);
-
-  const calculateProgressWidth = (
-    startDate: any,
-    endDate: any,
-    currentDate: any
-  ) => {
-    const start: any = new Date(startDate);
-    const end: any = new Date(endDate);
-    const current: any = new Date(currentDate);
-
-    if (current < start) return 0;
-    if (current > end) return 100;
-
-    // Calculate total days in the range
-    const totalDays = (end - start) / (1000 * 60 * 60 * 24);
-    const elapsedDays = (current - start) / (1000 * 60 * 60 * 24);
-
-    // Calculate progress width
-    return (elapsedDays / totalDays) * 100;
-  };
-
   useEffect(() => {
-    // setLastVideo();
-    // set3dLastImage();
-    // setLastImage();
-    // setLastDoc();
-
     setImagesVideos();
     set3dsDocs();
   }, [attachments]);
@@ -228,54 +96,6 @@ const MainScreen = () => {
     setProjectPlan(plan);
     setShowPlanDetails(true);
   };
-
-  // console.log(image, video);
-
-  /* {selectedProjects?.id ? (
-              <div className="mx-auto h-[250px] max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
-                {image &&
-                new Date(image?.uploadedAt).getTime() > new Date(video?.uploadedAt).getTime() &&
-                image?.filePath ? (
-                  <div className="flex h-full items-center justify-center">
-                    <img
-                      src={image?.filePath}
-                      alt="3D-3dImage"
-                      className="mt-10 max-h-[300px] rounded object-cover"
-                    />
-                  </div>
-                ) : (
-                  image?.uploadedAt > video?.uploadedAt && (
-                    <img
-                      src={assets.images.noFile}
-                      alt="img"
-                      className="h-[350px] w-[700px] rounded-3xl object-cover"
-                    />
-                  )
-                )}
-
-                {video &&
-                video?.uploadedAt >= image?.uploadedAt &&
-                video?.filePath ? (
-                  <video
-                    className="h-full max-h-[350px] w-full rounded-[20px]"
-                    controls
-                  >
-                    <source src={video?.filePath} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                ) : (
-                  video?.uploadedAt > image?.uploadedAt && (
-                    <img
-                      src={assets.images.noVideo}
-                      alt="video"
-                      className="h-[350px] w-[700px] rounded-3xl object-cover"
-                    />
-                  )
-                )}
-              </div>
-            ) : (
-              
-            )} */
 
   const customProgressBar = () => {
     const dd = Number(selectedProjects?.demolitionDays || 0);
@@ -497,15 +317,15 @@ const MainScreen = () => {
                         'day',
                         'asc'
                       ).map((plan: any, index: number) => {
-                        let count = 0;
-                        if (plan.data && plan.data.length > 0) {
-                          count = plan.data.reduce(
-                            // eslint-disable-next-line @typescript-eslint/no-shadow
-                            (total: number, item: any) =>
-                              total + (item?.count ?? 0),
-                            0
-                          );
-                        }
+                        // let count = 0;
+                        // if (plan.data && plan.data.length > 0) {
+                        //   count = plan.data.reduce(
+                        //     // eslint-disable-next-line @typescript-eslint/no-shadow
+                        //     (total: number, item: any) =>
+                        //       total + (item?.count ?? 0),
+                        //     0
+                        //   );
+                        // }
                         return (
                           <div>
                             <tr

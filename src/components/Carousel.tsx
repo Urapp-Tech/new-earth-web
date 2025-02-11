@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import CustomCard from './ImageBox';
-import { useAppSelector } from '@/redux/redux-hooks';
+// import { useAppSelector } from '@/redux/redux-hooks';
 
 export function CarouselItems({ cardHeight, items, type }: any) {
-  const { attachments } = useAppSelector((s) => s.projectAttachmentsState);
+  // const { attachments } = useAppSelector((s) => s.projectAttachmentsState);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 2000, stopOnInteraction: true }),
   ]);
   const ITEMS_PER_PAGE = 1;
-  const TOTAL_ITEMS = 4;
+  // const TOTAL_ITEMS = 4;
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 

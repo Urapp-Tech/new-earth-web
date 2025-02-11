@@ -13,8 +13,6 @@ import {
   setSelectedProject,
 } from '@/redux/features/projectSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
-import dayjs from 'dayjs';
-import { FileText } from 'lucide-react';
 import { memo, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
