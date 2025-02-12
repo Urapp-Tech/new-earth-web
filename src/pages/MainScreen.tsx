@@ -248,8 +248,8 @@ const MainScreen = () => {
         </div> */}
       </div>
       {/* )} */}
-      <div className="flex gap-5 rounded-[40px] max-[1024px]:flex-col">
-        <div className="basis-1/2 max-[1260px]:my-2">
+      <div className="grid grid-cols-12 gap-5 rounded-[40px] max-[1024px]:flex-col">
+        <div className="col-span-6 max-[1260px]:my-2">
           <div className="rounded-[40px] border-2 p-5 max-[1024px]:h-auto">
             <NavLink to="/gallery">
               <div className="flex items-center justify-start gap-2">
@@ -292,7 +292,7 @@ const MainScreen = () => {
             </div>
           </div>
         </div>
-        <div className="basis-1/2 max-[1260px]:my-2">
+        <div className="col-span-6 max-[1260px]:my-2">
           <div className="h-[393px] rounded-[40px] border-2 p-5">
             <div className="flex items-center justify-between gap-2">
               <span className="text-[24px] font-bold leading-normal text-secondary">
@@ -369,8 +369,8 @@ const MainScreen = () => {
         </div>
       </div>
 
-      <div className="mt-5 flex min-h-[400px] max-[1260px]:flex-col">
-        <div className="basis-1/2 px-2 max-[1260px]:my-2">
+      <div className="mt-5 grid min-h-[400px] grid-cols-12 max-[1260px]:flex-col">
+        <div className="col-span-6 px-2 max-[1260px]:my-2">
           <div className="bg-ban-two max-[480px]:background-[#fff] p-5 max-[1024px]:min-h-[500px] max-[1024px]:p-7 max-[576px]:p-[20px]">
             <div className="flex max-w-full items-center justify-between gap-2 pt-2 text-[22px] font-medium leading-normal text-secondary  max-[768px]:text-[20px] max-[480px]:flex-col max-[480px]:items-start">
               <span className="">Project Payments</span>
@@ -464,7 +464,7 @@ const MainScreen = () => {
             </div>
           </div>
         </div>
-        <div className="basis-1/2 px-2 max-[1260px]:my-2">
+        <div className="col-span-6 px-2 max-[1260px]:my-2">
           <div className="h-[400px] rounded-[40px] border-2 p-5">
             <NavLink to="/gallery" state={{ tab: '3drendersandblueprints' }}>
               <div className="flex items-center justify-start gap-2">
