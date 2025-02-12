@@ -143,12 +143,12 @@ const MainScreen = () => {
               style={{
                 width: `${demolitionProgressPercent}%`,
               }}
-              className={`absolute left-0 h-[10px] rounded-2xl bg-[#26F22D]`}
+              className={`absolute left-0 h-[10px] rounded-2xl bg-primary`}
             ></span>
             <span
               style={{
                 backgroundColor:
-                  demolitionProgressPercent === 100 ? `#26F22D` : '#C9C9C9',
+                  demolitionProgressPercent === 100 ? `#f27426` : '#C9C9C9',
               }}
               className="absolute right-[-5px] top-[-10px] z-10 flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#C9C9C9]"
             >
@@ -167,12 +167,12 @@ const MainScreen = () => {
               style={{
                 width: `${constructionProgressPercent}%`,
               }}
-              className={`absolute left-0  h-[10px] rounded-2xl bg-[#26F22D]`}
+              className={`absolute left-0  h-[10px] rounded-2xl bg-primary`}
             ></span>
             <span
               style={{
                 backgroundColor:
-                  constructionProgressPercent === 100 ? `#26F22D` : '#C9C9C9',
+                  constructionProgressPercent === 100 ? `#f27426` : '#C9C9C9',
               }}
               className="absolute  right-[-5px] top-[-10px] z-10 flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#C9C9C9]"
             >
@@ -191,12 +191,12 @@ const MainScreen = () => {
               style={{
                 width: `${finishingProgressPercent}%`,
               }}
-              className={`absolute left-0 h-[10px] rounded-2xl bg-[#26F22D]`}
+              className={`absolute left-0 h-[10px] rounded-2xl bg-primary`}
             ></span>
             <span
               style={{
                 backgroundColor:
-                  finishingProgressPercent === 100 ? `#26F22D` : '#C9C9C9',
+                  finishingProgressPercent === 100 ? `#f27426` : '#C9C9C9',
               }}
               className="absolute  right-[-5px] top-[-10px] z-10 flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#C9C9C9]"
             >
@@ -332,10 +332,12 @@ const MainScreen = () => {
                               key={index}
                               className="border-grey-100 w-full border-[0px] text-left"
                             >
-                              <td className="w-[100%] py-1 text-[18px]">
+                              <td className="w-[65%] py-1 text-[18px]">
                                 {plan.day}
                               </td>
-                              {/* <td className="w-[90%] py-1">{count}</td> */}
+                              <td className="w-[35%] py-1">
+                                Plan Activities: {plan?.data?.length || 0}
+                              </td>
                               <td className="py-1">
                                 <Button
                                   onClick={() =>

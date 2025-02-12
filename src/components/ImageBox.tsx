@@ -6,7 +6,15 @@ export default function CustomCard({
   setIsPreview,
   type,
 }: any) {
-  return (
+  return item?.attachmentType === 'video' ? (
+    <video
+      className={`max-h-[194px] min-h-[194px] w-full max-w-[250px] rounded-[20px] object-cover`}
+      controls
+    >
+      <source src={item.filePath} type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  ) : (
     <div
       onClick={() => {
         if (item?.attachmentType !== 'document') {

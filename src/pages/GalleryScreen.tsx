@@ -146,7 +146,7 @@ const GalleryScreen = () => {
                                         rel="noopener noreferrer"
                                       >
                                         <video
-                                          className="h-full max-h-[250px] w-full max-w-[250px] rounded-[20px] object-cover"
+                                          className="h-full max-h-[194px] min-h-[194px] w-full min-w-[200px] rounded-[20px] object-cover"
                                           controls
                                         >
                                           <source
