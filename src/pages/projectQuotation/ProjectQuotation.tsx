@@ -72,7 +72,8 @@ export default function ProjectQuotation() {
               onClick={() => {
                 setIsPreview({
                   state: true,
-                  source: selectedProjects.termsConditions,
+                  source:
+                    selectedProjects.termsConditions || assets.images.noFile,
                 });
               }}
               className="cursor-pointer underline underline-offset-2"

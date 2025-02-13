@@ -7,13 +7,20 @@ export default function CustomCard({
   type,
 }: any) {
   return item?.attachmentType === 'video' ? (
-    <video
-      className={`max-h-[194px] min-h-[194px] w-full max-w-[250px] rounded-[20px] object-cover`}
-      controls
+    <div
+      className={`relative w-[200px] overflow-hidden rounded-[35px] border-2`}
     >
-      <source src={item.filePath} type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+      <video
+        className={`max-h-[194px] min-h-[194px] w-full max-w-[250px] rounded-[20px] object-cover`}
+        controls
+      >
+        <source src={item.filePath} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div className="absolute left-4 top-3 w-[50%] truncate rounded-full bg-[#14242E40] px-5 py-2 text-[14px] font-medium text-[#FFFFFF] shadow-lg">
+        {type === 'day' ? item?.day : item?.title}
+      </div>
+    </div>
   ) : (
     <div
       onClick={() => {

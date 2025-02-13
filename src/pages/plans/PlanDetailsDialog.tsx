@@ -32,7 +32,7 @@ const PlanDetailsDialog: React.FC<DialogProps> = ({ open, setOpen, plan }) => {
   };
   return (
     <Dialog open={open} onOpenChange={toggleModal}>
-      <DialogContent className="sm:max-w-[425px] md:max-w-[825px] lg:max-w-[1325px]">
+      <DialogContent className="max-h-[80%] overflow-auto sm:max-w-[425px] md:max-w-[825px] lg:max-w-[1325px]">
         <DialogHeader>
           <DialogTitle>Day Activities</DialogTitle>
         </DialogHeader>
@@ -45,7 +45,7 @@ const PlanDetailsDialog: React.FC<DialogProps> = ({ open, setOpen, plan }) => {
               <b>Working Day: </b> {plan?.day ?? ''}
             </h3>
           </div>
-          <div className="relative overflow-x-auto">
+          <div className="relative overflow-x-auto overflow-y-auto">
             <table>
               <thead>
                 <tr className="text-left">

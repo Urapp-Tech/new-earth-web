@@ -36,36 +36,6 @@ export function CarouselItems({ cardHeight, items, type }: any) {
   );
 
   return (
-    // <div className="relative md:max-w-[55rem] [@media(min-width:1262px)]:max-w-[510px] [@media(min-width:1422px)]:max-w-[570px] [@media(min-width:1440px)]:max-w-[580px] [@media(min-width:1912px)]:max-w-[890px] [@media(min-width:2133px)]:max-w-[890px] [@media(min-width:2560px)]:max-w-[1090px]">
-    //   <div className="overflow-hidden" ref={emblaRef}>
-    //     <div className="flex">
-    //       {items?.map((x: any, index: number) => (
-    //         <div
-    //           key={index}
-    //           className="flex-shrink-0 md:basis-1/3 lg:basis-1/4 xl:basis-1/4 2xl:basis-1/6"
-    //         >
-    //           <div className="p-1">
-    //             <CustomCard type={type} item={x} cardHeight={cardHeight} />
-    //           </div>
-    //         </div>
-    //       ))}
-    //     </div>
-    //   </div>
-
-    //   <div className="mt-4 flex justify-center gap-2">
-    //     {Array.from({ length: totalPages }).map((_, index) => (
-    //       <button
-    //         key={index}
-    //         className={`mx-[.5px] h-2 rounded-full transition-all ${
-    //           selectedIndex === index
-    //             ? 'w-12 bg-[#F27426]'
-    //             : 'w-3  bg-[#D9D9D9]'
-    //         }`}
-    //         onClick={() => scrollTo(index)}
-    //       />
-    //     ))}
-    //   </div>
-    // </div>
     <div className="relative">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
