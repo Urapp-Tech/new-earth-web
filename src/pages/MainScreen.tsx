@@ -218,7 +218,7 @@ const MainScreen = () => {
   return (
     <>
       {/* {selectedProjects?.id && daysPassed >= 1 && ( */}
-      <div className="mb-14 px-1 max-[768px]:my-5">
+      <div className=" mb-14 px-1 max-[768px]:my-5">
         {selectedProjects?.demolitionDays && (
           <>
             <div className="mx-1 mb-3 flex items-center justify-between">
@@ -371,7 +371,7 @@ const MainScreen = () => {
         </div>
       </div>
 
-      <div className="mt-5 grid min-h-[400px] grid-cols-12 max-[1260px]:flex-col">
+      <div className="mt-5 grid h-[550px] min-h-[400px] grid-cols-12 max-[1260px]:flex-col">
         <div className="col-span-6 px-2 max-[1260px]:my-2">
           <div className="bg-ban-two max-[480px]:background-[#fff] p-5 max-[1024px]:min-h-[500px] max-[1024px]:p-7 max-[576px]:p-[20px]">
             <div className="flex max-w-full items-center justify-between gap-2 pt-2 text-[22px] font-medium leading-normal text-secondary  max-[768px]:text-[20px] max-[480px]:flex-col max-[480px]:items-start">

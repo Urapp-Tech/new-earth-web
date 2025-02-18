@@ -13,9 +13,9 @@ const MainLayout = () => {
     }
   }, []);
   return (
-    <div className="bg-lightgrey">
+    <div className="h-auto bg-lightgrey">
       <TopBar />
-      <div className="flex items-start justify-between 2xl:h-screen">
+      <div className="flex h-auto items-start justify-between">
         <Sidebar />
         <div className="ml-[9.5%] w-[90%] px-2 py-2 max-[1024px]:px-6 max-[768px]:w-[85%] max-[576px]:w-full max-[576px]:px-2 ">
           <Outlet />
