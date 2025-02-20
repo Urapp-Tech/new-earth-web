@@ -24,8 +24,13 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="fixed flex w-[10%] max-w-[100px] flex-col gap-[70px] bg-lightgrey px-[20px] max-[1024px]:w-[70px] max-[767.98px]:hidden">
+      <div className="fixed top-[30px] flex w-[10%] max-w-[100px] flex-col gap-[70px] bg-lightgrey px-[20px] max-[1024px]:w-[70px] max-[767.98px]:hidden">
         <div className="mx-auto basis-[60%]">
+          <div className="basis-[10%] max-[768px]:basis-[20%] max-[576px]:basis-[10%]">
+            <div className="max-w-[80px] pb-5 max-[992px]:max-w-[55px] max-[576px]:max-w-[50px] ">
+              <img src={assets.images.logo} alt="logo" />
+            </div>
+          </div>
           <div className="max-h-[380px] w-[80px] rounded-[45px] bg-grey text-center">
             <NavLink to="/">
               <div>

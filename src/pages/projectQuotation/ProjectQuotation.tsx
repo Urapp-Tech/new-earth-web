@@ -196,7 +196,7 @@ export default function ProjectQuotation() {
                     })
                 ) : (
                   <div className="p-7">
-                    <span>Total Paid not uploaded yet.</span>
+                    <span>Billings not uploaded yet.</span>
                   </div>
                 )}
               </div>
@@ -245,7 +245,7 @@ export default function ProjectQuotation() {
                     })
                 ) : (
                   <div className="p-7">
-                    <span>Labor & Material not uploaded yet.</span>
+                    <span>Payments not uploaded yet.</span>
                   </div>
                 )}
               </div>

@@ -285,7 +285,7 @@ const MainScreen = () => {
             <PopoverContent
               side="top"
               sideOffset={5}
-              className="border-1 mx-8 my-1 h-[200px] rounded-xl bg-white p-4 shadow-lg"
+              className="border-1 mx-8 my-1 h-[250px] rounded-xl bg-white p-4 shadow-lg"
             >
               <div className="">
                 <label
@@ -294,13 +294,13 @@ const MainScreen = () => {
                 >
                   Feedback
                 </label>
-                <div className="h-[105px]">
+                <div className="h-[160px]">
                   <textarea
                     {...register('feedback', {
                       required: 'feedback is required',
                     })}
                     slot="5"
-                    className="text-txt-color h-[90px] w-full appearance-none rounded-[3px] border border-grey  p-2 text-[16px] leading-tight focus:outline-none"
+                    className="text-txt-color h-[150px] w-full appearance-none rounded-[3px] border border-grey  p-2 text-[16px] leading-tight focus:outline-none"
                     id="feedback"
                     placeholder="Type your feedback"
                   />

@@ -36,14 +36,9 @@ const TopBar = () => {
   // console.log('user', selectedProjects);
 
   return (
-    <div className="bg-lightgrey">
-      <div className="flex w-full items-center justify-between p-5 max-[1024px]:gap-[15px]  max-[576px]:justify-center">
-        <div className="basis-[10%] max-[768px]:basis-[20%] max-[576px]:basis-[10%]">
-          <div className="max-w-[80px] max-[992px]:max-w-[55px] max-[576px]:max-w-[50px] ">
-            <img src={assets.images.logo} alt="logo" />
-          </div>
-        </div>
-        <div className="basis-[40%] max-[1024px]:basis-[25%] max-[768px]:basis-[50%] max-[460px]:basis-[40%] max-[400px]:basis-[55%]">
+    <div className="flex justify-end bg-lightgrey">
+      <div className="flex w-[90%] items-center justify-between p-5 max-[1024px]:gap-[15px]  max-[576px]:justify-center">
+        <div className="basis-[30%] max-[1024px]:basis-[25%] max-[768px]:basis-[50%] max-[460px]:basis-[40%] max-[400px]:basis-[55%]">
           <span className="block text-[24px] font-[500] capitalize leading-normal text-secondary max-[576px]:truncate max-[576px]:text-[20px] max-[360px]:w-[60px]">
             {selectedProjects?.name ?? ''}
           </span>
@@ -55,7 +50,7 @@ const TopBar = () => {
             {selectedProjects?.address ?? ''}
           </span>
         </div>
-        <div className="right-[4px] basis-[50%] max-[1024px]:basis-[65%] max-[768px]:basis-[30%] max-[576px]:absolute">
+        <div className="right-[4px] basis-[40%] max-[1024px]:basis-[65%] max-[768px]:basis-[30%] max-[576px]:absolute">
           <div className="flex items-center justify-between gap-4 max-[576px]:gap-0 max-[400px]:gap-2 max-[400px]:pr-[4px]">
             <div className="flex w-full items-center justify-end px-2 max-[400px]:p-0">
               <Select
