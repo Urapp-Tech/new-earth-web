@@ -5,7 +5,7 @@ type Props = {
 function Loader({ type }: Props) {
   return type === 'spinner' ? (
     <div className="flex h-full w-full items-center justify-center">
-      <div className="h-20 w-20 animate-spin rounded-full border-b-2 border-t-2 border-gray-900" />
+      <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-t-2 border-gray-900" />
     </div>
   ) : (
     <>

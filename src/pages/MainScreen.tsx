@@ -1,6 +1,10 @@
 import assets from '@/assets';
 import { fetchProjectAttachments } from '@/redux/features/projectAttachmentsSlice';
-import { fetchProjectDashboard } from '@/redux/features/projectDashboardSlice';
+import {
+  fetchProjectDashboard,
+  postProjectFeedback,
+  setRemoveFeedbackState,
+} from '@/redux/features/projectDashboardSlice';
 import {
   fetchProjects,
   setSelectedProject,
@@ -11,26 +15,47 @@ import { formatCurrency, sortArrayByKey } from '@/utils/helpers';
 import { useEffect, useState } from 'react';
 // import { Progress } from '@/components/ui/progress';
 import dayjs from 'dayjs';
-import { Check, EyeIcon } from 'lucide-react';
+import Loader from '@/components/common/Loader';
+import { Check, EyeIcon, Plus } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { CarouselItems } from '@/components/Carousel';
 import PlanDetailsDialog from './plans/PlanDetailsDialog';
 import { Button } from '@/components/ui/button';
 
 import relativeTime from 'dayjs/plugin/relativeTime';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@radix-ui/react-popover';
+import { useForm } from 'react-hook-form';
+import { toast } from '@/components/ui/use-toast';
 
 dayjs.extend(relativeTime);
+
+interface Feedback {
+  feedback: string;
+}
 
 const MainScreen = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<Feedback>();
 
   const [mediaItems, setMediaItems] = useState<any>(null);
   const [threeditems, setThreedItems] = useState<any>(null);
+  const [isOpenFeedback, setisOpenFeedback] = useState<boolean>(false);
 
   const { projects, selectedProjects } = useAppSelector((s) => s.projectState);
   const { attachments } = useAppSelector((s) => s.projectAttachmentsState);
-  const { dashboard } = useAppSelector((s) => s.projectdashboardState);
+  const { dashboard, feedback, loading } = useAppSelector(
+    (s) => s.projectdashboardState
+  );
 
   const [showPlanDetails, setShowPlanDetails] = useState<boolean>(false);
   const [projectPlan, setProjectPlan] = useState<any>();
@@ -51,6 +76,35 @@ const MainScreen = () => {
       dispatch(fetchProjectDashboard({ projectId: selectedProjects?.id }));
     }
   }, [selectedProjects]);
+
+  const onFeedbackSubmit = (data: Feedback) => {
+    const obj = {
+      feedback: data.feedback,
+      projectId: selectedProjects?.id,
+    };
+    dispatch(postProjectFeedback(obj));
+  };
+
+  useEffect(() => {
+    if (feedback?.success) {
+      toast({
+        title: feedback.message,
+        variant: 'default',
+        style: {
+          position: 'fixed',
+          left: '20px',
+          top: '20px',
+          transform: 'translateX(0%)',
+          width: '30%',
+          backgroundColor: '#f27426',
+          color: '#fff',
+        },
+      });
+      setisOpenFeedback(false);
+      setValue('feedback', '');
+      dispatch(setRemoveFeedbackState());
+    }
+  }, [feedback?.success]);
 
   const setImagesVideos = () => {
     const resp: any = attachments?.filter(
@@ -216,9 +270,60 @@ const MainScreen = () => {
   };
 
   return (
-    <>
-      {/* {selectedProjects?.id && daysPassed >= 1 && ( */}
-      <div className=" mb-14 px-1 max-[768px]:my-5">
+    <div className="relative">
+      <div className="fixed bottom-0 right-0 z-50 p-8">
+        <form onSubmit={handleSubmit(onFeedbackSubmit)}>
+          <Popover
+            open={isOpenFeedback}
+            onOpenChange={(open) => setisOpenFeedback(open)}
+          >
+            <PopoverTrigger onClick={() => setisOpenFeedback(true)}>
+              <div className="flex items-center justify-center rounded-full bg-primary p-5 text-white shadow-xl">
+                <Plus className="mx-1" /> Feedback
+              </div>
+            </PopoverTrigger>
+            <PopoverContent
+              side="top"
+              sideOffset={5}
+              className="border-1 mx-8 my-1 h-[200px] rounded-xl bg-white p-4 shadow-lg"
+            >
+              <div className="">
+                <label
+                  className="text-txt-color mb-2 block text-[12px] font-semibold"
+                  htmlFor="feedback"
+                >
+                  Feedback
+                </label>
+                <div className="h-[105px]">
+                  <textarea
+                    {...register('feedback', {
+                      required: 'feedback is required',
+                    })}
+                    slot="5"
+                    className="text-txt-color h-[90px] w-full appearance-none rounded-[3px] border border-grey  p-2 text-[16px] leading-tight focus:outline-none"
+                    id="feedback"
+                    placeholder="Type your feedback"
+                  />
+                  {errors.feedback && (
+                    <span className="block text-xs italic text-red-500">
+                      *{errors.feedback.message}
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center justify-end">
+                  <Button
+                    type="submit"
+                    className="border-1 flex w-[85px] rounded-[28px] border-2 bg-transparent text-primary hover:bg-primary hover:text-white"
+                  >
+                    {loading ? <Loader type="spinner" /> : 'Add'}
+                  </Button>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
+        </form>
+      </div>
+      <div className="mb-14 px-1 max-[768px]:my-5">
         {selectedProjects?.demolitionDays && (
           <>
             <div className="mx-1 mb-3 flex items-center justify-between">
@@ -510,7 +615,7 @@ const MainScreen = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
