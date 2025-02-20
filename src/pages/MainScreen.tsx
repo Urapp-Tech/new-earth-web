@@ -84,7 +84,6 @@ const MainScreen = () => {
     };
     dispatch(postProjectFeedback(obj));
   };
-  console.log(errors);
 
   useEffect(() => {
     if (feedback?.success) {
