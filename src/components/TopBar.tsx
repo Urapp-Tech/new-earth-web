@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import assets from '../assets';
+// import assets from '../assets';
 import {
   fetchProjects,
   setSelectedProject,
