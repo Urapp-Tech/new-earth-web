@@ -84,6 +84,7 @@ const MainScreen = () => {
     };
     dispatch(postProjectFeedback(obj));
   };
+  console.log(errors);
 
   useEffect(() => {
     if (feedback?.success) {
@@ -298,6 +299,14 @@ const MainScreen = () => {
                   <textarea
                     {...register('feedback', {
                       required: 'feedback is required',
+                      min: {
+                        value: 1,
+                        message: `minimum one word.`,
+                      },
+                      maxLength: {
+                        value: 1000,
+                        message: `1000 words limit.`,
+                      },
                     })}
                     slot="5"
                     className="text-txt-color h-[150px] w-full appearance-none rounded-[3px] border border-grey  p-2 text-[16px] leading-tight focus:outline-none"
