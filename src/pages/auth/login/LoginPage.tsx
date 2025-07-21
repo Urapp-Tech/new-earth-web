@@ -3,6 +3,7 @@ import assets from '@/assets';
 import { toast } from '@/components/ui/use-toast';
 import { login } from '@/redux/features/authStateSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
+import { Eye, EyeOff } from 'lucide-react';
 import promiseHandler from '@/utils/promise-handler';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -23,6 +24,8 @@ const LoginPage = () => {
   const { systemConfig } = useAppSelector((x) => x.appState);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     if (!systemConfig?.tenant) {
@@ -118,7 +121,7 @@ const LoginPage = () => {
                   </p>
                 )}
               </div>
-              <div className="mb-1">
+              <div className="relative mb-1">
                 <label
                   className="text-txt-color mb-2 block text-[12px] font-semibold"
                   htmlFor="password"
@@ -131,9 +134,16 @@ const LoginPage = () => {
                   })}
                   className="text-txt-color mb-3 w-full appearance-none rounded-[36px] border  border-grey px-3 py-4 text-[16px] leading-tight focus:outline-none "
                   id="password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="******************"
                 />
+                <button
+                  type="button"
+                  className="absolute right-5 top-[57%] -translate-y-1/2 transform text-gray-500"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
                 {errors.password && (
                   <p className="text-xs italic text-red-500">
                     {errors.password.message}
@@ -181,7 +191,7 @@ const LoginPage = () => {
             </form>
           </div>
         </div>
-        <div className="w-[50%] px-3 py-2 max-[768px]:w-full max-[768px]:flex-1 max-[768px]:py-0 max-[1024px]:hidden">
+        <div className="w-[50%] px-3 py-2 max-[1024px]:hidden max-[768px]:w-full max-[768px]:flex-1 max-[768px]:py-0">
           <div className="mx-auto  flex max-h-[834px] items-center justify-center overflow-hidden rounded-lg max-[1560px]:max-h-[96vh] max-[768px]:max-h-screen">
             <div className="flex">
               <div className="relative min-h-[984px] w-[735px] flex-1 overflow-hidden">

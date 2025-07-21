@@ -13,6 +13,7 @@ export default function CustomCard({
       <video
         className={`max-h-[194px] min-h-[194px] w-full max-w-[250px] rounded-[20px] object-cover`}
         controls
+        controlsList="nodownload"
       >
         <source src={item.filePath} type="video/mp4" />
         Your browser does not support the video tag.

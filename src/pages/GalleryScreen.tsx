@@ -4,6 +4,7 @@ import CustomCard from '@/components/ImageBox';
 import ImagePreview from '@/components/PreviewImageBox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ProjectAttachment } from '@/interfaces/project-attachments';
+import { Play } from 'lucide-react';
 import {
   fetchProjectAttachments,
   fetchProjectDaywiseAttachments,
@@ -141,22 +142,77 @@ const GalleryScreen = () => {
                                 >
                                   <div className="mx-auto mb-3 cursor-pointer">
                                     {image.attachmentType === 'video' && (
-                                      <a
-                                        href={image.filePath}
-                                        rel="noopener noreferrer"
+                                      <div
+                                        className="relative w-fit cursor-pointer"
+                                        onClick={() => {
+                                          // Create video element
+                                          const video =
+                                            document.createElement('video');
+                                          video.src = image.filePath;
+                                          video.controls = true;
+                                          video.autoplay = true;
+                                          video.style.width = '100%';
+                                          video.style.height = '100%';
+                                          (video as any).controlsList =
+                                            'nodownload'; // ✅ no download
+                                          video.oncontextmenu = (e) =>
+                                            e.preventDefault(); // ✅ disable right click
+
+                                          const container =
+                                            document.createElement('div');
+                                          container.style.position = 'fixed';
+                                          container.style.top = '0';
+                                          container.style.left = '0';
+                                          container.style.width = '100vw';
+                                          container.style.height = '100vh';
+                                          container.style.backgroundColor =
+                                            'black';
+                                          container.style.zIndex = '9999';
+                                          container.style.display = 'flex';
+                                          container.style.justifyContent =
+                                            'center';
+                                          container.style.alignItems = 'center';
+                                          container.appendChild(video);
+
+                                          container.addEventListener(
+                                            'click',
+                                            () => {
+                                              if (document.fullscreenElement) {
+                                                document.exitFullscreen();
+                                              }
+                                              document.body.removeChild(
+                                                container
+                                              );
+                                            }
+                                          );
+
+                                          document.body.appendChild(container);
+
+                                          if (video.requestFullscreen) {
+                                            video.requestFullscreen();
+                                          }
+                                        }}
                                       >
                                         <video
-                                          className="h-full max-h-[194px] min-h-[194px] w-full min-w-[200px] rounded-[20px] object-cover"
-                                          controls
+                                          className="h-full max-h-[130px] w-full max-w-[160px] rounded-[20px] object-contain"
+                                          muted
+                                          preload="metadata"
                                         >
                                           <source
                                             src={image.filePath}
                                             type="video/mp4"
                                           />
-                                          Your browser does not support the
-                                          video tag.
                                         </video>
-                                      </a>
+                                        {/* 👇 Play Button Overlay */}
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                          <Play
+                                            style={{
+                                              fontSize: 48,
+                                              color: 'white',
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
                                     )}
                                     {image.attachmentType === 'image' && (
                                       <CustomCard
@@ -166,19 +222,6 @@ const GalleryScreen = () => {
                                         setIsPreview={setIsPreview}
                                         cardHeight="h-[200px]"
                                       />
-                                      // <a href={image.filePath} rel="noopener noreferrer">
-                                      // <img
-                                      //   onClick={() =>
-                                      //     setIsPreview({
-                                      //       state: true,
-                                      //       source: image.filePath,
-                                      //     })
-                                      //   }
-                                      //   src={image.filePath}
-                                      //   alt="model"
-                                      //   className="h-full  w-full rounded-[20px] object-contain"
-                                      // />
-                                      // </a>
                                     )}
                                   </div>
                                 </div>
