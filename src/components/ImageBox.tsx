@@ -39,7 +39,7 @@ export default function CustomCard({
           document.body.removeChild(link);
         }
       }}
-      className={`relative ${cardHeight} w-[200px] overflow-hidden rounded-[35px] border-2`}
+      className={`relative ${cardHeight} border-3 w-[200px] overflow-hidden rounded-[35px]`}
     >
       <div
         className="absolute inset-0 bg-cover bg-center"
