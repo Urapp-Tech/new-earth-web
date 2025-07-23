@@ -81,7 +81,7 @@ const GalleryScreen = () => {
         <div className="mb-5 text-[28px] text-secondary max-[576px]:text-center">
           Media Gallery
         </div>
-        <div className="rounded-[20px]  bg-white">
+        <div className="rounded-[20px]  bg-white py-4">
           <Tabs defaultValue={tab} className="w-full ">
             <div className="tabs--head max-[768px]:overflow-y-hidden max-[768px]:overflow-x-scroll">
               <TabsList className="w-full justify-start p-0 max-[768px]:w-[780px] max-[576px]:w-[600px] max-[400px]:w-[500px]">
@@ -138,7 +138,7 @@ const GalleryScreen = () => {
                               return (
                                 <div
                                   key={i}
-                                  className="mt-4 basis-[15%] 2xl:basis-[12%]"
+                                  className="mt-4 basis-[15%] 2xl:basis-[12%] max-[576px]:basis-[100%]"
                                 >
                                   <div className="mx-auto mb-3 cursor-pointer">
                                     {image.attachmentType === 'video' && (
@@ -194,7 +194,7 @@ const GalleryScreen = () => {
                                         }}
                                       >
                                         <video
-                                          className="h-full max-h-[130px] w-full max-w-[160px] rounded-[20px] object-contain"
+                                          className="h-full max-h-[130px] w-full max-w-[160px] rounded-[20px] object-contain max-[576px]:max-h-full max-[576px]:min-h-full max-[576px]:max-w-full  max-[576px]:w-full "
                                           muted
                                           preload="metadata"
                                         >

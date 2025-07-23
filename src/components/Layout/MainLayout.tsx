@@ -13,11 +13,11 @@ const MainLayout = () => {
     }
   }, []);
   return (
-    <div className="h-auto bg-lightgrey">
+    <div className=" bg-lightgrey">
       <TopBar />
-      <div className="flex h-auto items-start justify-between">
+      <div className="flex items-start justify-between max-[576px]:pb-3">
         <Sidebar />
-        <div className="ml-[9.5%] w-[90%] px-2 py-2 max-[1024px]:px-6 max-[768px]:w-[85%] max-[576px]:w-full max-[576px]:px-2 ">
+        <div className="ml-[9.5%] w-[90%] px-2 py-2 max-[1024px]:px-6 max-[768px]:w-[85%] max-[576px]:ml-0 max-[576px]:w-full max-[576px]:px-3 ">
           <Outlet />
         </div>
       </div>

@@ -133,6 +133,9 @@ li.group.destructive.group.border-destructive.bg-destructive.text-destructive-fo
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .side-nav{
+    display: none !important ;
+  }
 }
 
 @media screen and (max-width: 480px) {

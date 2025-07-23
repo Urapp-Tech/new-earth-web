@@ -11,7 +11,7 @@ export default function CustomCard({
       className={`relative w-[200px] overflow-hidden rounded-[35px] border-2`}
     >
       <video
-        className={`max-h-[194px] min-h-[194px] w-full max-w-[250px] rounded-[20px] object-cover`}
+        className={`max-h-[194px] min-h-[194px] w-full max-w-[250px] rounded-[20px] object-cover max-[576px]:max-w-full max-[576px]:max-h-full max-[576px]:min-h-full max-[576px]:min-w-full  max-[576px]:w-full `}
         controls
         controlsList="nodownload"
       >

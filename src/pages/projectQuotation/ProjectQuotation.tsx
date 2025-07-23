@@ -52,11 +52,11 @@ export default function ProjectQuotation() {
         />
       )}
       <div className="h-screen p-2 max-[1024px]:px-[40px] max-[768px]:p-0">
-        <div className="flex items-center justify-between">
-          <div className="max-[576px]:text-{16px} mb-5 text-[28px] text-secondary max-[768px]:text-[18px] max-[576px]:text-center">
+        <div className="flex items-center justify-between mb-5 max-[768px]:flex-col">
+          <div className="max-[576px]:text-[20px] p-3 text-[28px] text-secondary max-[768px]:text-[18px] max-[576px]:text-center">
             Project Quotations and Payments
           </div>
-          <div>
+          <div className='flex items-center gap-3 max-[576px]:flex-col'>
             <span
               onClick={() => {
                 setIsPreview({
