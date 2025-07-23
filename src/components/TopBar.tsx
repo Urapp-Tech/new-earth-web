@@ -47,13 +47,12 @@ const TopBar = () => {
           </span>
           {/* <hr className="h-[1px] w-[60%] border-none bg-[#000000]" /> */}
           <span className="block text-[14px] font-[400] capitalize leading-normal text-secondary max-[576px]:truncate max-[576px]:text-[20px] max-[360px]:text-[17px]">
-            {/* {selectedProjects?.address ?? ''} */}
-            Lorem ipsum
+            {selectedProjects?.address ?? ''}
           </span>
         </div>
         <div className="right-[4px] basis-[40%] max-[1024px]:basis-[65%] max-[768px]:w-full  ">
           <div className="flex items-center justify-between gap-4 max-[576px]:gap-0 max-[400px]:gap-2 max-[400px]:pr-[4px]">
-            <div className="flex w-full items-center justify-end max-[768px]:justify-center px-2 max-[576px]:flex-col max-[576px]:gap-2 max-[400px]:p-0">
+            <div className="flex w-full items-center justify-end px-2 max-[768px]:justify-center max-[576px]:flex-col max-[576px]:gap-2 max-[400px]:p-0">
               <Select
                 value={selectedProjects?.id}
                 onValueChange={(value) =>
@@ -62,7 +61,7 @@ const TopBar = () => {
                   )
                 }
               >
-                <SelectTrigger className="ne-tabs h-[40px] w-full max-[576px]:w-full rounded-[36px] border-0 border-none border-transparent bg-white shadow-none focus:border-transparent focus:ring-0">
+                <SelectTrigger className="ne-tabs h-[40px] w-full rounded-[36px] border-0 border-none border-transparent bg-white shadow-none focus:border-transparent focus:ring-0 max-[576px]:w-full">
                   <SelectValue className="px-3" placeholder="Select Projects">
                     {projects.find(
                       (project) => project.id === selectedProjects?.id
