@@ -178,7 +178,7 @@ const MainScreen = () => {
       demolitionProgressPercent === 100
         ? Math.min((constructionElapsedDays / cd) * 100, 100)
         : // 100
-        0;
+          0;
 
     const finishingStartDate = demolitionEndDate.add(cd, 'days');
     const finishingElapsedDays =
@@ -187,7 +187,7 @@ const MainScreen = () => {
       constructionProgressPercent === 100
         ? Math.min((finishingElapsedDays / fd) * 100, 100)
         : // 100
-        0;
+          0;
 
     return (
       <div className="">
@@ -278,8 +278,9 @@ const MainScreen = () => {
             onOpenChange={(open) => setisOpenFeedback(open)}
           >
             <PopoverTrigger onClick={() => setisOpenFeedback(true)}>
-              <div className="flex items-center justify-center rounded-full bg-primary p-5 text-white shadow-xl max-[576px]:px-2 max-[576px]:w-[50px] max-[576px]:h-[50px]">
-                <Plus className="mx-1" />  <span className='max-[576px]:hidden'>Feedback</span>
+              <div className="flex items-center justify-center rounded-full bg-primary p-5 text-white shadow-xl max-[576px]:h-[50px] max-[576px]:w-[50px] max-[576px]:px-2">
+                <Plus className="mx-1" />{' '}
+                <span className="max-[576px]:hidden">Feedback</span>
               </div>
             </PopoverTrigger>
             <PopoverContent
@@ -293,7 +294,6 @@ const MainScreen = () => {
                   htmlFor="feedback"
                 >
                   Feedback
-                 
                 </label>
                 <div className="h-[160px]">
                   <textarea
@@ -332,7 +332,7 @@ const MainScreen = () => {
           </Popover>
         </form>
       </div>
-      <div className="mb-14 px-1 max-[768px]:my-5">
+      <div className="mb-14 px-1 max-[768px]:mt-0">
         {selectedProjects?.demolitionDays && (
           <>
             <div className="mx-1 mb-3 flex items-center justify-between">
@@ -363,7 +363,7 @@ const MainScreen = () => {
       </div>
       {/* )} */}
       <div className="grid grid-cols-12 gap-5 rounded-[40px] max-[1024px]:flex-col">
-        <div className="col-span-6 max-[992px]:col-span-12 max-[1260px]:my-2">
+        <div className="col-span-6 max-[1260px]:my-2 max-[992px]:col-span-12">
           <div className="rounded-[40px] border-2 p-5 max-[1024px]:h-auto">
             <NavLink to="/gallery">
               <div className="flex items-center justify-start gap-2">
@@ -406,7 +406,7 @@ const MainScreen = () => {
             </div>
           </div>
         </div>
-        <div className="col-span-6 max-[992px]:col-span-12 max-[1260px]:my-2">
+        <div className="col-span-6 max-[1260px]:my-2 max-[992px]:col-span-12">
           <div className="h-[393px] rounded-[40px] border-2 p-5 max-[576px]:p-3">
             <div className="flex items-center justify-between gap-2">
               <span className="text-[24px] font-bold leading-normal text-secondary">
@@ -457,7 +457,7 @@ const MainScreen = () => {
                                   onClick={() =>
                                     handleProjectPlanSelection(plan)
                                   }
-                                  className="btn-flips p-2 my-[10px] h-[46px] w-[46px] rounded-[28px] bg-[#C9C9C9] text-primary hover:bg-primary hover:text-white"
+                                  className="btn-flips my-[10px] h-[46px] w-[46px] rounded-[28px] bg-[#C9C9C9] p-2 text-primary hover:bg-primary hover:text-white"
                                 >
                                   <EyeIcon />
                                 </Button>
@@ -486,7 +486,7 @@ const MainScreen = () => {
       </div>
 
       <div className="mt-5 grid  min-h-[400px] grid-cols-12 max-[1260px]:flex-col">
-        <div className="col-span-6 px-2 max-[992px]:col-span-12 max-[1260px]:my-2">
+        <div className="col-span-6 px-2 max-[1260px]:my-2 max-[992px]:col-span-12">
           <div className="bg-ban-two max-[480px]:background-[#fff] p-5 max-[1024px]:min-h-[500px] max-[1024px]:p-7 max-[576px]:p-[20px]">
             <div className="flex max-w-full items-center justify-between gap-2 pt-2 text-[22px] font-medium leading-normal text-secondary  max-[768px]:text-[20px] max-[480px]:flex-col max-[480px]:items-start">
               <span className="">Project Payments</span>
@@ -580,7 +580,7 @@ const MainScreen = () => {
             </div>
           </div>
         </div>
-        <div className="col-span-6 px-2 max-[992px]:col-span-12 max-[1260px]:my-2">
+        <div className="col-span-6 px-2 max-[1260px]:my-2 max-[992px]:col-span-12">
           <div className="h-[400px] rounded-[40px] border-2 p-5">
             <NavLink to="/gallery" state={{ tab: '3drendersandblueprints' }}>
               <div className="flex items-center justify-start gap-2">
