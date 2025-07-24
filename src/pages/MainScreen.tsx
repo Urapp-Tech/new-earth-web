@@ -1,281 +1,631 @@
-import assets from "@/assets"
+import assets from '@/assets';
+import { fetchProjectAttachments } from '@/redux/features/projectAttachmentsSlice';
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
-import { fetchProjectAttachments } from "@/redux/features/projectAttachmentsSlice"
-import { fetchProjects, setSelectedProject } from "@/redux/features/projectSlice"
-import { useAppDispatch, useAppSelector } from "@/redux/redux-hooks"
-import { CURRENCY } from "@/utils/constant"
-import { formatCurrency } from "@/utils/helpers"
-import { useEffect, useState } from "react"
-import { NavLink } from "react-router-dom"
+  fetchProjectDashboard,
+  postProjectFeedback,
+  setRemoveFeedbackState,
+} from '@/redux/features/projectDashboardSlice';
+import {
+  fetchProjects,
+  setSelectedProject,
+} from '@/redux/features/projectSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/redux-hooks';
+import { CURRENCY } from '@/utils/constant';
+import { formatCurrency, sortArrayByKey } from '@/utils/helpers';
+import { useEffect, useState } from 'react';
+// import { Progress } from '@/components/ui/progress';
+import { CarouselItems } from '@/components/Carousel';
+import Loader from '@/components/common/Loader';
+import { Button } from '@/components/ui/button';
+import dayjs from 'dayjs';
+import { Check, EyeIcon, Plus } from 'lucide-react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import PlanDetailsDialog from './plans/PlanDetailsDialog';
 
-const MainScreen = () => {
+import { toast } from '@/components/ui/use-toast';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@radix-ui/react-popover';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import { useForm } from 'react-hook-form';
 
-    const dispatch = useAppDispatch();
-    const [video, setVideo] = useState<string | null>(null);
-    const [image, setImage] = useState<string | null>(null);
-    const [doc, setDoc] = useState<string | null>(null);
-    const { projects, selectedProjects } = useAppSelector(s => s.projectState);
-    const { attachments } = useAppSelector(s => s.projectAttachmentsState);
+dayjs.extend(relativeTime);
 
-    const fetchProjectsData = () => {
-        dispatch(fetchProjects({}));
-    }
-
-    useEffect(() => {
-        fetchProjectsData();
-    }, [dispatch])
-
-    useEffect(() => {
-        if (projects.length > 0 && !selectedProjects) {
-            dispatch(setSelectedProject(projects[0]))
-        }
-    }, [projects])
-
-    useEffect(() => {
-        if (selectedProjects) {
-            dispatch(fetchProjectAttachments({ project_id: selectedProjects.id }))
-        }
-    }, [selectedProjects])
-
-
-    const setLastVideo = () => {
-        const lastVideo = attachments
-            .filter((attachment) => attachment.attachmentType === 'video')
-            .sort((a, b) => {
-                const dateA = new Date(a.uploadedAt).getTime();
-                const dateB = new Date(b.uploadedAt).getTime();
-
-                return dateB - dateA; // Sort in descending order (latest first)
-            })
-            .shift(); // Get the first (latest) video
-
-        if (lastVideo) {
-            setVideo(lastVideo.filePath);
-        } else {
-            setVideo(null);
-        }
-    };
-    const setLastImage = () => {
-        const lastVideo = attachments.find((attachment) => attachment.attachmentType === 'image' && attachment.category === '3d');
-        if (lastVideo) {
-            setImage(lastVideo.filePath)
-        }
-        else {
-            setImage(null)
-        }
-    }
-    const setLastDoc = () => {
-        const lastVideo = attachments.find((attachment) => attachment.attachmentType === 'image' && attachment.category !== '3d');
-        if (lastVideo) {
-            setDoc(lastVideo.filePath)
-        }
-        else {
-            setDoc(null)
-        }
-    }
-
-    useEffect(() => {
-        setLastVideo();
-        setLastImage();
-        setLastDoc();
-    }, [attachments]);
-
-    return (
-        <>
-            <div className="flex gap-3  rounded-[40px] max-[1024px]:flex-col">
-                <div className="basis-[50%] max-[1024px]:basis-[100%]">
-
-                    <div className="max-w-[656px] max-[1024px]:max-w-[90%] max-[1024px]:mx-auto max-[768px]:max-w-full">
-                        <div className="flex justify-between items-center mb-2 px-4">
-                            <span className="block text-[16px] font-medium leading-normal text-secondary mb-2 capitalize">Most recent video</span>
-                            <NavLink to="videos" className="block text-[14px] font-medium leading-normal text-secondary underline capitalize">see all</NavLink>
-                        </div>
-                        {video ?
-                            <video className="w-full h-full rounded-[20px] max-h-[250px]" controls >
-                                <source src={video} type="video/mp4" />
-                                Your browser does not support the video tag.
-                            </video>
-                            :
-                            <img src={assets.images.noVideo} alt="video" className="w-full h-[400px] object-cover" />
-                        }
-                    </div>
-
-                </div>
-                <div className="basis-[50%] max-[1024px]:basis-[100%] max-[1024px]:px-5 max-[768px]:px-1">
-                    <div className="mb-2 px-4 max-[1024px]:max-w-[80%] max-[768px]:max-w-full">
-
-                        <span className="block text-[16px] font-medium leading-normal text-secondary capitalize mb-3 max-[1024px]:mt-7">select project</span>
-                        <Select value={selectedProjects?.id} onValueChange={(value) => dispatch(setSelectedProject(projects.find(x => x.id === value)))}>
-                            <SelectTrigger className="ne-tabs w-full h-[60px] rounded-[36px] bg-white border-transparent focus:border-transparent focus:ring-0 border-0 border-none shadow-none">
-                                <SelectValue className="px-3" placeholder="Select Projects">
-                                    {projects.find((project) => project.id === selectedProjects?.id)?.name || "Select Projects"}
-                                </SelectValue>
-                            </SelectTrigger>
-                            <SelectContent>
-                                {projects &&
-                                    projects.map((item, i) => (
-                                        <SelectItem key={i} value={item.id}>
-                                            {item.name}
-                                        </SelectItem>
-                                    ))}
-                            </SelectContent>
-                        </Select>
-
-                    </div>
-                    <div className="flex justify-around items-center px-[5px] gap-[15px] max-[1024px]:justify-start max-[1024px]:gap-[30px] max-[576px]:flex-col">
-                        <div className="my-[10px] max-[576px]:w-full">
-                            <NavLink to="/gallery">
-                                <div className="flex gap-2 justify-center items-center mb-[15px]">
-                                    <img src={assets.images.playIcon} alt="icons" className="w-[25px] h-[25px]" />
-
-                                    <span className="text-[14px] font-bold text-secondary leading-normal">3D renders</span>
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="9" viewBox="0 0 10 9" fill="none">
-                                        <path d="M1 8.5L9 0.5M9 0.5H1M9 0.5V8.5" stroke="#14242E" />
-                                    </svg>
-
-                                </div>
-                            </NavLink>
-                            <div className=" text-center mx-auto h-[250px] max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
-                                {
-                                    image ?
-                                        <img src={image} alt="3D-image" className="w-full h-full object-contain ne-box-shade max-[1260px]:object-cover" />
-                                        :
-                                        <img src={assets.images.noFile} alt="3D-image" className="w-full h-full object-contain ne-box-shade max-[1260px]:object-cover" />
-                                }
-                            </div>
-                        </div>
-                        <div className="my-[10px] max-[576px]:w-full">
-                            <NavLink to="/gallery/blueprints">
-                                <div className="flex gap-2 justify-center items-center mb-[15px]">
-                                    <img src={assets.images.playIcon} alt="icons" className="w-[25px] h-[25px]" />
-                                    <span className="text-[14px] font-bold text-secondary leading-normal capitalize">project blueprints</span>
-                                    <a href="#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="9" viewBox="0 0 10 9" fill="none">
-                                            <path d="M1 8.5L9 0.5M9 0.5H1M9 0.5V8.5" stroke="#14242E" />
-                                        </svg>
-                                    </a>
-                                </div>
-                            </NavLink>
-                            <div className="h-[250px] text-center mx-auto max-[1024px]:h-[300px] max-[768px]:h-[220px] max-[576px]:h-full">
-                                {
-                                    doc ?
-                                        <img src={doc} alt="3D-image" className="w-full h-full object-contain ne-box-shade max-[1260px]:object-cover" />
-                                        :
-                                        <img src={assets.images.blueprintNoFile} alt="3D-image" className="w-full h-full object-contain ne-box-shade max-[1260px]:object-cover" />
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="flex mt-4 min-h-[420px] max-[1260px]:flex-col ">
-                <div className="basis-[40%] max-[1260px]:max-w-[600px] max-[1260px]:my-3">
-                    <div className="bg-ban-two p-5">
-                        <div className="max-w-[200px] py-2 text-secondary text-[24px] leading-normal font-medium">
-                            Total investment plan
-                        </div>
-                        <div className="mb-2 text-[#EB5A00] text-[40px] leading-normal font-bold max-[480px]:text-[24px]">
-                            {formatCurrency(selectedProjects?.budget ?? 0, CURRENCY).split('.')[0]}.
-                            <span className="text-secondary opacity-[0.5] break-all leading-4">{formatCurrency(selectedProjects?.budget ?? 0, CURRENCY).split('.')[1]}</span>
-                        </div>
-                        <div className="flex gap-1 items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <g opacity="0.5" clipPath="url(#clip0_44_143)">
-                                    <path d="M10 7.33331V3.33331L8 1.33331L6 3.33331V4.66665H2V14H14V7.33331H10ZM4.66667 12.6666H3.33333V11.3333H4.66667V12.6666ZM4.66667 9.99998H3.33333V8.66665H4.66667V9.99998ZM4.66667 7.33331H3.33333V5.99998H4.66667V7.33331ZM8.66667 12.6666H7.33333V11.3333H8.66667V12.6666ZM8.66667 9.99998H7.33333V8.66665H8.66667V9.99998ZM8.66667 7.33331H7.33333V5.99998H8.66667V7.33331ZM8.66667 4.66665H7.33333V3.33331H8.66667V4.66665ZM12.6667 12.6666H11.3333V11.3333H12.6667V12.6666ZM12.6667 9.99998H11.3333V8.66665H12.6667V9.99998Z" fill="#14242E" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_44_143">
-                                        <rect width="16" height="16" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                            <span className="text-[14px] font-medium leading-normal text-secondary">
-                                Skyline Heights
-                            </span>
-                        </div>
-                        <div className="flex gap-1 items-center mt-4">
-
-                            <span className="text-[14px] font-medium leading-normal text-secondary capitalize break-all">
-                                Total paid
-                            </span>
-
-                        </div>
-                        <div className="max-w-[200px] mb-2 text-[#EB5A00] text-[24px] leading-normal font-bold">
-                            {formatCurrency(selectedProjects?.totalPaid ?? 0, CURRENCY).split('.')[0]}.
-                            <span className="text-secondary opacity-[0.5]">{formatCurrency(selectedProjects?.totalPaid ?? 0, CURRENCY).split('.')[1]}</span>
-                        </div>
-                        <div className="flex gap-2 items-center mt-4 max-[576px]:flex-col max-[576px]:items-start">
-
-                            <span className="text-[14px] font-medium leading-normal text-secondary capitalize ">
-                                Due amount
-                            </span>
-                            <span className="text-[14px] font-medium leading-normal text-secondary capitalize ">
-                                27th June 2024
-                            </span>
-
-                        </div>
-                        <div className="max-w-[200px] mb-4 text-[#EB5A00] text-[24px] leading-normal font-bold">
-                            { formatCurrency(selectedProjects?.dueAmount ?? 0, CURRENCY ).split('.')[0] }.
-                            <span className="text-secondary opacity-[0.5] break-all">{ formatCurrency(selectedProjects?.dueAmount ?? 0, CURRENCY ).split('.')[1] }</span>
-                        </div>
-                    </div>
-                </div >
-                <div className="basis-[60%] px-4 py-2 max-[1260px]:my-2">
-                    <div className="flex justify-between items-center gap-4 max-[768px]:flex-col max-[767px]:items-start">
-                        <div className="flex-1 bg-ban-three min-h-[400px] p-6 max-[768px]:min-h-[350px] max-[768px]:w-[80%] max-[576px]:w-full">
-                            <div className="flex justify-between items-center max-[768px]:flex-col max-[768px]:items-start">
-                                <div className=" text-[24px] font-medium leading-normal text-white">
-                                    Project Plan
-                                </div>
-                                <NavLink to="/plans" className="block text-[16px] font-medium leading-normal text-secondary underline capitalize">view details</NavLink>
-                            </div>
-
-                        </div>
-                        <div className="flex-1 bg-white min-h-[400px] p-6 rounded-[50px] max-[768px]:min-h-[350px] max-[768px]:w-[80%] max-[576px]:w-full max-[576px]:p-3">
-                            <div className="flex justify-between items-center max-[768px]:flex-col max-[768px]:items-start">
-                                <div className=" text-[24px] font-medium leading-normal text-secondary mb-2">
-                                    Milestones
-                                </div>
-                                <a href="#" className="block text-[16px] font-medium leading-normal text-secondary underline capitalize">view details</a>
-                            </div>
-                            <div className="w-[269px] h-[59px] border-2 border-primary rounded-[50px] my-3 max-[480px]:w-full">
-                                <div className="block w-[70%] h-full bg-primary rounded-[50px]">
-                                    <span className="block text-white   w-[120px]  text-[16px] font-bold px-5 leading-normal py-2">
-                                        Demolition
-                                    </span>
-
-                                </div>
-                            </div>
-                            <div className="w-[269px] h-[59px] border-2 border-primary rounded-[50px] my-3 max-[480px]:w-full">
-                                <div className="block w-[90%] h-full bg-primary rounded-[50px]">
-                                    <span className="block text-white   w-[120px]  text-[16px] font-bold px-5 leading-normal py-2">
-                                        Construction
-                                    </span>
-
-                                </div>
-                            </div>
-                            <div className="w-[269px] h-[59px] border-2 border-primary rounded-[50px] my-3 max-[480px]:w-full">
-                                <div className="block w-[50%] h-full bg-primary rounded-[50px]">
-                                    <span className="block text-white   w-[120px]  text-[16px] font-bold px-5 leading-normal py-2">
-                                        Finishing
-                                    </span>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div ></>
-    )
+interface Feedback {
+  feedback: string;
 }
 
-export default MainScreen 
+const MainScreen = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<Feedback>();
+
+  const [mediaItems, setMediaItems] = useState<any>(null);
+  const [threeditems, setThreedItems] = useState<any>(null);
+  const [isOpenFeedback, setisOpenFeedback] = useState<boolean>(false);
+
+  const { projects, selectedProjects } = useAppSelector((s) => s.projectState);
+  const { attachments } = useAppSelector((s) => s.projectAttachmentsState);
+  const { dashboard, feedback, loading } = useAppSelector(
+    (s) => s.projectdashboardState
+  );
+
+  const [showPlanDetails, setShowPlanDetails] = useState<boolean>(false);
+  const [projectPlan, setProjectPlan] = useState<any>();
+
+  useEffect(() => {
+    dispatch(fetchProjects({}));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (projects.length > 0 && selectedProjects === null) {
+      dispatch(setSelectedProject(projects[0]));
+    }
+  }, [projects]);
+
+  useEffect(() => {
+    if (selectedProjects?.id) {
+      dispatch(fetchProjectAttachments({ project_id: selectedProjects?.id }));
+      dispatch(fetchProjectDashboard({ projectId: selectedProjects?.id }));
+    }
+  }, [selectedProjects]);
+
+  const onFeedbackSubmit = (data: Feedback) => {
+    const obj = {
+      feedback: data.feedback,
+      projectId: selectedProjects?.id,
+    };
+    dispatch(postProjectFeedback(obj));
+  };
+
+  useEffect(() => {
+    if (feedback?.success) {
+      toast({
+        title: feedback.message,
+        variant: 'default',
+        style: {
+          position: 'fixed',
+          left: '20px',
+          top: '20px',
+          transform: 'translateX(0%)',
+          width: '30%',
+          backgroundColor: '#f27426',
+          color: '#fff',
+        },
+      });
+      setisOpenFeedback(false);
+      setValue('feedback', '');
+      dispatch(setRemoveFeedbackState());
+    }
+  }, [feedback?.success]);
+
+  const setImagesVideos = () => {
+    const resp: any = attachments?.filter(
+      (attachment: any) =>
+        (attachment.attachmentType === 'image' ||
+          attachment.attachmentType === 'video') &&
+        attachment.category !== '3d' &&
+        attachment.category !== 'Blueprint'
+    );
+
+    if (resp?.length) {
+      setMediaItems(resp);
+    } else {
+      setMediaItems(null);
+    }
+  };
+
+  const set3dsDocs = () => {
+    const resp = attachments.filter(
+      (attachment: any) =>
+        (attachment.attachmentType === 'document' ||
+          attachment.attachmentType === 'image') &&
+        attachment.category === '3d'
+    );
+
+    if (resp?.length) {
+      setThreedItems(resp);
+    } else {
+      setThreedItems(null);
+    }
+  };
+
+  const startDate: any = dayjs(dashboard?.startDate);
+  const endDate = dayjs(dashboard?.endDate);
+  const currentDate = dayjs();
+
+  useEffect(() => {
+    setImagesVideos();
+    set3dsDocs();
+  }, [attachments]);
+
+  const handleProjectPlanSelection = (plan: any) => {
+    setProjectPlan(plan);
+    setShowPlanDetails(true);
+  };
+
+  const customProgressBar = () => {
+    const dd = Number(selectedProjects?.demolitionDays || 0);
+    const cd = Number(selectedProjects?.constructionDays || 0);
+    const fd = Number(selectedProjects?.finishingDays || 0);
+
+    // const totalDays = dd + cd + fd;
+
+    // Demolition Date Calculation
+    const demolitionStartDate = startDate;
+    const demolitionEndDate = demolitionStartDate.add(dd, 'days');
+    const demolitionElapsedDays = Math.max(
+      currentDate.diff(demolitionStartDate, 'day') + 1,
+      0
+    );
+    const demolitionProgressPercent: any = Math.min(
+      (demolitionElapsedDays / dd) * 100,
+      100
+    );
+
+    // Construction Date Calculation (after demolition)
+    const constructionStartDate = demolitionEndDate; // Construction starts right after demolition ends
+    const constructionElapsedDays =
+      currentDate.diff(constructionStartDate, 'day') + 1; // Including today
+    const constructionProgressPercent =
+      demolitionProgressPercent === 100
+        ? Math.min((constructionElapsedDays / cd) * 100, 100)
+        : // 100
+          0;
+
+    const finishingStartDate = demolitionEndDate.add(cd, 'days');
+    const finishingElapsedDays =
+      currentDate.diff(finishingStartDate, 'day') + 1;
+    const finishingProgressPercent =
+      constructionProgressPercent === 100
+        ? Math.min((finishingElapsedDays / fd) * 100, 100)
+        : // 100
+          0;
+
+    return (
+      <div className="">
+        <div className="grid h-[10px] grid-cols-12 rounded-2xl bg-[#C9C9C9]">
+          <div className="relative col-span-4 w-full">
+            <span
+              style={{
+                width: `${demolitionProgressPercent}%`,
+              }}
+              className={`absolute left-0 h-[10px] rounded-2xl bg-primary`}
+            ></span>
+            <span
+              style={{
+                backgroundColor:
+                  demolitionProgressPercent === 100 ? `#f27426` : '#C9C9C9',
+              }}
+              className="absolute right-[-5px] top-[-10px] z-10 flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#C9C9C9]"
+            >
+              {demolitionProgressPercent === 100 ? (
+                <Check size="20px" color="white" />
+              ) : (
+                1
+              )}
+            </span>
+            <span className="absolute right-[-20px] top-[25px] z-10 flex items-center justify-center">
+              Demolition
+            </span>
+          </div>
+          <div className="relative col-span-4 w-full">
+            <span
+              style={{
+                width: `${constructionProgressPercent}%`,
+              }}
+              className={`absolute left-0  h-[10px] rounded-2xl bg-primary`}
+            ></span>
+            <span
+              style={{
+                backgroundColor:
+                  constructionProgressPercent === 100 ? `#f27426` : '#C9C9C9',
+              }}
+              className="absolute  right-[-5px] top-[-10px] z-10 flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#C9C9C9]"
+            >
+              {constructionProgressPercent === 100 ? (
+                <Check size="20px" color="white" />
+              ) : (
+                2
+              )}
+            </span>
+            <span className="absolute right-[-20px] top-[25px] z-10 flex items-center justify-center">
+              Construction
+            </span>
+          </div>
+          <div className="relative col-span-4 w-full">
+            <span
+              style={{
+                width: `${finishingProgressPercent}%`,
+              }}
+              className={`absolute left-0 h-[10px] rounded-2xl bg-primary`}
+            ></span>
+            <span
+              style={{
+                backgroundColor:
+                  finishingProgressPercent === 100 ? `#f27426` : '#C9C9C9',
+              }}
+              className="absolute  right-[-5px] top-[-10px] z-10 flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#C9C9C9]"
+            >
+              {finishingProgressPercent === 100 ? (
+                <Check size="20px" color="white" />
+              ) : (
+                3
+              )}
+            </span>
+            <span className="absolute right-[-5px] top-[25px] z-10 flex items-center justify-center">
+              Finishing
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="relative">
+      <div className="fixed bottom-0 right-0 z-50 p-8">
+        <form onSubmit={handleSubmit(onFeedbackSubmit)}>
+          <Popover
+            open={isOpenFeedback}
+            onOpenChange={(open) => setisOpenFeedback(open)}
+          >
+            <PopoverTrigger onClick={() => setisOpenFeedback(true)}>
+              <div className="flex items-center justify-center rounded-full bg-primary p-5 text-white shadow-xl max-[576px]:h-[50px] max-[576px]:w-[50px] max-[576px]:px-2">
+                <Plus className="mx-1" />{' '}
+                <span className="max-[576px]:hidden">Feedback</span>
+              </div>
+            </PopoverTrigger>
+            <PopoverContent
+              side="top"
+              sideOffset={5}
+              className="border-1 mx-8 my-1 h-[250px] rounded-xl bg-white p-4 shadow-lg"
+            >
+              <div className="">
+                <label
+                  className="text-txt-color mb-2 block text-[12px] font-semibold"
+                  htmlFor="feedback"
+                >
+                  Feedback
+                </label>
+                <div className="h-[160px]">
+                  <textarea
+                    {...register('feedback', {
+                      required: 'feedback is required',
+                      min: {
+                        value: 1,
+                        message: `minimum one word.`,
+                      },
+                      maxLength: {
+                        value: 1000,
+                        message: `1000 words limit.`,
+                      },
+                    })}
+                    slot="5"
+                    className="text-txt-color h-[150px] w-full appearance-none rounded-[3px] border border-grey  p-2 text-[16px] leading-tight focus:outline-none"
+                    id="feedback"
+                    placeholder="Type your feedback"
+                  />
+                  {errors.feedback && (
+                    <span className="block text-xs italic text-red-500">
+                      *{errors.feedback.message}
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center justify-end">
+                  <Button
+                    type="submit"
+                    className="border-1 flex w-[85px] rounded-[28px] border-2 bg-transparent text-primary hover:bg-primary hover:text-white"
+                  >
+                    {loading ? <Loader type="spinner" /> : 'Add'}
+                  </Button>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
+        </form>
+      </div>
+      <div className="mb-14 px-1 max-[768px]:mt-0">
+        {selectedProjects?.demolitionDays && (
+          <>
+            <div className="mx-1 mb-3 flex items-center justify-between">
+              <div>
+                <span className="pr-4 text-[20px] text-secondary">
+                  Project Status
+                </span>
+                <span className="text-[14px] text-secondary">
+                  {dayjs(dashboard?.startDate).format('D MMM, YYYY')}
+                </span>
+              </div>
+              <div className="text-[14px] text-secondary">
+                <span className="text-[14px] font-[500] text-secondary">
+                  {currentDate >= endDate
+                    ? 'Completed'
+                    : `${dayjs().to(dashboard?.endDate, true)} remaining`}
+                </span>
+              </div>
+            </div>
+            <div>{customProgressBar()}</div>
+          </>
+        )}
+
+        {/* <div className="mt-1 flex justify-between px-3 py-2 text-sm text-gray-500">
+          <span>{startDate.format('YYYY-MM-DD')} ( Day 01 )</span>
+          <span>{totalDays} Days </span>
+        </div> */}
+      </div>
+      {/* )} */}
+      <div className="grid grid-cols-12 gap-5 rounded-[40px] max-[1024px]:flex-col">
+        <div className="col-span-6 max-[1260px]:my-2 max-[992px]:col-span-12">
+          <div className="rounded-[40px] border-2 p-5 max-[1024px]:h-auto">
+            <NavLink to="/gallery">
+              <div className="flex items-center justify-start gap-2">
+                <img
+                  src={assets.images.playIcon}
+                  alt="icons"
+                  className="h-[25px] w-[25px]"
+                />
+
+                <span className="text-[24px] font-bold leading-normal text-secondary">
+                  Site Updates
+                </span>
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  height="9"
+                  viewBox="0 0 10 9"
+                  fill="none"
+                >
+                  <path d="M1 8.5L9 0.5M9 0.5H1M9 0.5V8.5" stroke="#14242E" />
+                </svg>
+              </div>
+              <span className="mx-8 text-[14px] text-[#14242E]">
+                (images and videos)
+              </span>
+            </NavLink>
+            <div className="my-8">
+              {mediaItems?.length ? (
+                <CarouselItems
+                  type="day"
+                  items={mediaItems}
+                  cardHeight="h-[194px]"
+                />
+              ) : (
+                <div className="flex h-[225px] items-center justify-center text-[#14242E]">
+                  Images and Videos not uploaded yet.
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="col-span-6 max-[1260px]:my-2 max-[992px]:col-span-12">
+          <div className="h-[393px] rounded-[40px] border-2 p-5 max-[576px]:p-3">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-[24px] font-bold leading-normal text-secondary">
+                Project Plans
+              </span>
+              <NavLink to="/plans">
+                <span className="text-[14px] leading-normal text-secondary underline underline-offset-2">
+                  View Details
+                </span>
+              </NavLink>
+            </div>
+            <span className="text-[14px] text-[#14242E]">
+              (daily tasks and updates)
+            </span>
+            <div className="mt-5 w-full">
+              <div className="rounded-[20px]">
+                {dashboard?.projectPlanResult?.length ? (
+                  <table className="w-full border-0">
+                    <tbody className="w-full border-0">
+                      {sortArrayByKey(
+                        dashboard?.projectPlanResult,
+                        'day',
+                        'asc'
+                      ).map((plan: any, index: number) => {
+                        // let count = 0;
+                        // if (plan.data && plan.data.length > 0) {
+                        //   count = plan.data.reduce(
+                        //     // eslint-disable-next-line @typescript-eslint/no-shadow
+                        //     (total: number, item: any) =>
+                        //       total + (item?.count ?? 0),
+                        //     0
+                        //   );
+                        // }
+                        return (
+                          <div>
+                            <tr
+                              key={index}
+                              className="border-grey-100 w-full border-[0px] text-left"
+                            >
+                              <td className="w-[65%] py-1 text-[18px] max-[1260px]:w-[40%] max-[576px]:w-[30%] max-[576px]:text-[16px]">
+                                {plan.day}
+                              </td>
+                              <td className="w-[35%] py-1 max-[1260px]:w-[60%] max-[576px]:w-[70%] max-[576px]:text-[16px]">
+                                Plan Activities: {plan?.data?.length || 0}
+                              </td>
+                              <td className="py-1">
+                                <Button
+                                  onClick={() =>
+                                    handleProjectPlanSelection(plan)
+                                  }
+                                  className="btn-flips my-[10px] h-[46px] w-[46px] rounded-[28px] bg-[#C9C9C9] p-2 text-primary hover:bg-primary hover:text-white"
+                                >
+                                  <EyeIcon />
+                                </Button>
+                              </td>
+                            </tr>
+                            <hr className="h-2" />
+                          </div>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                ) : (
+                  <div className="flex h-[200px] items-center justify-center text-[#14242E]">
+                    Plans not uploaded yet.
+                  </div>
+                )}
+                <PlanDetailsDialog
+                  open={showPlanDetails}
+                  setOpen={(val) => setShowPlanDetails(val)}
+                  plan={projectPlan}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-5 grid  min-h-[400px] grid-cols-12 max-[1260px]:flex-col">
+        <div className="col-span-6 px-2 max-[1260px]:my-2 max-[992px]:col-span-12">
+          <div className="bg-ban-two max-[480px]:background-[#fff] p-5 max-[1024px]:min-h-[500px] max-[1024px]:p-7 max-[576px]:p-[20px]">
+            <div className="flex max-w-full items-center justify-between gap-2 pt-2 text-[22px] font-medium leading-normal text-secondary  max-[768px]:text-[20px] max-[480px]:flex-col max-[480px]:items-start">
+              <span className="">Project Payments</span>
+              <span
+                onClick={() => navigate('./project-quotations')}
+                className="cursor-pointer text-sm underline underline-offset-2"
+              >
+                View all quotations
+              </span>
+            </div>
+            <div className="pb-2">
+              <span className="text-[14px] text-[#14242E]">
+                (received, bills, dues)
+              </span>
+            </div>
+            <div className="mb-2 text-[40px] font-bold leading-normal text-[#EB5A00] max-[480px]:text-[24px]">
+              {
+                formatCurrency(dashboard?.totalQuotation ?? 0, CURRENCY).split(
+                  '.'
+                )[0]
+              }
+              <span className="break-all text-[24px] leading-4 text-secondary opacity-[0.5]">
+                {
+                  formatCurrency(
+                    dashboard?.totalQuotation ?? 0,
+                    CURRENCY
+                  ).split('.')[1]
+                }
+              </span>
+            </div>
+            <div className="flex items-center gap-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <g opacity="0.5" clipPath="url(#clip0_44_143)">
+                  <path
+                    d="M10 7.33331V3.33331L8 1.33331L6 3.33331V4.66665H2V14H14V7.33331H10ZM4.66667 12.6666H3.33333V11.3333H4.66667V12.6666ZM4.66667 9.99998H3.33333V8.66665H4.66667V9.99998ZM4.66667 7.33331H3.33333V5.99998H4.66667V7.33331ZM8.66667 12.6666H7.33333V11.3333H8.66667V12.6666ZM8.66667 9.99998H7.33333V8.66665H8.66667V9.99998ZM8.66667 7.33331H7.33333V5.99998H8.66667V7.33331ZM8.66667 4.66665H7.33333V3.33331H8.66667V4.66665ZM12.6667 12.6666H11.3333V11.3333H12.6667V12.6666ZM12.6667 9.99998H11.3333V8.66665H12.6667V9.99998Z"
+                    fill="#14242E"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_44_143">
+                    <rect width="16" height="16" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+              <span className="text-[14px] font-medium capitalize leading-normal text-secondary">
+                {selectedProjects?.name ? selectedProjects?.name : ''}
+              </span>
+            </div>
+            <div className="mt-4 flex items-center gap-1">
+              <span className="break-all text-[14px] font-medium capitalize leading-normal text-secondary">
+                Total paid
+              </span>
+            </div>
+            <div className="mb-2 max-w-[200px] text-[24px] font-bold leading-normal text-[#EB5A00]">
+              {
+                formatCurrency(dashboard?.totalPaid ?? 0, CURRENCY).split(
+                  '.'
+                )[0]
+              }
+              <span className="text-secondary opacity-[0.5]">
+                {
+                  formatCurrency(dashboard?.totalPaid ?? 0, CURRENCY).split(
+                    '.'
+                  )[1]
+                }
+              </span>
+            </div>
+            <div className="mt-4 flex items-center gap-2 max-[576px]:flex-col max-[576px]:items-start">
+              <span className="text-[14px] font-medium capitalize leading-normal text-secondary ">
+                Due amount
+              </span>
+              {/* <span className="text-[14px] font-medium capitalize leading-normal text-secondary ">
+                27th June 2024
+              </span> */}
+            </div>
+            <div className="mb-4 max-w-[200px] text-[24px] font-bold leading-normal text-[#EB5A00]">
+              {formatCurrency(dashboard?.totalDue ?? 0, CURRENCY).split('.')[0]}
+              <span className="break-all text-secondary opacity-[0.5]">
+                {
+                  formatCurrency(dashboard?.totalDue ?? 0, CURRENCY).split(
+                    '.'
+                  )[1]
+                }
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="col-span-6 px-2 max-[1260px]:my-2 max-[992px]:col-span-12">
+          <div className="h-[400px] rounded-[40px] border-2 p-5">
+            <NavLink to="/gallery" state={{ tab: '3drendersandblueprints' }}>
+              <div className="flex items-center justify-start gap-2">
+                <img
+                  src={assets.images.playIcon}
+                  alt="icons"
+                  className="h-[25px] w-[25px]"
+                />
+
+                <span className="text-[24px] font-bold leading-normal text-secondary">
+                  Project Documents
+                </span>
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  height="9"
+                  viewBox="0 0 10 9"
+                  fill="none"
+                >
+                  <path d="M1 8.5L9 0.5M9 0.5H1M9 0.5V8.5" stroke="#14242E" />
+                </svg>
+              </div>
+              <span className="mx-8 text-[14px] text-[#14242E]">
+                (2d layouts, 3d render and others)
+              </span>
+            </NavLink>
+            <div className="my-8 w-full">
+              {threeditems?.length ? (
+                <CarouselItems
+                  type="title"
+                  items={threeditems}
+                  cardHeight="h-[243px]"
+                />
+              ) : (
+                <div className="flex h-[250px] items-center justify-center text-[#14242E]">
+                  3d Images and Docs not uploaded yet.
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MainScreen;

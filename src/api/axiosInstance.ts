@@ -1,6 +1,7 @@
 import { toast } from '@/components/ui/use-toast';
 import { handleShowLoginModal } from '@/redux/features/authModalSlice';
 import { logout } from '@/redux/features/authStateSlice';
+import { setRemoveProject } from '@/redux/features/projectSlice';
 import { store } from '@/redux/store';
 import { MAIN_BASE_URL, getTenantId, getToken } from '@/utils/constant';
 import axios, {
@@ -44,6 +45,7 @@ axiosInstance.interceptors.response.use(
     // Handle logout errors here (example: if response status is 401)
     if (error.response && error.response.status === 401) {
       store.dispatch(logout());
+      store.dispatch(setRemoveProject());
       store.dispatch(handleShowLoginModal(true));
       toast({
         title: 'Authentication Error',

@@ -1,6 +1,7 @@
 import banner1 from '../assets/images/banner/banner-(1).png';
 import banner2 from '../assets/images/banner/banner-(2).png';
 import doc from '../assets/images/banner/doc.jpg';
+import docs from '../assets/images/docs.jpg';
 import hmodel1 from '../assets/images/banner/models/house(1).png';
 import hmodel10 from '../assets/images/banner/models/house(10).png';
 import hmodel2 from '../assets/images/banner/models/house(2).png';
@@ -15,7 +16,7 @@ import pdf1 from '../assets/images/banner/pdf/pdf-1.png';
 import sketch1 from '../assets/images/banner/pdf/sketch(2).png';
 import sketch2 from '../assets/images/banner/pdf/sketch(3).png';
 import sketch3 from '../assets/images/banner/pdf/sketch(4).png';
-import videoThumb from "../assets/images/banner/video-banner.png";
+import videoThumb from '../assets/images/banner/video-banner.png';
 import avatar1 from '../assets/images/icons/ic-avatar.png';
 import bellIcon from '../assets/images/icons/ic-bell.png';
 import busnessIcon from '../assets/images/icons/ic-business-man.png';
@@ -39,7 +40,7 @@ import noFile from './images/banner/no-file.png';
 import noVideo from './images/banner/no-video.png';
 import blueprintNoFile from './images/banner/blueprint-noFile.png';
 import speechBubble from './images/speech-bubble.png';
-
+import supplier from './images/icons/supply.png';
 
 const assets = {
   images: {
@@ -84,6 +85,8 @@ const assets = {
     noFile,
     noVideo,
     blueprintNoFile,
+    supplier,
+    docs,
   },
 } as const;
 

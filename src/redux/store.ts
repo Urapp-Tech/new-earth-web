@@ -1,12 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import appStateReducer from './features/appStateSlice';
+import authModalSliceReducer from './features/authModalSlice';
 import authStateReducer from './features/authStateSlice';
 import deviceStateReducer from './features/deviceState';
 import forgotPasswordSliceReducer from './features/forgotPasswordSlice';
-import authModalSliceReducer from './features/authModalSlice';
-import projectSliceReducer from './features/projectSlice';
-import projectPlanSlice from './features/projectPlanSlice';
 import projectAttachmentsSlice from './features/projectAttachmentsSlice';
+import projectPlanSlice from './features/projectPlanSlice';
+import projectQuotationSlice from './features/projectQuotationSlice';
+import projectSliceReducer from './features/projectSlice';
+import quotationSlice from './features/quotationSlice';
+import projectDashboardSlice from './features/projectDashboardSlice';
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +21,9 @@ export const store = configureStore({
     projectState: projectSliceReducer,
     projectPlanState: projectPlanSlice,
     projectAttachmentsState: projectAttachmentsSlice,
+    projectQuotationState: projectQuotationSlice,
+    quotationState: quotationSlice,
+    projectdashboardState: projectDashboardSlice,
   },
 });
 

@@ -55,6 +55,7 @@ export const authStateSlice = createSlice({
       LocalStorageUtil.removeItem('GUEST_USER');
       LocalStorageUtil.removeItem('REGISTERED_CART');
       LocalStorageUtil.removeItem('CART_ITEMS');
+      LocalStorageUtil.removeItem('SELECTED_PROJECT');
     },
   },
 });
